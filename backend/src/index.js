@@ -42,6 +42,24 @@ const db = mysql.createConnection({
   database: "registration",
 });
 
+app.get("/users", (req, res) => {
+  const q = "SELECT * FROM user";
+  db.query(q, (err, data) => {
+    if (err) return res.json(err);
+    return res.json(data);
+  });
+});
+
+app.get("/users/:id", (req, res) => {
+  const userid = req.params.id;
+  const q = "SELECT * FROM user WHERE id = ?";
+
+  db.query(q, [userid], (err, data) => {
+    if (err) return res.json(err);
+    return res.json(data[0]); // return the first object from the data array
+  });
+});
+
 app.post("/register", (req, res) => {
   const firstname = req.body.firstname;
   const lastname = req.body.lastname;
@@ -98,6 +116,34 @@ app.post("/login", (req, res) => {
     } else {
       res.send({ message: "User doesn't exist" });
     }
+  });
+});
+
+app.delete("/users/:id", (req, res) => {
+  const userid = req.params.id;
+  const q = "DELETE FROM user WHERE id = ?";
+
+  db.query(q, [userid], (err, data) => {
+    if (err) return res.json(err);
+    return res.json("User has been deleted successfully");
+  });
+});
+
+app.put("/users/:id", (req, res) => {
+  const userid = req.params.id;
+  const q =
+    "UPDATE user SET `firstname` = ?, `lastname` = ?, `contact` = ?, `email` = ? WHERE id = ?";
+
+  const values = [
+    req.body.firstname,
+    req.body.lastname,
+    req.body.contact,
+    req.body.email,
+  ];
+
+  db.query(q, [...values, userid], (err, data) => {
+    if (err) return res.json(err);
+    return res.json("User has been updated successfully");
   });
 });
 
