@@ -1,0 +1,23 @@
+.navbar {
+    background-color: #f8f9fa;
+  }
+  
+  .navbar-brand {
+    color: #007bff;
+  }
+  
+  .nav-link {
+    color: #007bff;
+  }
+  
+  .nav-dropdown {
+    color: #007bff;
+  }
+  
+  .nav-dropdown-item {
+    color: #343a40;
+  }
+  
+  .nav-dropdown-divider {
+    border-top: 1px solid #e9ecef;
+  }
