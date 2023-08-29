@@ -23,18 +23,32 @@ const department = (req, res) => {
 };
 
 const getDepartments = (req, res) => {
-    const query = "SELECT * FROM department";
-  
-    db.query(query, (err, data) => {
-      if (err) {
-        return res.json(err);
-      }
-      return res.json(data);
-    });
-  };
-  
+  const query = "SELECT * FROM department";
+
+  db.query(query, (err, data) => {
+    if (err) {
+      return res.json(err);
+    }
+    return res.json(data);
+  });
+};
+
+function updateDepartment(req, res) {
+  const { id } = req.params;
+  const { department } = req.body;
+
+  const q = "UPDATE department SET `department` = ? WHERE `department_id` = ?";
+
+  const values = [department, id];
+
+  db.query(q, values, (err, data) => {
+    if (err) return res.json(err);
+    return res.json("Department has been updated successfully");
+  });
+}
 
 module.exports = {
   department,
   getDepartments,
+  updateDepartment,
 };

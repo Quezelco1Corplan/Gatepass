@@ -4,7 +4,11 @@ const cors = require("cors");
 const bcrypt = require("bcrypt");
 const { deleteUser } = require("./components/Delete.jsx");
 const { updateUser } = require("./components/Update.jsx");
-const { department, getDepartments } = require("./components/Department.jsx");
+const {
+  department,
+  getDepartments,
+  updateDepartment,
+} = require("./components/Department.jsx");
 
 const saltRounds = 10;
 
@@ -94,7 +98,10 @@ app.delete("/users/:id", deleteUser);
 app.put("/users/:id", updateUser);
 
 app.post("/departments", department);
+
 app.get("/departments", getDepartments);
+
+app.put("/departments/:id", updateDepartment);
 
 app.listen(3001, () => {
   console.log("running server");
