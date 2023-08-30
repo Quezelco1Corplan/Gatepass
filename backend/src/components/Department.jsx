@@ -47,8 +47,19 @@ function updateDepartment(req, res) {
   });
 }
 
+function deleteDepartment(req, res) {
+  const departid = req.params.id;
+  const q = "DELETE FROM department WHERE department_id = ?";
+
+  db.query(q, [departid], (err, data) => {
+    if (err) return res.json(err);
+    return res.json("Department has been deleted successfully");
+  });
+}
+
 module.exports = {
   department,
   getDepartments,
   updateDepartment,
+  deleteDepartment
 };

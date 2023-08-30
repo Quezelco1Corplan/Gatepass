@@ -161,7 +161,10 @@ table td {
 }
 .AddButton{
   display: flex;
-  align-items: end;
+  align-items: flex-end;
   justify-content: flex-end;
   padding: 15px 15px;
+}
+.redWarning{
+  color: #da251d;
 }

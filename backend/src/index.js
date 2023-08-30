@@ -8,6 +8,7 @@ const {
   department,
   getDepartments,
   updateDepartment,
+  deleteDepartment,
 } = require("./components/Department.jsx");
 
 const saltRounds = 10;
@@ -102,6 +103,8 @@ app.post("/departments", department);
 app.get("/departments", getDepartments);
 
 app.put("/departments/:id", updateDepartment);
+
+app.delete("/departments/:id", deleteDepartment);
 
 app.listen(3001, () => {
   console.log("running server");

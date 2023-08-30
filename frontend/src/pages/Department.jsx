@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import "../css/DepartmentStyle.css";
+import axios from "axios";
 
 function usePrevious(value) {
   const ref = useRef();
@@ -15,6 +16,8 @@ const Department = () => {
   const [editModalOpen, setEditModalOpen] = useState(false);
   const [editDepartment, setEditDepartment] = useState({});
   const [addModalOpen, setAddModalOpen] = useState(false);
+  const [deleteModalOpen, setDeleteModalOpen] = useState(false);
+  const [addWarning, setAddWarning] = useState("");
 
   useEffect(() => {
     fetchDepartments();
@@ -22,6 +25,10 @@ const Department = () => {
 
   const openAddModal = () => {
     setAddModalOpen(true);
+  };
+
+  const openDeleteModal = () => {
+    setDeleteModalOpen(true);
   };
 
   const openEditModal = () => {
@@ -39,6 +46,11 @@ const Department = () => {
   };
 
   const addDepartment = async () => {
+    if (newDepartment.trim() === "") {
+      setAddWarning("Please add a warning");
+      return;
+    }
+
     try {
       const response = await fetch("http://localhost:3001/departments", {
         method: "POST",
@@ -74,6 +86,16 @@ const Department = () => {
       window.location.reload(); // Reload the page
     } catch (error) {
       console.error("Error updating department:", error);
+    }
+  };
+
+  const deleteDepartment = async (id) => {
+    try {
+      console.log(`Deleting department with id: ${id}`);
+      await axios.delete("http://localhost:3001/departments/" + id);
+      window.location.reload();
+    } catch (err) {
+      console.log(err);
     }
   };
 
@@ -127,9 +149,14 @@ const Department = () => {
 
     const closeModal = () => {
       setAddModalOpen(false);
+      window.location.reload();
     };
 
     const handleAdd = async () => {
+      if (newDepartment.trim() === "") {
+        setAddWarning("Please add a department");
+        return;
+      }
       addDepartment();
       closeModal();
     };
@@ -138,16 +165,20 @@ const Department = () => {
       if (prevAddModalOpen !== addModalOpen && addModalOpen) {
         inputRef.current.focus();
       }
-    }, [addModalOpen, prevAddModalOpen]);
+    }, [prevAddModalOpen]);
 
     return (
       <div className={`edit-modal ${addModalOpen ? "open" : ""}`}>
         <div className="modal-content">
           <h2>Add Department</h2>
+          {addWarning && <p className="redWarning">{addWarning}</p>}
           <input
             type="text"
             value={newDepartment}
-            onChange={(e) => setNewDepartment(e.target.value)}
+            onChange={(e) => {
+              setNewDepartment(e.target.value);
+              setAddWarning("");
+            }}
             ref={inputRef}
           />
           <div className="modal-buttons">
@@ -156,6 +187,37 @@ const Department = () => {
             </button>
             <button className="update-button" onClick={handleAdd}>
               Add
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  };
+
+  const DeleteModal = () => {
+    const closeModal = () => {
+      setDeleteModalOpen(false);
+      window.location.reload();
+    };
+
+    const handleDelete = async () => {
+      console.log(
+        `handleDelete called with department_id: ${editDepartment.department_id}`
+      );
+      deleteDepartment(editDepartment.department_id);
+      closeModal();
+    };
+
+    return (
+      <div className={`edit-modal ${deleteModalOpen ? "open" : ""}`}>
+        <div className="modal-content">
+          <h2>Are you sure you want to delete this department?</h2>
+          <div className="modal-buttons">
+            <button className="cancel-button" onClick={closeModal}>
+              No
+            </button>
+            <button className="update-button" onClick={handleDelete}>
+              Yes
             </button>
           </div>
         </div>
@@ -209,7 +271,10 @@ const Department = () => {
                   )}
                   <button
                     className="delete-button"
-                    // onClick={() => deleteDepartment(department.department_id)}
+                    onClick={() => {
+                      setEditDepartment(department);
+                      openDeleteModal();
+                    }}
                   >
                     Delete
                   </button>
@@ -220,6 +285,7 @@ const Department = () => {
         </table>
       </div>
       <EditModal />
+      <DeleteModal />
     </div>
   );
 };
