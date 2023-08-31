@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
 import "../css/DepartmentStyle.css";
 import axios from "axios";
+import Sidebar from "../component/sidebar";
+// Sidebar
 
 function usePrevious(value) {
   const ref = useRef();
@@ -226,6 +228,7 @@ const Department = () => {
   };
 
   return (
+    <Sidebar>
     <div>
       <h1>Department List</h1>
       <div className="AddButton">
@@ -287,6 +290,7 @@ const Department = () => {
       <EditModal />
       <DeleteModal />
     </div>
+    </Sidebar>
   );
 };
 

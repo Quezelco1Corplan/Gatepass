@@ -49,3 +49,11 @@ main{
 .icon, .link-text{
     font-size: 20px;
 }
+
+.sidebar-content {
+    height: calc(100% - 60px); /* Adjust the height as needed */
+  }
+  
+  .sidebar-scroll {
+    overflow-y: auto;
+  }

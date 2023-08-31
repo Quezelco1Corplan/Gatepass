@@ -2,6 +2,9 @@ import axios from "axios";
 import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
+import Sidebar from "./sidebar";
+// import UserManagement from "../pages/UserManagement";
+// UserManagement
 
 const Update = () => {
   const [user, setUser] = useState({
@@ -41,7 +44,7 @@ const Update = () => {
     e.preventDefault();
     try {
       await axios.put("http://localhost:3001/users/" + userID, user);
-      navigate("/");
+      navigate("/UserManagement");
     } catch (err) {
       console.log(err);
     }
@@ -49,6 +52,7 @@ const Update = () => {
 
   console.log(user);
   return (
+    <Sidebar>
     <div>
       <h1>Update User Information</h1>
       <div className="form">
@@ -84,6 +88,7 @@ const Update = () => {
         Update
       </button>
     </div>
+    </Sidebar>
   );
 };
 

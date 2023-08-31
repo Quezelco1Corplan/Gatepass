@@ -1,10 +1,13 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-// import Login from './pages/Login';
-// import Signup from './pages/Signup';
-// import Dashboard from './pages/Dashboard';
-// // AuthProvider
-// import Home from './pages/Home';
+import Login from './pages/Login';
+import Signup from './pages/Signup';
+import Dashboard from './pages/Dashboard';
+// AuthProvider
+import Home from './pages/Home';
+import UserManagement from "./pages/UserManagement";
+import Update from "./component/Update";
+import Position from "./pages/Position";
 import Department from "./pages/Department";
 
 const App = () => {
@@ -12,11 +15,14 @@ const App = () => {
     <div>
       <Router>
         <Routes>
-          {/* <Route path='/' element={<Login />}/>
+          <Route path='/' element={<Login />}/>
           <Route path='/Signup' element={<Signup />}/>
           <Route path='/Home' element={<Home />}/> 
-          <Route path='/Dashboard' element={<Dashboard />}/>  */}
-          <Route path="/" element={<Department />} />
+          <Route path='/Dashboard' element={<Dashboard />}/> 
+          <Route path="/UserManagement" element={<UserManagement />} />
+          <Route path="/update/:id" element={<Update />} />
+          <Route path="/Position" element={<Position />} />
+          <Route path="/Department" element={<Department />} />
         </Routes>
       </Router>
     </div>

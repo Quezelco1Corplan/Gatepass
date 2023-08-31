@@ -10,6 +10,7 @@ const {
   updateDepartment,
   deleteDepartment,
 } = require("./components/Department.jsx");
+const { position, getPosition, updatePosition, deletePosition } = require("./components/Position.jsx");
 
 const saltRounds = 10;
 
@@ -105,6 +106,14 @@ app.get("/departments", getDepartments);
 app.put("/departments/:id", updateDepartment);
 
 app.delete("/departments/:id", deleteDepartment);
+
+app.post("/position", position);
+
+app.get("/position", getPosition),
+
+app.put("/position/:id", updatePosition),
+
+app.delete("/position/:id", deletePosition),
 
 app.listen(3001, () => {
   console.log("running server");
