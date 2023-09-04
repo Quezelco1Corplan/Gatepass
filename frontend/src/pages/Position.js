@@ -306,13 +306,6 @@ const Position = () => {
             {positions.map((position) => (
               <tr key={position.position_id}>
                 <td>{position.position_id}</td>
-                {/* <td>
-                  {position.position_id === editPosition.position_id ? (
-                    <label>{editPosition.position_name}</label>
-                  ) : (
-                    position.position_name
-                  )}
-                </td> */}
                 <td>{position.position_name}</td>
                 <td>
                   {position.position_id === editPosition.position_id ? (

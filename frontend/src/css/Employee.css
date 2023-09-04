@@ -1,0 +1,139 @@
+body {
+  font-family: Arial, sans-serif;
+}
+
+h1 {
+  text-align: center;
+  color: #333;
+}
+
+button {
+  margin: 10px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  background-color: #007bff;
+  color: white;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th,
+td {
+  padding: 15px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+.modal-content {
+  background-color: #fefefe;
+  margin: 2% auto; /* Adjust the vertical margin */
+  padding: 20px;
+  border: 1px solid #888;
+  width: 30%; /* Reduce the width */
+  max-width: 400px; /* Set a max-width */
+  border-radius: 10px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  position: relative; /* Add this to position the modal */
+  top: 50%; /* Center the modal vertically */
+  transform: translateY(-50%); /* Center the modal vertically */
+  overflow: auto; /* Add scroll if content is larger than modal */
+  max-height: 90vh; /* Set a max-height */
+}
+.open {
+  display: block;
+}
+
+.add-modal.open,
+.edit-modal.open,
+.delete-modal.open {
+  display: block;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.add-modal,
+.edit-modal,
+.delete-modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgb(0, 0, 0);
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.modal-buttons {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.cancel-button {
+  background-color: #dc3545;
+}
+
+.cancel-button:hover {
+  background-color: #c82333;
+}
+
+.add-button,
+.update-button,
+.delete-button {
+  background-color: #28a745;
+}
+
+.add-button:hover,
+.update-button:hover,
+.delete-button:hover {
+  background-color: #218838;
+}
+
+.form-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+}
+
+.form-group {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px; /* Reduce the margin */
+}
+
+.form-group label {
+  margin-bottom: 5px;
+}
+
+.form-group input,
+.form-group select {
+  width: 100%;
+  padding: 5px; /* Reduce the padding */
+  border-radius: 5px;
+  border: 1px solid #ddd;
+}
+
+.modal-buttons {
+  display: flex;
+  justify-content: flex-end;
+  width: 100%; /* Ensure buttons take full width of form */
+}
