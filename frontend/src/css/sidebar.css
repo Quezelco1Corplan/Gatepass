@@ -3,6 +3,9 @@
     padding:0;
     text-decoration: none;
 }
+body {
+    background-color: rgb(223, 223, 223);
+}
 .sidebar-container{
     display:flex;
 }
@@ -11,7 +14,7 @@ main{
     padding: 20px;
 }
 .sidebar{
-    background: #000;
+    background: #756cf5;
     color: #fff;
     height: 100vh;
     width: 200px;
@@ -20,8 +23,15 @@ main{
 .top-section{
     display: flex;
     align-items:center;
-    padding:20px 15px;
+    padding:30px 15px;
 }
+.top-section h1{ 
+    font-size: 30px;
+    padding-left: 10px;
+    margin-top: 5px;
+    color: #ffffffff;
+}
+
 .logo{
     font-size: 30px;
 }
@@ -51,7 +61,7 @@ main{
 }
 
 .sidebar-content {
-    height: calc(100% - 60px); /* Adjust the height as needed */
+    height: calc(100% - 60px);
   }
   
   .sidebar-scroll {

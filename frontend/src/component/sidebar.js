@@ -1,9 +1,7 @@
 import React, { useState } from "react";
-// import { NavLink } from 'react-router-dom'
 import "../css/sidebar.css";
 import { Sidebardata } from "./Sidebardata";
 import Submenu from "./Submenu";
-
 import {
   // RxDashboard,
   RxHamburgerMenu,
@@ -16,12 +14,12 @@ function Sidebar({ children }) {
 
   return (
     <div className="sidebar-container">
-      <div style={{ width: isOpen ? "280px" : "50px" }} className="sidebar">
+      <div style={{ width: isOpen ? "280px" : "40px" }} className="sidebar">
         <div className="top-section">
           <h1 style={{ display: isOpen ? "block" : "none" }} className="logo">
             Qeuzelco1
           </h1>
-          <div style={{ marginLeft: isOpen ? "70px" : "0px" }} className="bars">
+          <div style={{ marginLeft: isOpen ? "50px" : "-8px" }} className="bars">
             <RxHamburgerMenu onClick={toggle} />
           </div>
         </div>

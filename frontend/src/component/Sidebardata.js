@@ -23,7 +23,7 @@ export const Sidebardata = [
     },
     {
         title: 'Reports',
-        path: '/Home',
+        // path: '/Home',
         icon: <TablerIcons.TbReportAnalytics/>,
         iconClosed: <RiIcons.RiArrowDownSFill/>,
         iconOpened: <RiIcons.RiArrowUpSFill/>,
@@ -42,7 +42,7 @@ export const Sidebardata = [
     },
     {
         title: 'Forms',
-        path: '/Home',
+        // path: '/Home',
         icon: <SimpleIcons.SiFormstack/>,
         iconClosed: <RiIcons.RiArrowDownSFill/>,
         iconOpened: <RiIcons.RiArrowUpSFill/>,
@@ -66,7 +66,7 @@ export const Sidebardata = [
     },
     {
         title: 'Maintenance',
-        path: '/Home',
+        // path: '/Home',
         icon: <SimpleIcons.SiFormstack/>,
         iconClosed: <RiIcons.RiArrowDownSFill/>,
         iconOpened: <RiIcons.RiArrowUpSFill/>,
@@ -83,7 +83,7 @@ export const Sidebardata = [
             },
             {
                 title: 'Employees',
-                path: '/Forms/GPF',
+                path: '/Employee',
                 icon: <GiOpenGate/>,
             },
             {

@@ -3,9 +3,11 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import '../css/UserManagement.css';
 import Sidebar from "../component/sidebar";
-// Sidebar
+import { FaTrash } from "react-icons/fa";
+
 
 const UserManagement = () => {
+  
   const [users, setUsers] = useState([]);
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
   const [userIdToDelete, setUserIdToDelete] = useState(null);
@@ -31,11 +33,12 @@ const UserManagement = () => {
   const Delete = async (id) => {
     try {
       await axios.delete("http://localhost:3001/users/" + id);
-      window.location.reload();
+      setUsers(users.filter(user => user.id !== id));
     } catch (err) {
       console.log(err);
     }
   };
+  
 
   const DeleteModal = () => {
     const closeModal = () => {
@@ -51,7 +54,7 @@ const UserManagement = () => {
     
       <div className={`edit-modal ${deleteModalOpen ? "open" : ""}`}>
         <div className="modal-content">
-          <h2>Are you sure you want to delete this department?</h2>
+          <h2>Are you sure you want to delete this? </h2>
           <div className="modal-buttons">
             <button className="cancel-button" onClick={closeModal}>
               No
@@ -68,50 +71,95 @@ const UserManagement = () => {
   // Render the user table
   const renderUserTable = () => {
     return (
-      <table className="table">
-        <thead>
-          <tr>
-            <th className="th-td">First Name</th>
-            <th className="th-td">Last Name</th>
-            <th className="th-td">Contact</th>
-            <th className="th-td">Email</th>
-            <th className="th-td">ACTION</th>
-          </tr>
-        </thead>
-        <tbody>
-          {users.map((user) => (
-            <tr key={user.id}>
-              <td className="th-td">{user.firstname}</td>
-              <td className="th-td">{user.lastname}</td>
-              <td className="th-td">{user.contact}</td>
-              <td className="th-td">{user.email}</td>
-              <td className="th-td">
+      <form>
+        {users.map((user) => (
+          <div>
+            <div className="um-form-wrapper" key={user.id}>
+              
+              <div className="um-info">
+                <h1>User Management</h1>
+              </div>
+
+              <div className="um-info">
+                
+                <div className="um-firstname">
+                  <label htmlFor={`firstname-${user.id}`}>First Name:</label>
+                  <input
+                    type="text"
+                    id={`firstname-${user.id}`}
+                    name={`firstname-${user.id}`}
+                    value={user.firstname}
+                    readOnly
+                  />
+                </div>
+
+                <div className="um-lastname">
+                  <label htmlFor={`lastname-${user.id}`}>Last Name:</label>
+                  <input
+                   type="text"
+                    id={`lastname-${user.id}`}
+                    name={`lastname-${user.id}`}
+                    value={user.lastname}
+                    readOnly
+                  />
+                </div>
+                
+              </div>
+              
+              <label htmlFor={`contact-${user.id}`}>Contact:</label>
+              
+              <input
+                type="text"
+                id={`contact-${user.id}`}
+                name={`contact-${user.id}`}
+                value={user.contact}
+                readOnly
+              />
+
+              <label htmlFor={`email-${user.id}`}>Email:</label>
+              <input
+              type="text"
+              id={`email-${user.id}`}
+              name={`email-${user.id}`}
+              value={user.email}
+              readOnly
+              />
+
+              <div className="um-info">
+                <div className="update"> 
                 <button className="button update">
-                  <Link to={`/update/${user.id}`}>Update</Link>
+                  <Link to={`/Update/${user.id}`}>Update</Link>
                 </button>
+                </div>
+                <div className="delete"> 
                 <button
-                  className="button delete"
-                  onClick={() => {
-                    openDeleteModal(user.id);
-                  }}
-                >
-                  Delete
+                  className="button-delete"
+                  onClick={(event) => {
+                  event.preventDefault(); // Prevent fo rm submission and page refresh
+                  openDeleteModal(user.id);
+                  }}>
+                  <FaTrash />
                 </button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-        <DeleteModal />
-      </table>
+                </div>
+              </div>
+
+            </div>  
+            </div> 
+          ))}    
+        <DeleteModal /> 
+      </form>
     );
   };
 
   return (
     <Sidebar>
-    <div>
-      <h2>User Management</h2>
+     
+    <div className="um-wrapper">
+      
       {renderUserTable()}
+
     </div>
+    
     </Sidebar>
   );
 };

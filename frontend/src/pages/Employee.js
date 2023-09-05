@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import "../css/Employee.css";
+import Sidebar from "../component/sidebar";
 
 function usePrevious(value) {
   const ref = useRef();
@@ -31,6 +32,11 @@ const Employee = () => {
   useEffect(() => {
     fetchEmployees(true);
   }, []);
+
+  const formatDate = (dateString) => {
+    const options = { year: "numeric", month: "2-digit", day: "2-digit" };
+    return new Date(dateString).toLocaleDateString(undefined, options);
+  };
 
   useEffect(() => {
     const fetchPositions = async () => {
@@ -101,13 +107,20 @@ const Employee = () => {
     }
   };
 
-  const updateEmployee = async (id, updatedEmployee) => {
+  const updateEmployee = async (id, empName, dob, doe, pos, dept, id_num) => {
     return fetch(`http://localhost:3001/employee/${id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(updatedEmployee),
+      body: JSON.stringify({
+        empName: empName,
+        dob: dob,
+        doe: doe,
+        pos: pos,
+        dept: dept,
+        id_num: id_num,
+      }),
     })
       .then((response) => response.json())
       .then((data) => {
@@ -132,6 +145,7 @@ const Employee = () => {
   // AddModal component
   // AddModal component
   const AddModal = () => {
+    const inputRef = useRef(null);
     const prevAddModalOpen = usePrevious(addModalOpen);
 
     const closeModal = () => {
@@ -149,6 +163,12 @@ const Employee = () => {
         [event.target.name]: event.target.value,
       });
     };
+
+    useEffect(() => {
+      if (prevAddModalOpen !== addModalOpen && addModalOpen) {
+        inputRef.current.focus();
+      }
+    }, [prevAddModalOpen]);
 
     return (
       <div className={`add-modal ${addModalOpen ? "open" : ""}`}>
@@ -177,6 +197,7 @@ const Employee = () => {
                   placeholder="Name"
                   value={newEmployee.empName}
                   onChange={handleInputChange}
+                  ref={inputRef}
                 />
               </label>
             </div>
@@ -215,6 +236,7 @@ const Employee = () => {
                   value={newEmployee.pos}
                   onChange={handleInputChange}
                 >
+                  <option value="">Select Position</option>
                   {Array.isArray(positions) &&
                     positions.map((position) => (
                       <option
@@ -236,6 +258,7 @@ const Employee = () => {
                   value={newEmployee.dept}
                   onChange={handleInputChange}
                 >
+                  <option value="">Select Department</option>
                   {Array.isArray(departments) &&
                     departments.map((department) => (
                       <option
@@ -264,12 +287,24 @@ const Employee = () => {
   };
   // EditModal component
   const EditModal = () => {
+    const inputRef = useRef(null);
+    const prevEditModalOpen = usePrevious(editModalOpen);
+
     const closeModal = () => {
       setEditModalOpen(false);
+      window.location.reload();
     };
 
     const handleUpdate = async () => {
-      updateEmployee(editEmployee.id, editEmployeeData);
+      updateEmployee(
+        editEmployeeData.employee_id,
+        editEmployeeData.empName,
+        editEmployeeData.dob,
+        editEmployeeData.doe,
+        editEmployeeData.pos,
+        editEmployeeData.dept,
+        editEmployeeData.id_num
+      );
       closeModal();
     };
 
@@ -279,6 +314,12 @@ const Employee = () => {
         [event.target.name]: event.target.value,
       });
     };
+
+    useEffect(() => {
+      if (prevEditModalOpen !== editModalOpen && editModalOpen) {
+        inputRef.current.focus();
+      }
+    }, [prevEditModalOpen]);
 
     return (
       <div className={`edit-modal ${editModalOpen ? "open" : ""}`}>
@@ -307,6 +348,7 @@ const Employee = () => {
                   placeholder="Name"
                   value={editEmployeeData.empName}
                   onChange={handleInputChange}
+                  ref={inputRef}
                 />
               </label>
             </div>
@@ -424,6 +466,7 @@ const Employee = () => {
 
   return (
     <div>
+      <Sidebar>
       <h1>Employee List</h1>
       <button onClick={openAddModal}>Add Employee</button>
       <AddModal />
@@ -447,8 +490,8 @@ const Employee = () => {
               <tr key={index}>
                 <td>{employee.id_num}</td>
                 <td>{employee.empName}</td>
-                <td>{employee.dob}</td>
-                <td>{employee.doe}</td>
+                <td>{formatDate(employee.dob)}</td>
+                <td>{formatDate(employee.doe)}</td>
                 <td>{employee.pos}</td>
                 <td>{employee.dept}</td>
                 <td>
@@ -461,6 +504,7 @@ const Employee = () => {
             ))}
         </tbody>
       </table>
+      </Sidebar>  
     </div>
   );
 };
