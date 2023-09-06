@@ -1,15 +1,12 @@
 
-
 .um-wrapper {
   display:flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   height: 95vh;
-  /* padding: none; */
+  
 }
-
-
 
 .um-form-wrapper {
   display: flex;
@@ -19,7 +16,6 @@
   padding: 30px 26px;
   border-radius: 5px;
   box-shadow:  2px 4px 4px #cac6c6;
-  /* align-items: center; */
 }
 
 .um-form-wrapper .um-info { 
@@ -49,12 +45,14 @@
   background: #fff;
   width: 300px;
   border: solid 2px gray;
-  margin-bottom: 10px;
-  /* box-shadow: 2px 4px 4px #ddd9d9, -2px 4px 4px #e2dddd; */
+  margin-bottom: 20px;
+  box-shadow:  2px 4px 4px #cac6c6;
+
 }
 
 .um-form-wrapper label {
-  margin-bottom: 10px;
+  margin-bottom: 0px;
+  font-size: 20px;
 } 
 .um-form-wrapper  button {
   margin: 4px;
@@ -67,31 +65,31 @@
 
 .um-form-wrapper .update button{
   border: solid 2px gray;
-  border-radius: none;
   width: 550px;
   font-size: 20px;
   font-weight: bold;
-  box-shadow: 1px 1px 5px 0px gray;
-  
+  box-shadow:  2px 4px 4px #cac6c6;
 }
 
 .um-form-wrapper .delete button{
   font-size: 30px;
-  padding: none;
-
+  padding: 10px 10px;
+  margin-left: 15px;
+  border: none;
+  cursor: pointer;
+  border-radius: 50%;
+  border: solid 2px gray;
+  box-shadow:  2px 4px 4px #cac6c6;
 }
 
 
 
-.edit-modal.open {
-  /* Add your open modal styles here */
+.um-edit-modal.open {
   opacity: 1  ;
   visibility: visible;
-  /* box-shadow: 2px 0px 4px 0px #353131, -2px 0px 4px 0px #0f0b0b; */
 }
 
-.edit-modal {
-  /* Add your default modal styles here */
+.um-edit-modal {
   position: fixed;
   top: 0;
   left: 0;
@@ -104,45 +102,35 @@
   opacity: 0;
   visibility: hidden;
   transition: opacity 0.3s ease, visibility 0.3s ease;
-  box-shadow: 2px 0px 4px 0px #ddd9d9, -2px 0px 4px 0px #e2dddd;
 }
 
-.modal-content {
-  /* Add your modal content styles here */
+/*  */
+.um-modal-content {
   background-color: #fff;
   padding: 20px;
   border-radius: 4px;
   max-width: 400px;
 }
 
-.cancel-button,
-.update-button {
+.um-cancel-button,
+.um-update-button {
   padding: 8px 20px;
   margin-left: 30px;
   border: none;
   border-radius: 4px;
-  cursor: pointer;
+  /* cursor: pointer; */
 }
 
-.cancel-button {
-  /* Add your cancel button styles here */
+.um-cancel-button {
+
   background-color: red;
   color: #fff;
   margin-left: 230px;
 }
 
-.update-button {
-  /* Add your update button styles here */
+.um-update-button {
   background-color: #4caf50;
   color: #fff;
 }
 
-.update, .delete {
-  background-color: transparent !important;
-  color: gray !important;
-}
 
-.update:hover, .delete:hover {
-  background-color: transparent !important;
-  color: gray!important;
-}

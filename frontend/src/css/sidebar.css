@@ -3,28 +3,52 @@
     padding:0;
     text-decoration: none;
 }
+
 body {
     background-color: rgb(223, 223, 223);
+    overflow-y: hidden;
 }
+
 .sidebar-container{
     display:flex;
 }
+
 main{
+    flex: 1;
     width: 100%;
     padding: 20px;
 }
+sidebar-content {
+    padding: 10px;
+  }
+
 .sidebar{
     background: #756cf5;
     color: #fff;
     height: 100vh;
     width: 200px;
-    transition: all 0.5s;
+    transition: width o.5s ease;
+    overflow-y: scroll;
 }
+
+.sidebar-closed {
+    width: 50px;
+  }
+  
+  .sidebar-open {
+    width: 350px; 
+  }
+
 .top-section{
     display: flex;
     align-items:center;
     padding:30px 15px;
+    background-color: #756cf5;
+    position: sticky;
+    top: 0;
+    z-index: 1;
 }
+
 .top-section h1{ 
     font-size: 30px;
     padding-left: 10px;
@@ -34,36 +58,29 @@ main{
 
 .logo{
     font-size: 30px;
+    font-size: 20px;
+  font-weight: bold;
+  margin-right: 10px;
 }
+
 .bars{
+   
     display: flex;
     font-size: 25px;
     margin-left: 50px;
-}
-.link{
-    display: flex;
-    color: #fff;
-    padding: 10px 15px;
-    gap: 15px;
-    transition: all 0.5s;
-}
-.link:hover{
-    background:lightskyblue;
-    color: #000;
-    transition: all 0.5s;
-}
-.active{
-    background: lightskyblue;
-    color: #000;
-}
-.icon, .link-text{
-    font-size: 20px;
+    cursor: pointer;
 }
 
-.sidebar-content {
-    height: calc(100% - 60px);
+.sidebar::-webkit-scrollbar {
+    width: 8px; 
   }
   
-  .sidebar-scroll {
-    overflow-y: auto;
+  .sidebar::-webkit-scrollbar-track {
+    background: rgb(223, 223, 223) 
   }
+  
+  .sidebar::-webkit-scrollbar-thumb {
+    background: #756cf5; 
+    border-radius: 10px;
+  }
+  

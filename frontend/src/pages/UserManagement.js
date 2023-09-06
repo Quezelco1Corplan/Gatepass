@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import '../css/UserManagement.css';
 import Sidebar from "../component/sidebar";
 import { FaTrash } from "react-icons/fa";
@@ -11,6 +11,7 @@ const UserManagement = () => {
   const [users, setUsers] = useState([]);
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
   const [userIdToDelete, setUserIdToDelete] = useState(null);
+  const navigate = useNavigate();
 
   // Fetch users from the server
   useEffect(() => {
@@ -52,14 +53,14 @@ const UserManagement = () => {
 
     return (
     
-      <div className={`edit-modal ${deleteModalOpen ? "open" : ""}`}>
-        <div className="modal-content">
+      <div className={`um-edit-modal ${deleteModalOpen ? "open" : ""}`}>
+        <div className="um-modal-content">
           <h2>Are you sure you want to delete this? </h2>
-          <div className="modal-buttons">
-            <button className="cancel-button" onClick={closeModal}>
+          <div className="um-modal-buttons">
+            <button className="um-cancel-button" onClick={closeModal}>
               No
             </button>
-            <button className="update-button" onClick={handleDelete}>
+            <button className="um-update-button" onClick={handleDelete}>
               Yes
             </button>
           </div>
@@ -127,15 +128,20 @@ const UserManagement = () => {
 
               <div className="um-info">
                 <div className="update"> 
-                <button className="button update">
-                  <Link to={`/Update/${user.id}`}>Update</Link>
-                </button>
+                <button
+                className="button update"
+                onClick={() => {
+                  navigate(`/Update/${user.id}`);
+                }}
+              >
+                Update
+              </button>
                 </div>
                 <div className="delete"> 
                 <button
                   className="button-delete"
                   onClick={(event) => {
-                  event.preventDefault(); // Prevent fo rm submission and page refresh
+                  event.preventDefault();
                   openDeleteModal(user.id);
                   }}>
                   <FaTrash />

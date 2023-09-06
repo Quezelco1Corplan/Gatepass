@@ -1,4 +1,4 @@
-body {
+/* body {
   font-family: Arial, sans-serif;
 }
 
@@ -35,18 +35,18 @@ td {
 
 .modal-content {
   background-color: #fefefe;
-  margin: 2% auto; /* Adjust the vertical margin */
+  margin: 2% auto; 
   padding: 20px;
   border: 1px solid #888;
-  width: 30%; /* Reduce the width */
-  max-width: 400px; /* Set a max-width */
+  width: 30%; 
+  max-width: 400px; 
   border-radius: 10px;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-  position: relative; /* Add this to position the modal */
-  top: 50%; /* Center the modal vertically */
-  transform: translateY(-50%); /* Center the modal vertically */
-  overflow: auto; /* Add scroll if content is larger than modal */
-  max-height: 90vh; /* Set a max-height */
+  position: relative; 
+  top: 50%; 
+  transform: translateY(-50%); 
+  overflow: auto;
+  max-height: 90vh; 
 }
 .open {
   display: block;
@@ -117,7 +117,7 @@ td {
   width: 100%;
   display: flex;
   flex-direction: column;
-  margin-bottom: 10px; /* Reduce the margin */
+  margin-bottom: 10px; 
 }
 
 .form-group label {
@@ -127,7 +127,7 @@ td {
 .form-group input,
 .form-group select {
   width: 100%;
-  padding: 5px; /* Reduce the padding */
+  padding: 5px; 
   border-radius: 5px;
   border: 1px solid #ddd;
 }
@@ -135,5 +135,5 @@ td {
 .modal-buttons {
   display: flex;
   justify-content: flex-end;
-  width: 100%; /* Ensure buttons take full width of form */
-}
+  width: 100%; 
+} */

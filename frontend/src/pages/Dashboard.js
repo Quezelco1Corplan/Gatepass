@@ -15,7 +15,7 @@ function Dashboard() {
   }, [isLoggedIn, navigate]);
 
   const logout = () => {
-    setIsLoggedIn(false); // Set authentication state
+    setIsLoggedIn(false);
     navigate("/");
   };
 
