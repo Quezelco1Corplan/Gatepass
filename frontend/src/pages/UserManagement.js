@@ -74,7 +74,7 @@ const UserManagement = () => {
     return (
       <form>
         {users.map((user) => (
-          <div>
+          <div key={user.id}>
             <div className="um-form-wrapper" key={user.id}>
               
               <div className="um-info">

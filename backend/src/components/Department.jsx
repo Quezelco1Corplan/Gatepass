@@ -1,12 +1,4 @@
-const mysql = require("mysql");
-
-const db = mysql.createConnection({
-  user: "root",
-  host: "localhost",
-  password: "",
-  database: "registration",
-});
-
+const { db } = require("../sql/Connection.jsx");
 const department = (req, res) => {
   const { id } = req.params;
   const { department } = req.body;
@@ -61,5 +53,5 @@ module.exports = {
   department,
   getDepartments,
   updateDepartment,
-  deleteDepartment
+  deleteDepartment,
 };

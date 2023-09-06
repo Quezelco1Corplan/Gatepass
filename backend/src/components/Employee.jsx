@@ -1,11 +1,4 @@
-const mysql = require("mysql");
-
-const db = mysql.createConnection({
-  host: "localhost",
-  user: "root",
-  password: "",
-  database: "registration",
-});
+const { db } = require("../sql/Connection.jsx");
 
 const employee = (req, res) => {
   const { empName, dob, doe, pos, dept, id_num } = req.body;
