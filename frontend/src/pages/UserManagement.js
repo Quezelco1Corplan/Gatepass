@@ -1,10 +1,9 @@
+import { useNavigate } from "react-router-dom";
+import { FaTrash } from "react-icons/fa";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
 import '../css/UserManagement.css';
 import Sidebar from "../component/sidebar";
-import { FaTrash } from "react-icons/fa";
-
 
 const UserManagement = () => {
   
@@ -13,23 +12,23 @@ const UserManagement = () => {
   const [userIdToDelete, setUserIdToDelete] = useState(null);
   const navigate = useNavigate();
 
-  // Fetch users from the server
   useEffect(() => {
+    
     const fetchAllUsers = async () => {
       try {
         const res = await axios.get("http://localhost:3001/users");
         setUsers(res.data);
-      } catch (err) {
-        console.log(err);
-      }
-    };
-    fetchAllUsers();
-  }, []);
+        } catch (err) {
+          console.log(err);
+        }
+      };
+      fetchAllUsers();
+    }, []);
 
-  const openDeleteModal = (id) => {
-    setUserIdToDelete(id);
-    setDeleteModalOpen(true);
-  };
+    const openDeleteModal = (id) => {
+      setUserIdToDelete(id);
+      setDeleteModalOpen(true);
+    };
 
   const Delete = async (id) => {
     try {
@@ -39,7 +38,6 @@ const UserManagement = () => {
       console.log(err);
     }
   };
-  
 
   const DeleteModal = () => {
     const closeModal = () => {
@@ -52,18 +50,33 @@ const UserManagement = () => {
     };
 
     return (
-    
-      <div className={`um-edit-modal ${deleteModalOpen ? "open" : ""}`}>
+
+
+       
+  <div className={`um-edit-modal ${deleteModalOpen ? "open" : ""}`}>
         <div className="um-modal-content">
-          <h2>Are you sure you want to delete this? </h2>
-          <div className="um-modal-buttons">
-            <button className="um-cancel-button" onClick={closeModal}>
-              No
-            </button>
-            <button className="um-update-button" onClick={handleDelete}>
-              Yes
-            </button>
+          <div className="um-text-container">
+            <div className="um-text-h2">
+              <h2>Are you sure you want to delete this account? </h2>
+            </div>
+            <div className="um-text-p">
+              <p>Note: this will not be recovered if yes!</p>
+            </div>
           </div>
+         
+          <div className="um-modal-buttons">
+            <div className="um-button">
+              <button className="um-update-button" onClick={handleDelete}>
+                YES
+              </button>
+            </div>
+            <div className="um-button">
+              <button className="um-cancel-button" onClick={closeModal}>
+                CANCEL
+              </button>
+            </div>
+          </div>
+
         </div>
       </div>
     );
@@ -72,73 +85,43 @@ const UserManagement = () => {
   // Render the user table
   const renderUserTable = () => {
     return (
-      <form>
-        {users.map((user) => (
-          <div key={user.id}>
-            <div className="um-form-wrapper" key={user.id}>
-              
-              <div className="um-info">
-                <h1>User Management</h1>
-              </div>
 
+      <table className="table">
+        <thead>
+          <tr>
+            <th className="th-td">No.</th>
+            <th className="th-td">First Name</th>
+            <th className="th-td">Last Name</th>
+            <th className="th-td">Contact</th >
+            <th className="th-td">Email</th>
+          </tr>
+        </thead>
+        <tbody>
+          {users.map((user, index) => (
+            <tr key={user.id}>
+              <td className="th-td">{index + 1}</td>
+              <td className="th-td">{user.firstname}</td>
+              <td className="th-td">{user.lastname}</td>
+              <td className="th-td">{user.contact}</td>
+              
+              <td className="th-td">
               <div className="um-info">
-                
-                <div className="um-firstname">
-                  <label htmlFor={`firstname-${user.id}`}>First Name:</label>
-                  <input
-                    type="text"
-                    id={`firstname-${user.id}`}
-                    name={`firstname-${user.id}`}
-                    value={user.firstname}
-                    readOnly
-                  />
+                <div className="title-email">
+                  {user.email}
                 </div>
-
-                <div className="um-lastname">
-                  <label htmlFor={`lastname-${user.id}`}>Last Name:</label>
-                  <input
-                   type="text"
-                    id={`lastname-${user.id}`}
-                    name={`lastname-${user.id}`}
-                    value={user.lastname}
-                    readOnly
-                  />
-                </div>
-                
-              </div>
               
-              <label htmlFor={`contact-${user.id}`}>Contact:</label>
-              
-              <input
-                type="text"
-                id={`contact-${user.id}`}
-                name={`contact-${user.id}`}
-                value={user.contact}
-                readOnly
-              />
-
-              <label htmlFor={`email-${user.id}`}>Email:</label>
-              <input
-              type="text"
-              id={`email-${user.id}`}
-              name={`email-${user.id}`}
-              value={user.email}
-              readOnly
-              />
-
-              <div className="um-info">
                 <div className="update"> 
-                <button
-                className="button update"
-                onClick={() => {
-                  navigate(`/Update/${user.id}`);
-                }}
-              >
-                Update
-              </button>
-                </div>
+                 <button
+                  className="button update"
+                  onClick={() => {
+                    navigate(`/Update/${user.id}`);
+                  }}>
+                  Update
+               </button>
+              </div>
+
                 <div className="delete"> 
-                <button
+               <button
                   className="button-delete"
                   onClick={(event) => {
                   event.preventDefault();
@@ -149,23 +132,28 @@ const UserManagement = () => {
                 </div>
               </div>
 
-            </div>  
-            </div> 
-          ))}    
-        <DeleteModal /> 
-      </form>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+        
+      </table>
     );
   };
 
   return (
     <Sidebar>
-     
-    <div className="um-wrapper">
-      
-      {renderUserTable()}
-
+    <div className="um-wrapper">    
+      <div className="um-containter">
+        <div className="um-component">
+          <h2>User Management</h2>
+        </div>
+        <div className="um-component">
+          {renderUserTable()}
+        </div>
+      </div>
     </div>
-    
+    <DeleteModal />
     </Sidebar>
   );
 };

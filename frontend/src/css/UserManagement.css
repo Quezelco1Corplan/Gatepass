@@ -1,86 +1,102 @@
-
-.um-wrapper {
-  display:flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  height: 95vh;
-  
+body {
+  user-select: none;
 }
 
-.um-form-wrapper {
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  box-shadow: 2px 2px 4px #c4c4c4;
+}
+thead {
+  background-color: #3c6c91;
+  color: #ffffff  ;
+}
+tbody {
+  /* background-color: #3c6c91; */
+  color: #838383 ;
+}
+
+.th-td {
+  padding: 10px;
+  text-align: left;
+  border: solid 1px #d4d4d4;
+  width: 300px;
+}
+
+.th-td-1 {
   display: flex;
-  flex-direction: column;
-  justify-content: center;
-  background-color: #fff;
-  padding: 30px 26px;
-  border-radius: 5px;
-  box-shadow:  2px 4px 4px #cac6c6;
-}
-
-.um-form-wrapper .um-info { 
-  display:flex;
   flex-direction: row;
 }
 
-.um-form-wrapper .um-info h1{
-  margin-top: 10px;
-  padding-bottom: 50px;
+
+/* Style for the update button */
+.button.update {
+  background: transparent; 
+  border: solid 1px #d4d4d4;
+  color: #8e8e8e;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 10px;
+  margin: 4px 2px;
+  cursor: pointer;
 }
 
-.um-form-wrapper .um-info .um-firstname {
-  display:flex;
-  flex-direction: column;
+/* Style for the delete button */
+.button-delete {
+  background-color: #f44336; 
+  border: #8e8e8e;
+  color: #ffffff;
+  padding: 10px 15px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 10px;
+  margin: 4px 2px;
+  cursor: pointer;
+}
+
+
+/* .um-info {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+} */
+
+/* .update, .delete {
+  flex: 1;
+} */
+/* 
+.update {
+  padding-left: 50px;
+} */
+
+.um-wrapper {
+ display: grid;
+ align-items: center;
+ justify-content: center;
+ /* height: 40vh; */
+ /* background: white; */
+}
+
+.um-wrapper .um-containter h2 {
+  padding: 20px 10px;
+  border: solid 1px #d4d4d4;
+  color: gray;
+  box-shadow: 2px 2px 3px #c4c4c4;
+}
+.um-wrapper .um-containter {
+  padding: 20px 30px;
+   background: white;
+   margin-top: 5px;
+   
   
 }
-
-.um-form-wrapper .um-info .um-lastname {
-  display:flex;
-  flex-direction: column;
-  margin-left: 8px;
-}
-
-.um-form-wrapper input {
-  padding: 10px 9px;
-  background: #fff;
-  width: 300px;
-  border: solid 2px gray;
-  margin-bottom: 20px;
-  box-shadow:  2px 4px 4px #cac6c6;
+.um-component{
+  margin: 10px;
 
 }
-
-.um-form-wrapper label {
-  margin-bottom: 0px;
-} 
-.um-form-wrapper  button {
-  margin: 4px;
-  height: 50px;
-  margin-top: 50px;
-  margin-bottom: 20px;
-  background: transparent;
-  color: gray;
-}
-
-.um-form-wrapper .update button{
-  border: solid 2px gray;
-  width: 550px;
-  font-size: 20px;
-  font-weight: bold;
-  box-shadow:  2px 4px 4px #cac6c6;
-}
-
-.um-form-wrapper .delete button{
-  font-size: 30px;
-  padding: 10px 10px;
-  margin-left: 15px;
-  border: none;
-  cursor: pointer;
-  border-radius: 50%;
-  border: solid 2px gray;
-  box-shadow:  2px 4px 4px #cac6c6;
-}
-
 
 
 .um-edit-modal.open {
@@ -103,6 +119,26 @@
   transition: opacity 0.3s ease, visibility 0.3s ease;
 }
 
+/*  */.um-edit-modal.open {
+  opacity: 1  ;
+  visibility: visible;
+}
+
+.um-edit-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+} 
+
 /*  */
 .um-modal-content {
   background-color: #fff;
@@ -117,11 +153,9 @@
   margin-left: 30px;
   border: none;
   border-radius: 4px;
-  /* cursor: pointer; */
 }
 
 .um-cancel-button {
-
   background-color: red;
   color: #fff;
   margin-left: 230px;
@@ -131,5 +165,3 @@
   background-color: #4caf50;
   color: #fff;
 }
-
-

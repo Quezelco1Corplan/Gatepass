@@ -15,27 +15,27 @@ const SidebarLink = styled(Link)`
   overflow: hidden;
 
   &:hover {
-    background: #252831;
+    background: #153855;
     cursor: pointer;
   }
 `;
 
 const SidebarLabel = styled.span`
-  margin-left: 16px;
+  margin-left: 10px;
 `;
 
 const DropdownLink = styled(Link)`
-  background: #414757;
+  background: #3c6c91;
   height: 40px;
   padding-left: 3rem;
   display: flex;
   align-items: center;
   text-decoration: none;
-  color: #f5f5f5;
+  color: #f5ffff;
   font-size: 12px;
 
   &:hover {
-    background: #632ce4;
+    background: #153855;
     cursor: pointer;
   }
 `;
