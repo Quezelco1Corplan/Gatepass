@@ -53,6 +53,7 @@ function Signup() {
         setRegisterStatus(response.data.message);
       } else {
         setRegisterStatus("ACCOUNT CREATED SUCCESSFULLY");
+        window.location.href = "/";
       }
     });
   };

@@ -1,167 +1,185 @@
-body {
-  user-select: none;
-}
+  body {
+    user-select: none;
+    overflow-y: hidden;
+  }
 
-.table {
-  width: 100%;
-  border-collapse: collapse;
-  box-shadow: 2px 2px 4px #c4c4c4;
-}
-thead {
-  background-color: #3c6c91;
-  color: #ffffff  ;
-}
-tbody {
+
+
+  .table {
+    width: 100%;
+    border-collapse: collapse;
+    box-shadow: 2px 2px 4px #c4c4c4;
+  }
+
+  thead {
+    background-color: #3c6c91;
+    color: #ffffff  ;
+  }
+  tbody {
   /* background-color: #3c6c91; */
-  color: #838383 ;
-}
+    color: #838383 ;
+  }
 
-.th-td {
-  padding: 10px;
-  text-align: left;
-  border: solid 1px #d4d4d4;
-  width: 300px;
-}
+  .th-td {
+    padding: 10px;
+    text-align: left;
+    border: solid 1px #d4d4d4;
+    width: 300px;
+  }
 
-.th-td-1 {
-  display: flex;
-  flex-direction: row;
-}
+  .th-td-1  {
+    padding: 10px;
+    text-align: left;
+    border: solid 1px #d4d4d4;
+    width: 300px;
+    display:flex;
+    flex-direction: row;
+  }
 
-
-/* Style for the update button */
-.button.update {
-  background: transparent; 
-  border: solid 1px #d4d4d4;
-  color: #8e8e8e;
-  padding: 10px 20px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 10px;
-  margin: 4px 2px;
-  cursor: pointer;
-}
-
-/* Style for the delete button */
-.button-delete {
-  background-color: #f44336; 
-  border: #8e8e8e;
-  color: #ffffff;
-  padding: 10px 15px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 10px;
-  margin: 4px 2px;
-  cursor: pointer;
-}
+  .th-td-1 {
+    display: flex;
+    flex-direction: row;
+  }
 
 
-/* .um-info {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-} */
+  /* Style for the update button */
+  .button.update {
+    background: transparent; 
+    /* border: solid 1px #d4d4d4; */
+    border: solid 1px #8e8e8e;
+    border-radius: 5px;
+    color: #8e8e8e;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 10px;
+    margin: 4px 2px;
+    cursor: pointer;
+  }
 
-/* .update, .delete {
-  flex: 1;
-} */
-/* 
-.update {
-  padding-left: 50px;
-} */
-
-.um-wrapper {
- display: grid;
- align-items: center;
- justify-content: center;
- /* height: 40vh; */
- /* background: white; */
-}
-
-.um-wrapper .um-containter h2 {
-  padding: 20px 10px;
-  border: solid 1px #d4d4d4;
-  color: gray;
-  box-shadow: 2px 2px 3px #c4c4c4;
-}
-.um-wrapper .um-containter {
-  padding: 20px 30px;
-   background: white;
-   margin-top: 5px;
-   
-  
-}
-.um-component{
-  margin: 10px;
-
-}
+  /* Style for the delete button */
+  .button-delete {
+    background-color: #e71d36; 
+    border: solid 1px #8e8e8e;
+    border-radius: 50%;
+    color: #ffffff;
+    padding: 10px 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 10px;
+    margin: 4px 2px;
+    cursor: pointer;
+  }
 
 
-.um-edit-modal.open {
-  opacity: 1  ;
-  visibility: visible;
-}
+  .um-info {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 
-.um-edit-modal {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  display: flex;
+  .update, .delete {
+    flex: 1;
+  }
+
+  .update {
+    padding-left: 50px;
+  }
+
+  .um-wrapper {
+  display: grid;
   align-items: center;
   justify-content: center;
-  opacity: 0;
-  visibility: hidden;
-  transition: opacity 0.3s ease, visibility 0.3s ease;
-}
+  }
 
-/*  */.um-edit-modal.open {
-  opacity: 1  ;
-  visibility: visible;
-}
+  .um-wrapper .um-containter h2 {
+    padding: 20px 10px;
+    border: solid 1px #d4d4d4;
+    color: #8E8E8E;
+    box-shadow: 2px 2px 3px #c4c4c4;
+  }
 
-.um-edit-modal {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  opacity: 0;
-  visibility: hidden;
-  transition: opacity 0.3s ease, visibility 0.3s ease;
-} 
+  .um-wrapper .um-containter {
+    padding: 20px 30px;
+    background: white;
+    margin-top: 5px;
+  }
 
-/*  */
-.um-modal-content {
-  background-color: #fff;
-  padding: 20px;
-  border-radius: 4px;
-  max-width: 400px;
-}
+  .um-component{
+    margin: 10px;
+  }
+
+
+  /* pop up */
+  .um-edit-modal.open {
+    opacity: 1  ;
+    visibility: visible;
+  }
+
+  .um-edit-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgb(142, 142, 152, 0.5) ;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+  } 
+
+  .um-modal-content {
+    background-color: #fdffff;
+    padding: 30px 50px;
+    border-radius: 4px;
+    max-width: 400px;
+  }
+
+  .um-text-container {
+    padding: 10px 16px;
+    color:#8e8e8e;
+  }
+
+  .um-text-p {
+    padding: 10px 16px;
+    margin-top: 10px;
+    border-top: solid 1px #8e8e8e;
+  }
+
+
+
+  .um-modal-buttons {
+    display: flex;
+    flex-direction: row;
+    padding-left: 230px;
+    margin-left: 5px;
+  }
+
+  /* .um-button {
+    padding-left: 5px;
+  } */
 
 .um-cancel-button,
 .um-update-button {
   padding: 8px 20px;
-  margin-left: 30px;
+  margin-top: 40px;
+  margin-left: 10px;
   border: none;
   border-radius: 4px;
 }
 
 .um-cancel-button {
-  background-color: red;
-  color: #fff;
-  margin-left: 230px;
+  background-color: #e71d36;
+  color: #fdffff;
+  /* margin-left: 230px; */
 }
 
 .um-update-button {
-  background-color: #4caf50;
+  background-color: #3c6c91;
   color: #fff;
 }

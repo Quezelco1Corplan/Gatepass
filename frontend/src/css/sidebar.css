@@ -48,10 +48,9 @@
     padding:30px 15px;
     background-color: #005176;
     position: sticky;
-    top: 0;
-    z-index: 1;
-    
+    /* animation:forwards; */
   }
+
   .top-section::after {
     content: "";
     position: absolute;
@@ -76,8 +75,9 @@
     margin-right: 10px;
   }
 
+  
   .bars{
-    
+  
     display: flex;
     font-size: 25px;
     margin-left: 50px;

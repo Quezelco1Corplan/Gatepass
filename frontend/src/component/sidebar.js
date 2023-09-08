@@ -18,7 +18,7 @@ function Sidebar({ children }) {
           >
             Quezelco 1
           </h1>
-          <div
+        <div
             style={{ marginLeft: isOpen ? "50px" : "-8px" }}
             className="bars fixed-header"
           >

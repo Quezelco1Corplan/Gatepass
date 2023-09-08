@@ -94,6 +94,7 @@ const UserManagement = () => {
             <th className="th-td">Last Name</th>
             <th className="th-td">Contact</th >
             <th className="th-td">Email</th>
+            <th className="th-td">Action</th>
           </tr>
         </thead>
         <tbody>
@@ -103,36 +104,30 @@ const UserManagement = () => {
               <td className="th-td">{user.firstname}</td>
               <td className="th-td">{user.lastname}</td>
               <td className="th-td">{user.contact}</td>
-              
-              <td className="th-td">
-              <div className="um-info">
-                <div className="title-email">
-                  {user.email}
-                </div>
-              
-                <div className="update"> 
-                 <button
-                  className="button update"
-                  onClick={() => {
-                    navigate(`/Update/${user.id}`);
-                  }}>
-                  Update
-               </button>
-              </div>
+              <td className="th-td">{user.email}</td>
+              <td>  
+                <div className="um-info">
+                  <div className="update"> 
+                    <button
+                      className="button update"
+                      onClick={() => {
+                      navigate(`/Update/${user.id}`);
+                    }}>
+                    Update
+                    </button>
+                  </div>
 
-                <div className="delete"> 
-               <button
-                  className="button-delete"
-                  onClick={(event) => {
-                  event.preventDefault();
-                  openDeleteModal(user.id);
-                  }}>
-                  <FaTrash />
-                </button>
+                  <div className="delete"> 
+                    <button
+                      className="button-delete"
+                      onClick={(event) => {
+                      event.preventDefault();
+                      openDeleteModal(user.id);
+                    }}><FaTrash />
+                    </button>
+                  </div>
                 </div>
-              </div>
-
-              </td>
+              </td>             
             </tr>
           ))}
         </tbody>

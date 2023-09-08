@@ -164,6 +164,10 @@ const Department = () => {
     };
 
     useEffect(() => {
+      inputRef.current.focus();
+    }, []);
+
+    useEffect(() => {
       if (prevAddModalOpen !== addModalOpen && addModalOpen) {
         inputRef.current.focus();
       }
@@ -229,67 +233,69 @@ const Department = () => {
 
   return (
     <Sidebar>
-    <div>
-      <h1>Department List</h1>
-      <div className="AddButton">
-        <button className="Add" onClick={openAddModal}>
-          Add Department
-        </button>
-      </div>
-      <AddModal />
+      <div>
+        <h1>Department List</h1>
+        <div className="AddButton">
+          <button className="Add" onClick={openAddModal}>
+            Add Department
+          </button>
+        </div>
+        <AddModal />
 
-      <div className="table-container">
-        <table>
-          <thead>
-            <tr>
-              <th>Department ID</th>
-              <th>Department Name</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {departments.map((department) => (
-              <tr key={department.department_id}>
-                <td>{department.department_id}</td>
-                <td>
-                  {department.department_id === editDepartment.department_id ? (
-                    <label>{editDepartment.department}</label>
-                  ) : (
-                    department.department
-                  )}
-                </td>
-                <td>
-                  {department.department_id === editDepartment.department_id ? (
-                    <>{/* Remove the Update and Cancel buttons */}</>
-                  ) : (
+        <div className="table-container">
+          <table>
+            <thead>
+              <tr>
+                <th>Department ID</th>
+                <th>Department Name</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {departments.map((department) => (
+                <tr key={department.department_id}>
+                  <td>{department.department_id}</td>
+                  <td>
+                    {department.department_id ===
+                    editDepartment.department_id ? (
+                      <label>{editDepartment.department}</label>
+                    ) : (
+                      department.department
+                    )}
+                  </td>
+                  <td>
+                    {department.department_id ===
+                    editDepartment.department_id ? (
+                      <>{/* Remove the Update and Cancel buttons */}</>
+                    ) : (
+                      <button
+                        className="edit-button"
+                        onClick={() => {
+                          setEditDepartment(department);
+                          openEditModal();
+                        }}
+                      >
+                        Edit
+                      </button>
+                    )}
                     <button
-                      className="edit-button"
+                      className="delete-button"
                       onClick={() => {
                         setEditDepartment(department);
-                        openEditModal();
+                        openDeleteModal();
                       }}
                     >
-                      Edit
+                      Delete
                     </button>
-                  )}
-                  <button
-                    className="delete-button"
-                    onClick={() => {
-                      setEditDepartment(department);
-                      openDeleteModal();
-                    }}
-                  >
-                    Delete
-                  </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        <EditModal />
+        <DeleteModal />
       </div>
-      <EditModal />
-      <DeleteModal />
-    </div>
     </Sidebar>
   );
 };
