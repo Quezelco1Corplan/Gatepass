@@ -1,117 +1,138 @@
+  /* root */
+  :root {
+    --darkblue: #3c6c91;
+    --skybleue: #0583d2;
+    --lightblue:#b8b3ff;
+    --lightgreen:#61b0b7;
+    --purewhite: #ffffff;
+    --red: #e71d36;
+    --white: #fdffff;
+    --gray:#8e8e8e;
+    --box-shadow1: 2px 2px 4px #c4c4c4;
+    --border1: solid 1px #d4d4d4; 
+    --border2: solid 1px #8e8e8e; 
+  }
+  
+  /* body */
   body {
     user-select: none;
     overflow-y: hidden;
   }
 
 
+  /*  Header */
+ .um-wrapper {
+  display: flex;
+  flex-direction: column;
+  margin-top: 12px;
+ }
+  
+  .um-header h1 {
+     color: var(--gray)
+  }
 
-  .table {
+  .um-wrapper .um-component {
+    margin-top: 19px;
+  
+    /* overflow: hidden; */
+    /* max-h; */
+  }
+
+  .um-wrapper .um-container .um-component h2 {
+    padding: 20px 10px;
+    border: solid 1px #d4d4d4;
+    color: #8E8E8E;
+    box-shadow: 2px 2px 3px #c4c4d4;
+  }
+
+  
+  /* Table */
+  .um-table {
     width: 100%;
     border-collapse: collapse;
-    box-shadow: 2px 2px 4px #c4c4c4;
+    box-shadow: var(--box-shadow1);
+    grid-template-areas:
+    "header",
+    "body"; 
+    
+  }
+  .um-table-body {
+    width: auto;
+    max-height: 500px; /* Adjust this value as needed */
+    overflow-y: auto;
+    display: grid;
+    /* row-gap: 50px; */
+    /* flex: 0 1 100px; */
   }
 
   thead {
-    background-color: #3c6c91;
+    background-color: var(--darkblue);
     color: #ffffff  ;
-  }
-  tbody {
-  /* background-color: #3c6c91; */
-    color: #838383 ;
+    position: sticky;
+    grid-area: header;
   }
 
-  .th-td {
+  tbody {
+    color: var(--gray);
+    grid-area: body;
+  }
+
+  .um-th-td {
     padding: 10px;
     text-align: left;
-    border: solid 1px #d4d4d4;
+    border: var(--border1);
     width: 300px;
   }
 
-  .th-td-1  {
+  .um-th-td-1  {
     padding: 10px;
     text-align: left;
-    border: solid 1px #d4d4d4;
+    border: var(--border1);
     width: 300px;
     display:flex;
     flex-direction: row;
   }
 
-  .th-td-1 {
+
+  /* button */
+  .um-info {
     display: flex;
-    flex-direction: row;
+   justify-content: space-around;
   }
 
-
   /* Style for the update button */
-  .button.update {
-    background: transparent; 
-    /* border: solid 1px #d4d4d4; */
-    border: solid 1px #8e8e8e;
-    border-radius: 5px;
-    color: #8e8e8e;
-    padding: 10px 20px;
+  .um-button.update {
+    background: none; 
+    border: var(--border2);
+    color: var(--gray);
+    padding: 6px 20px;
     text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 10px;
-    margin: 4px 2px;
+    font-size: 16px;
     cursor: pointer;
+  }
+
+  .um-button.update:hover {
+    background: var(--darkblue);
+    color: var(--purewhite);
   }
 
   /* Style for the delete button */
-  .button-delete {
-    background-color: #e71d36; 
-    border: solid 1px #8e8e8e;
+  .um-button-delete {
+    background: var(--purewhite);
+    border: None;
     border-radius: 50%;
-    color: #ffffff;
-    padding: 10px 10px;
+    color: var(--gray);
     text-align: center;
     text-decoration: none;
-    display: inline-block;
-    font-size: 10px;
-    margin: 4px 2px;
+    font-size: 25px;
+    margin-top: 3px;
     cursor: pointer;
+  } 
+
+  .um-button-delete:hover {
+    color: var(--red);
   }
-
-
-  .um-info {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-
-  .update, .delete {
-    flex: 1;
-  }
-
-  .update {
-    padding-left: 50px;
-  }
-
-  .um-wrapper {
-  display: grid;
-  align-items: center;
-  justify-content: center;
-  }
-
-  .um-wrapper .um-containter h2 {
-    padding: 20px 10px;
-    border: solid 1px #d4d4d4;
-    color: #8E8E8E;
-    box-shadow: 2px 2px 3px #c4c4c4;
-  }
-
-  .um-wrapper .um-containter {
-    padding: 20px 30px;
-    background: white;
-    margin-top: 5px;
-  }
-
-  .um-component{
-    margin: 10px;
-  }
-
-
+  
   /* pop up */
   .um-edit-modal.open {
     opacity: 1  ;
@@ -134,7 +155,7 @@
   } 
 
   .um-modal-content {
-    background-color: #fdffff;
+    background: var(--white);
     padding: 30px 50px;
     border-radius: 4px;
     max-width: 400px;
@@ -142,16 +163,14 @@
 
   .um-text-container {
     padding: 10px 16px;
-    color:#8e8e8e;
+    color: var(--gray);
   }
 
   .um-text-p {
     padding: 10px 16px;
     margin-top: 10px;
-    border-top: solid 1px #8e8e8e;
+    border-top: var(--border2);
   }
-
-
 
   .um-modal-buttons {
     display: flex;
@@ -160,21 +179,19 @@
     margin-left: 5px;
   }
 
-  /* .um-button {
-    padding-left: 5px;
-  } */
 
 .um-cancel-button,
 .um-update-button {
   padding: 8px 20px;
-  margin-top: 40px;
+  margin-top: 30px;
   margin-left: 10px;
   border: none;
   border-radius: 4px;
+  box-shadow: var(--box-shadow1);
 }
 
 .um-cancel-button {
-  background-color: #e71d36;
+  background-color: var(--red);
   color: #fdffff;
   /* margin-left: 230px; */
 }

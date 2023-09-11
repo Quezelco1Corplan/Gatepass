@@ -465,47 +465,69 @@ const Employee = () => {
   };
 
   return (
-    <div>
-      <Sidebar>
-      <h1>Employee List</h1>
-      <button onClick={openAddModal}>Add Employee</button>
-      <AddModal />
-      <EditModal />
-      <DeleteModal />
-      <table>
-        <thead>
-          <tr>
-            <th>ID Number</th>
-            <th>Name</th>
-            <th>Date of Birth</th>
-            <th>Date of Employment</th>
-            <th>Position</th>
-            <th>Department</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          {Array.isArray(employees) &&
-            employees.map((employee, index) => (
-              <tr key={index}>
-                <td>{employee.id_num}</td>
-                <td>{employee.empName}</td>
-                <td>{formatDate(employee.dob)}</td>
-                <td>{formatDate(employee.doe)}</td>
-                <td>{employee.pos}</td>
-                <td>{employee.dept}</td>
-                <td>
-                  <button onClick={() => openEditModal(employee)}>Edit</button>
-                  <button onClick={() => openDeleteModal(employee)}>
-                    Delete
-                  </button>
-                </td>
+    <Sidebar>
+      <div className="e-container">
+        <div className="e-header">
+          <h1>Employee List</h1>
+        </div>
+
+        <div className="e-button">
+          <button className="e-Add" onClick={openAddModal}>
+            Add Employee
+          </button>
+        </div>
+
+        <AddModal />
+        <EditModal />
+        <DeleteModal />
+
+        <div className="e-table-container">
+          <table className="e-table">
+            <thead>
+              <tr>
+                <th className="e-th-td">Name</th>
+                <th className="e-th-td">Date of Birth</th>
+                <th className="e-th-td">Date of Employment</th>
+                <th className="e-th-td">ID Number</th>
+                <th className="e-th-td">Position</th>
+                <th className="e-th-td">Department</th>
+                <th className="e-th-td">Action</th>
               </tr>
-            ))}
-        </tbody>
-      </table>
-      </Sidebar>  
-    </div>
+            </thead>
+
+            <tbody>
+              {Array.isArray(employees) &&
+                employees.map((employee, index) => (
+                  <tr key={index}>
+                    <td>{employee.id_num}</td>
+                    <td>{employee.empName}</td>
+                    <td>{formatDate(employee.dob)}</td>
+                    <td>{formatDate(employee.doe)}</td>
+                    <td>{employee.pos}</td>
+                    <td>{employee.dept}</td>
+                    <td>
+                      <div className="e-button-div">
+                        <button
+                          className="edit-button"
+                          onClick={() => openEditModal(employee)}
+                        >
+                          Edit
+                        </button>
+                        <button
+                          className="delete-button"
+                          onClick={() => openDeleteModal(employee)}
+                        >
+                          Delete
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </Sidebar>
   );
 };
 

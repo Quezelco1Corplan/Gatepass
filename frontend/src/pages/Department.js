@@ -47,6 +47,8 @@ const Department = () => {
     }
   };
 
+  
+
   const addDepartment = async () => {
     if (newDepartment.trim() === "") {
       setAddWarning("Please add a warning");
@@ -94,7 +96,7 @@ const Department = () => {
   const deleteDepartment = async (id) => {
     try {
       console.log(`Deleting department with id: ${id}`);
-      await axios.delete("http://localhost:3001/departments/" + id);
+      await axios.delete(`http://localhost:3001/departments/${id}`);
       window.location.reload();
     } catch (err) {
       console.log(err);
@@ -164,10 +166,6 @@ const Department = () => {
     };
 
     useEffect(() => {
-      inputRef.current.focus();
-    }, []);
-
-    useEffect(() => {
       if (prevAddModalOpen !== addModalOpen && addModalOpen) {
         inputRef.current.focus();
       }
@@ -207,9 +205,7 @@ const Department = () => {
     };
 
     const handleDelete = async () => {
-      console.log(
-        `handleDelete called with department_id: ${editDepartment.department_id}`
-      );
+      console.log(`handleDelete called with department_id: ${editDepartment.department_id}`);
       deleteDepartment(editDepartment.department_id);
       closeModal();
     };
@@ -233,22 +229,26 @@ const Department = () => {
 
   return (
     <Sidebar>
-      <div>
-        <h1>Department List</h1>
-        <div className="AddButton">
-          <button className="Add" onClick={openAddModal}>
+      <div className="d-container">
+        <div className="d-header">
+          <h1>Department List</h1>
+        </div>
+
+        <div className="d-button">
+          <button className="d-Add" onClick={openAddModal}>
             Add Department
           </button>
         </div>
+
         <AddModal />
 
-        <div className="table-container">
-          <table>
+        <div className="d-table-container">
+          <table className="d-table">
             <thead>
               <tr>
-                <th>Department ID</th>
-                <th>Department Name</th>
-                <th>Actions</th>
+                <th className="d-th-td">Department ID</th>
+                <th className="d-th-td">Department Name</th>
+                <th className="d-th-td">Actions</th>
               </tr>
             </thead>
             <tbody>
@@ -264,29 +264,31 @@ const Department = () => {
                     )}
                   </td>
                   <td>
-                    {department.department_id ===
-                    editDepartment.department_id ? (
-                      <>{/* Remove the Update and Cancel buttons */}</>
-                    ) : (
+                    <div className="d-button-div">
+                      {department.department_id ===
+                      editDepartment.department_id ? (
+                        <>{/* Remove the Update and Cancel buttons */}</>
+                      ) : (
+                        <button
+                          className="edit-button"
+                          onClick={() => {
+                            setEditDepartment(department);
+                            openEditModal();
+                          }}
+                        >
+                          Edit
+                        </button>
+                      )}
                       <button
-                        className="edit-button"
+                        className="delete-button"
                         onClick={() => {
                           setEditDepartment(department);
-                          openEditModal();
+                          openDeleteModal();
                         }}
                       >
-                        Edit
+                        Delete
                       </button>
-                    )}
-                    <button
-                      className="delete-button"
-                      onClick={() => {
-                        setEditDepartment(department);
-                        openDeleteModal();
-                      }}
-                    >
-                      Delete
-                    </button>
+                    </div>
                   </td>
                 </tr>
               ))}

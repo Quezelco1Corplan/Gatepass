@@ -281,74 +281,76 @@ const Position = () => {
   };
 
   return (
-    
     <Sidebar>
-    <div>
-      <h1>Position List</h1>
-      <div className="AddButton">
-        <button className="Add" onClick={openAddModal}>
-          Add Position
-        </button>
-      </div>
-      <AddModal />
+      <div className="p-container">
+        <div className="p-header">
+          <h1>Position List</h1>
+        </div>
 
-      <div className="table-container">
-        <table>
-          <thead>
-            <tr>
-              <th>Position ID</th>
-              <th>Position</th>
-              <th>Department</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            {positions.map((position) => (
-              <tr key={position.position_id}>
-                <td>{position.position_id}</td>
-                <td>{position.position_name}</td>
-                <td>
-                  {position.position_id === editPosition.position_id ? (
-                    <>{/* Remove the Update and Cancel buttons */}</>
-                  ) : (
-                    position.department_name
-                  )}
-                </td>
-                <td>
-                  {position.position_id === editPosition.position_id ? (
-                    <>{/* Remove the Update and Cancel buttons */}</>
-                  ) : (
-                    <>
-                      <button
-                        className="edit-button"
-                        onClick={() => {
-                          setEditPosition(position);
-                          setSelectedOption(position.department_name);
-                          openEditModal();
-                        }}
-                      >
-                        Edit
-                      </button>
-                      <button
-                        className="delete-button"
-                        onClick={() => {
-                          setEditPosition(position);
-                          openDeleteModal();
-                        }}
-                      >
-                        Delete
-                      </button>
-                    </>
-                  )}
-                </td>
+        <div className="p-button">
+          <button className="p-Add" onClick={openAddModal}>
+            Add Position
+          </button>
+        </div>
+        <AddModal />
+
+        <div className="table-container">
+          <table className="p-table">
+            <thead>
+              <tr>
+                <th className="p-th-td">Position ID</th>
+                <th className="p-th-td">Position</th>
+                <th className="p-th-td">Department</th>
+                <th className="p-th-td">Action</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {positions.map((position) => (
+                <tr key={position.position_id}>
+                  <td>{position.position_id}</td>
+                  <td>{position.position_name}</td>
+                  <td>
+                    {position.position_id === editPosition.position_id ? (
+                      <>{/* Remove the Update and Cancel buttons */}</>
+                    ) : (
+                      position.department_name
+                    )}
+                  </td>
+                  <td>
+                    {position.position_id === editPosition.position_id ? (
+                      <>{/* Remove the Update and Cancel buttons */}</>
+                    ) : (
+                      <>
+                        <button
+                          className="edit-button"
+                          onClick={() => {
+                            setEditPosition(position);
+                            setSelectedOption(position.department_name);
+                            openEditModal();
+                          }}
+                        >
+                          Edit
+                        </button>
+                        <button
+                          className="delete-button"
+                          onClick={() => {
+                            setEditPosition(position);
+                            openDeleteModal();
+                          }}
+                        >
+                          Delete
+                        </button>
+                      </>
+                    )}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        <EditModal />
+        <DeleteModal />
       </div>
-      <EditModal />
-      <DeleteModal />
-    </div>
     </Sidebar>
   );
 };

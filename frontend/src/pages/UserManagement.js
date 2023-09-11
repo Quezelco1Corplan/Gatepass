@@ -77,6 +77,7 @@ const UserManagement = () => {
             </div>
           </div>
 
+    
         </div>
       </div>
     );
@@ -85,68 +86,73 @@ const UserManagement = () => {
   // Render the user table
   const renderUserTable = () => {
     return (
-
-      <table className="table">
-        <thead>
-          <tr>
-            <th className="th-td">No.</th>
-            <th className="th-td">First Name</th>
-            <th className="th-td">Last Name</th>
-            <th className="th-td">Contact</th >
-            <th className="th-td">Email</th>
-            <th className="th-td">Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          {users.map((user, index) => (
-            <tr key={user.id}>
-              <td className="th-td">{index + 1}</td>
-              <td className="th-td">{user.firstname}</td>
-              <td className="th-td">{user.lastname}</td>
-              <td className="th-td">{user.contact}</td>
-              <td className="th-td">{user.email}</td>
-              <td>  
-                <div className="um-info">
-                  <div className="update"> 
-                    <button
-                      className="button update"
-                      onClick={() => {
-                      navigate(`/Update/${user.id}`);
-                    }}>
-                    Update
-                    </button>
-                  </div>
-
-                  <div className="delete"> 
-                    <button
-                      className="button-delete"
-                      onClick={(event) => {
-                      event.preventDefault();
-                      openDeleteModal(user.id);
-                    }}><FaTrash />
-                    </button>
-                  </div>
-                </div>
-              </td>             
+  
+        <table className="um-table">
+          <thead>
+            <tr>
+              <th className="um-th-td">No.</th>
+              <th className="um-th-td">First Name</th>
+              <th className="um-th-td">Last Name</th>
+              <th className="um-th-td">Contact</th >
+              <th className="um-th-td">Email</th>
+              <th className="um-th-td">Action</th>
             </tr>
-          ))}
-        </tbody>
+          </thead>
+
+        <div className="um-table-body">
+          <tbody>
+            {users.map((user, index) => (
+              <tr key={user.id}>
+                <td className="um-th-td">{index + 1}</td>
+                <td className="um-th-td">{user.firstname}</td>
+                <td className="um-th-td">{user.lastname}</td>
+                <td className="um-th-td">{user.contact}</td>
+                <td className="um-th-td">{user.email}</td>
+                <td>  
+                  <div className="um-info">
+                    <div className="um-update"> 
+                      <button
+                        className="um-button update"
+                        onClick={() => {
+                        navigate(`/Update/${user.id}`);
+                      }}>
+                      Update
+                      </button>
+                    </div>
+
+                    <div className="um-delete"> 
+                      <button
+                        className="um-button-delete"
+                        onClick={(event) => {
+                        event.preventDefault();
+                        openDeleteModal(user.id);
+                      }}><FaTrash />
+                      </button>
+                    </div>
+                  </div>
+                </td>             
+              </tr>
+            ))}
+          </tbody>
+        </div>
         
       </table>
+    
     );
   };
 
   return (
     <Sidebar>
     <div className="um-wrapper">    
-      <div className="um-containter">
-        <div className="um-component">
-          <h2>User Management</h2>
+      
+        <div className="um-header">
+          <h1>User Management</h1>
         </div>
+        
         <div className="um-component">
           {renderUserTable()}
         </div>
-      </div>
+
     </div>
     <DeleteModal />
     </Sidebar>

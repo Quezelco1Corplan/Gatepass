@@ -1,38 +1,78 @@
-/* body {
-  font-family: Arial, sans-serif;
+:root {
+  --darkblue: #16558f;
+  --skybleue: #0583d2;
+  --lightblue:#b8b3ff;
+  --lightgreen:#61b0b7;
+  --white: #fdffff;
+  --gray:#8e8e8e;
 }
 
-h1 {
-  text-align: center;
-  color: #333;
-}
+  body {
+    user-select: none;
+  }
 
-button {
-  margin: 10px;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 5px;
-  background-color: #007bff;
-  color: white;
-  cursor: pointer;
-}
+  /* Header */
+  .e-header {
+    position:absolute;
+    top:6%;
+  }
+  .e-header h1 {
+    color: var(--gray)
+  }
+  /* End Header */
+  
 
-button:hover {
-  background-color: #0056b3;
-}
+  /* Add Department */
+  .e-button{
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
+    padding: 15px 15px;
+  }
+  
+  .e-Add{
+    background-color: var(--white);
+    color: var(--gray);
+    border: solid 1px var(--gray);
+    padding: 10px;
+    cursor: pointer;
+  }
+  /* End Add Department */
 
-table {
-  width: 100%;
-  border-collapse: collapse;
-}
+  
+  /* Table */
 
-th,
-td {
-  padding: 15px;
-  text-align: left;
-  border-bottom: 1px solid #ddd;
-}
+  .e-table-container {
+    margin-bottom: 20px;
+    
+  }
+  
+  .e-table {
+    position: collapse;
+    width: 100%;
+    padding: 10px 10px;
+    border-collapse: collapse;
+  }
 
+  .e-table th{
+    background: var(--darkblue);
+    height: 7px;
+  }
+  .e-table tr, th, td{
+    padding: 10px;
+    border: var(--border1);
+  }
+
+  .e-button-div {
+    display: flex;
+    justify-content: center;
+  }
+
+  
+  /* end table */
+  
+
+/* Modal */
 .modal-content {
   background-color: #fefefe;
   margin: 2% auto; 
@@ -136,4 +176,4 @@ td {
   display: flex;
   justify-content: flex-end;
   width: 100%; 
-} */
+}
