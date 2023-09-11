@@ -1,16 +1,18 @@
 const { db } = require("../sql/Connection.jsx");
 
 const addGatepasss = (req, res) => {
-  const { purpose, destination, dot, departments, names } = req.body;
+  const { purpose, destination, dot, departments, service_vehicle, names } = req.body;
+
+  console.log(req.body);
 
   const q =
-    "INSERT INTO gatepass (purpose, destination, dot, departments, names) VALUES (?, ?, ?, ?, ?)";
-  const values = [purpose, destination, dot, departments, names];
+    "INSERT INTO gatepass (purpose, destination, dot, departments, service_vehicle ,names) VALUES (?, ?, ?, ?, ?, ?)";
+  const values = [purpose, destination, dot, departments, service_vehicle, names];
 
-  db.query(q, [values], (err, data) => {
+  db.query(q, values, (err, data) => {
     if (err) {
       console.error(err);
-      return res.status(500).json("Internal Server Error");
+      return res.status(500).json({ message: "Internal Server Error", error: err.message });
     }
     return res.json("Gatepass has been added in your database." + data);
   });

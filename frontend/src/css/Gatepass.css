@@ -1,0 +1,264 @@
+.header {
+  display: grid;
+  grid-template-columns: 40vh 1fr;
+  margin-bottom: 15px;
+  height: 50px;
+}
+
+.search-wrap {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-end;
+  top: 0;
+}
+
+.search-bar {
+  display: relative;
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 20px;
+  box-shadow: 0px 0px 10px #ccc ;
+  padding: 10px;
+  width: 22px;
+  overflow: hidden;
+  transition: width .5s cubic-bezier(.9, 0, .3, .1);
+}
+
+.show-search {
+  width: 45%;
+  
+}
+
+.search-bar input[type="text"] {
+    background-color: antiquewhite;
+    border: none;
+    outline: none;
+    height: 100%;
+    width: calc(100% - 64px);
+    padding: 0px;
+    font-size: 16px;
+    font-weight: 500;
+    /* margin-left: 5px; */
+    padding-left: 14px;
+    border-radius: 4rem;
+    box-shadow: 0 0 0 100px white inset;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 1.5s;
+  }
+
+  .show-search,
+  .search-bar input[type="text"] {
+    opacity: 1;
+    pointer-events: initial;
+  }
+
+  .search-bar:active {
+    border: 1px solid #87bdf0
+  }
+
+  .search-button {
+    width: 35px;
+    height: 35px;
+    background-color: #272727;
+    border-radius: 50%;
+    position: absolute;
+    top: 2.8ch;
+    right: 24px;
+    margin: auto;
+    display: grid;
+    place-items: center;
+    cursor: pointer;
+    transition: transform .6s cubic-bezier(.9, 0, .3, .9);
+  }
+ 
+  .close-icon{
+    opacity: 0;
+  }
+  .show-search
+  .search-button {
+    transform: rotate(90deg);
+  }
+  .search-icon {
+    font-size: 1rem;
+  }
+
+
+  .close-icon {
+    font-size: 1.5; 
+  }
+
+  .search-icon,
+  .close-icon {
+    color: #fff;
+    position: absolute;
+    transition: opacity .5s cubic-bezier(.9, 0, .3, .9);
+  }
+
+  .show-search .search-icon {
+    opacity: 0;
+  }
+
+  .show-search .close-icon {
+    opacity: 1;
+  }
+
+
+  /*FORM STYLES*/
+
+  label {
+    display: block;
+    width: 100%;
+    margin-bottom: 10px;
+    font-weight: bold;
+    font-size: 1.5rem;
+  }
+
+  textarea {
+    width: 20%;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    resize: vertical;
+  }
+
+  .form-box {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding: 20px;
+    height: 78vh;
+    background-color: white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    border-radius: 5px;
+    text-align: left;
+  }
+
+
+  .history-box {
+    text-align: right;
+  }
+
+ .form-wrap {
+  padding-left: 10px;
+ }
+
+  .form-wrap label {
+    font-size: 18px;
+    font-weight: 500;
+  }
+
+  form {
+    width: 30vw;
+    height: 71vh;
+    /* overflow: hidden; */
+    overflow-y: auto;
+  }
+
+  form::-webkit-scrollbar {
+    width: 6px;
+    
+  }
+  
+  form::-webkit-scrollbar-thumb {
+    background-color: #ccc;
+  }
+
+  .form-wrap input[type='text'],
+  .form-wrap input[type='date'],
+  .form-wrap textarea,
+  .dropdown-input {
+    height: 35px;
+    width: 90%;
+    padding: 10px;
+    margin-bottom: 8px;
+    border-radius: 6px;
+    border: 1px solid #080808;
+    border-top: #fff;
+    box-sizing: border-box;
+    font-size: 13px;
+    font-weight: lighter;
+    background-color: #eeeff1;
+  }
+
+  .form-wrap textarea {
+    height: 50px;
+  }
+
+  /*BUTTON STYLES*/
+
+.generate-pass-button .svg-inline--fa {
+  margin-right: 5px; 
+  font-size: 1rem; 
+  color: #fff; 
+}
+ 
+.generate-pass-button {
+  background-color: #007bff;
+  color: #fff; 
+  padding: 14px 20px; 
+  font-size: 16px; 
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.generate-pass-button:hover {
+  background-color: #0056b3; 
+}
+
+
+/*POP-UP GENERATED GATEPASS*/
+ .popup-gate-pass {
+  position: fixed;
+  top: 0%;
+  left: 0%;
+  width: 100%;
+  height: 100vh;
+  /* padding: 20px; */
+  border-radius: 5px;
+  background-color: rgba(0, 0, 0, 0.2);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  /* Animation */
+  animation-name: fade-in;
+  animation-duration: 0.5s;
+  animation-timing-function: ease-in-out;
+}
+
+.gate-pass-inner {
+  position: relative;
+  padding: 32px;
+  /* width: 50%; */
+  min-height: 80vh;
+  min-width: 400px;
+  background-color: #fff;
+
+  /* Animation */
+  animation-name: slide-up;
+  animation-duration: 0.5s;
+  animation-timing-function: ease-in-out;
+}
+
+/* Animation Keyframes */
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slide-up {
+  from {
+    transform: translateY(50px);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
