@@ -26,7 +26,11 @@ const {
 } = require("./components/UserManagement.jsx");
 const { userRegister } = require("./components/Registration.jsx");
 const { userLogin } = require("./components/SignIn.jsx");
-const { addGatepasss, deleteGatepass } = require("./components/Gatepass.jsx");
+const {
+  addGatepasss,
+  deleteGatepass,
+  getGatepass,
+} = require("./components/Gatepass.jsx");
 const app = express();
 
 app.use(express.json());
@@ -61,6 +65,7 @@ app.get("/employee", getEmployee),
 
 app.post("/gatepass", addGatepasss);
 app.delete("/gatepass/:id", deleteGatepass);
+app.get("/gatepass", getGatepass);
 
 app.listen(3001, () => {
   console.log("running server");

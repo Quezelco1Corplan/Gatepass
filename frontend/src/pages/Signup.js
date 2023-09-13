@@ -8,7 +8,8 @@ import "../css/Signup.css";
 function Signup() {
   const [registerStatus, setRegisterStatus] = useState("");
 
-  const formik = useFormik({
+  const formik = useFormik (
+    {
     initialValues: {
       firstname: "",
       lastname: "",

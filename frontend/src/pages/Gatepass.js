@@ -4,7 +4,7 @@ import "../css/Gatepass.css";
 import SearchBar from "../component/SearchBar.js";
 import GeneratedGatePass from "../component/GeneratedGatePass";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faL, faRepeat } from "@fortawesome/free-solid-svg-icons";
+import { faRepeat } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
 
 const Gatepass = () => {
@@ -16,6 +16,7 @@ const Gatepass = () => {
   const [isSearchVisible, setIsSearchVisible] = useState(false);
   const [buttonPopUp, setButtonPopup] = useState(false);
   const [gatepass, setGatepass] = useState({
+    ref_number: "",
     purpose: "",
     destination: "",
     dot: "",
@@ -27,6 +28,15 @@ const Gatepass = () => {
   const [employees, setEmployees] = useState([]);
   const [departments, setDepartments] = useState([]);
   const [serviceVehicle, setServiceVehicle] = useState("");
+  const [refNumber, setRefNumber] = useState("");
+  const [counter, setCounter] = useState(() => {
+    const savedCounter = localStorage.getItem("counter");
+    return savedCounter ? Number(savedCounter) : 1;
+  });
+  const [currentDate, setCurrentDate] = useState(
+    new Date().toISOString().slice(0, 10)
+  );
+  const [gatepassData, setGatepassData] = useState([]);
 
   const toggleSearch = () => {
     setIsSearchVisible(!isSearchVisible);
@@ -34,25 +44,44 @@ const Gatepass = () => {
 
   useEffect(() => {
     fetchEmployeesAndDepartments();
+    fetchGatepass();
   }, []);
+
+  const formatDate = (dateString) => {
+    const options = { year: "numeric", month: "2-digit", day: "2-digit" };
+    return new Date(dateString).toLocaleDateString(undefined, options);
+  };
 
   const fetchEmployeesAndDepartments = async () => {
     try {
-      const employeesResponse = await axios.get("http://localhost:3001/employee");
-      const departmentsResponse = await axios.get("http://localhost:3001/departments");
-  
+      const employeesResponse = await axios.get(
+        "http://localhost:3001/employee"
+      );
+      const departmentsResponse = await axios.get(
+        "http://localhost:3001/departments"
+      );
+
       console.log("Employees:", employeesResponse.data);
       console.log("Departments:", departmentsResponse.data);
-  
+
       if (Array.isArray(employeesResponse.data)) {
         setEmployees(employeesResponse.data);
       } else {
         console.error("Error: employees data is not an array");
       }
-  
+
       setDepartments(departmentsResponse.data);
     } catch (err) {
       console.error(err);
+    }
+  };
+
+  const fetchGatepass = async () => {
+    try {
+      const response = await axios.get("http://localhost:3001/gatepass");
+      setGatepassData(response.data);
+    } catch (error) {
+      console.error(error);
     }
   };
 
@@ -80,27 +109,93 @@ const Gatepass = () => {
     setGatepass((prev) => ({ ...prev, names: e.target.value }));
   };
 
+  // Modify the handleClick function
   const handleClick = async (e) => {
     e.preventDefault();
 
-    const { purpose, destination, dot, departments, service_vehicle, names } = gatepass;
+    const { purpose, destination, dot, departments, service_vehicle, names } =
+      gatepass;
 
-    if (!purpose || !destination || !dot || !departments || !service_vehicle || !names) {
+    if (
+      !purpose ||
+      !destination ||
+      !dot ||
+      !departments ||
+      !service_vehicle ||
+      !names
+    ) {
       alert("Values are empty");
       return;
     }
 
+    // Ask the user to confirm
+    const confirm = window.confirm("Are you sure your information is correct?");
+    if (!confirm) {
+      return;
+    }
+
+    // Get the current date
+    const date = new Date();
+    const dateString = date.toISOString().slice(0, 10);
+
+    // Check if the date has changed
+    if (dateString !== currentDate) {
+      // If the date has changed, reset the counter and update the current date
+      setCounter(1);
+      localStorage.setItem("counter", "1");
+      setCurrentDate(dateString);
+    } else {
+      // If the date has not changed, increment the counter
+      setCounter(counter + 1);
+      localStorage.setItem("counter", String(counter + 1));
+    }
+
+    // Generate the reference number
+    const refNumber = `${date.getFullYear()}-${String(
+      date.getMonth() + 1
+    ).padStart(2, "0")}-${String(date.getDate()).padStart(2, "0")}-${String(
+      counter
+    ).padStart(4, "0")}`;
+
     try {
-      const response = await axios.post("http://localhost:3001/gatepass", gatepass);
+      const response = await axios.post("http://localhost:3001/gatepass", {
+        ...gatepass,
+        ref_number: refNumber,
+      });
       alert(response.data);
-      setDescription(purpose); 
+      setDescription(purpose);
       setServiceVehicle(service_vehicle);
       setButtonPopup(true);
+      setRefNumber(refNumber);
+      window.location.reload();
     } catch (err) {
       console.log(err);
       setError(true);
     }
   };
+
+  // const deleteGatepass = async (id) => {
+  //   console.log(`Deleting gatepass with id: ${id}`);
+  //   if (!id) {
+  //     console.error("Invalid ID:", id);
+  //     return;
+  //   }
+
+  //   try {
+  //     const response = await axios.delete(
+  //       "http://localhost:3001/gatepass/" + id
+  //     );
+  //     if (response.status === 200) {
+  //       await fetchGatepass();
+  //     }
+  //   } catch (err) {
+  //     if (err.response && err.response.status === 404) {
+  //       alert("Gatepass not found");
+  //     } else {
+  //       console.error(err);
+  //     }
+  //   }
+  // };
 
   return (
     <Sidebar>
@@ -137,8 +232,12 @@ const Gatepass = () => {
                       name="destination"
                     >
                       <option value="">Select Destination</option>
-                      <option value="Destination 1">Destination 1</option>
-                      <option value="Destination 2">Destination 2</option>
+                      <option value="Gumaca">Gumaca</option>
+                      <option value="Macalelon">Macalelon</option>
+                      <option value="Pitogo">Pitogo</option>
+                      <option value="Lopez">Lopez</option>
+                      <option value="General Luna">General Luna</option>
+                      <option value="Calauag">Calauag</option>
                       {/* Add more destination options */}
                     </select>
                   </label>
@@ -153,13 +252,14 @@ const Gatepass = () => {
                     />
                   </label>
 
-                  <label>Service Vehicle
+                  <label>
+                    Service Vehicle
                     <input
                       type="text"
                       value={gatepass.service_vehicle}
                       onChange={handleChange}
                       name="service_vehicle"
-                      />
+                    />
                   </label>
 
                   <label>
@@ -171,14 +271,15 @@ const Gatepass = () => {
                       name="departments"
                     >
                       <option value="">Select Department</option>
-                      {Array.isArray(departments) && departments.map((department) => (
-                        <option
-                          key={department.department_id}
-                          value={department.department}
-                        >
-                          {department.department}
-                        </option>
-                      ))}
+                      {Array.isArray(departments) &&
+                        departments.map((department) => (
+                          <option
+                            key={department.department_id}
+                            value={department.department}
+                          >
+                            {department.department}
+                          </option>
+                        ))}
                     </select>
                   </label>
 
@@ -191,14 +292,15 @@ const Gatepass = () => {
                       name="names"
                     >
                       <option value="">Select Name</option>
-                      {Array.isArray(employees) && employees.map((employee) => (
-                        <option
-                          key={employee.employee_id}
-                          value={employee.empName}
-                        >
-                          {employee.empName}
-                        </option>
-                      ))}
+                      {Array.isArray(employees) &&
+                        employees.map((employee) => (
+                          <option
+                            key={employee.employee_id}
+                            value={employee.empName}
+                          >
+                            {employee.empName}
+                          </option>
+                        ))}
                     </select>
                   </label>
                 </form>
@@ -210,15 +312,17 @@ const Gatepass = () => {
               >
                 <FontAwesomeIcon icon={faRepeat} /> Generate pass
               </button>
+              {error && "Something went wrong!"}
             </div>
 
             <GeneratedGatePass
               trigger={buttonPopUp}
               setTrigger={setButtonPopup}
-              description={description} 
+              description={description}
             >
               <h2>Gate Pass</h2>
               <div className="gatepass-content">
+                <p>Reference Number: {refNumber}</p>
                 <p>Description: {description}</p>
                 <p>Destination: {destination}</p>
                 <p>Date of Travel: {dateOfTravel}</p>
@@ -231,7 +335,45 @@ const Gatepass = () => {
             <div className="history-box">
               <div className="history-title">History</div>
               <div className="history-content">
-                {/* put the history content here :) */}
+                <table className="empty">
+                  <thead className="empty">
+                    <tr className="empty">
+                      <th>Ref Number</th>
+                      <th>Purpose</th>
+                      <th>Destination</th>
+                      <th>Date of Travel</th>
+                      <th>Department</th>
+                      <th>Service Vehicle</th>
+                      <th>Name</th>
+                    </tr>
+                  </thead>
+                  <tbody className="empty">
+                    {gatepassData.map((gatepass, index) => {
+                      return (
+                        <tr key={index}>
+                          <td>{gatepass.ref_number}</td>
+                          <td>{gatepass.purpose}</td>
+                          <td>{gatepass.destination}</td>
+                          <td>{formatDate(gatepass.dot)}</td>
+                          <td>{gatepass.departments}</td>
+                          <td>{gatepass.service_vehicle}</td>
+                          <td>{gatepass.names}</td>
+                          {/* <td>
+                            <div className="delete">
+                              <button
+                                onClick={() =>
+                                  deleteGatepass(gatepass.gatepass_id)
+                                }
+                              >
+                                Delete
+                              </button>
+                            </div>
+                          </td> */}
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                </table>
               </div>
             </div>
           </div>

@@ -485,10 +485,10 @@ const Employee = () => {
           <table className="e-table">
             <thead>
               <tr>
+                <th className="e-th-td">ID Number</th>
                 <th className="e-th-td">Name</th>
                 <th className="e-th-td">Date of Birth</th>
                 <th className="e-th-td">Date of Employment</th>
-                <th className="e-th-td">ID Number</th>
                 <th className="e-th-td">Position</th>
                 <th className="e-th-td">Department</th>
                 <th className="e-th-td">Action</th>

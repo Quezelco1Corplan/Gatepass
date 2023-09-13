@@ -1,132 +1,97 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
-import { Link } from "react-router-dom";
-import '../css/UserManagement.css';
-import Sidebar from "../component/sidebar";
-// Sidebar
+import React, { useState } from 'react';
+import '../css/LoginForm.css';
+import Axios from 'axios';
+import * as Yup from 'yup';
+import { useFormik } from 'formik';
+import { Link, useNavigate } from 'react-router-dom';
+import { useAuth } from '../component/AuthContext';
 
-const UserManagement = () => {
+function LoginForm() {
+    const navigate = useNavigate();
+    const [loginStatus, setLoginStatus] = useState('');
+    const { isLoggedIn, setIsLoggedIn } = useAuth();
   
-  const [users, setUsers] = useState([]);
-  const [deleteModalOpen, setDeleteModalOpen] = useState(false);
-  const [userIdToDelete, setUserIdToDelete] = useState(null);
-
-  // Fetch users from the server
-  useEffect(() => {
-    const fetchAllUsers = async () => {
-      try {
-        const res = await axios.get("http://localhost:3001/users");
-        setUsers(res.data);
-      } catch (err) {
-        console.log(err);
-      }
-    };
-    fetchAllUsers();
-  }, []);
-
-  const openDeleteModal = (id) => {
-    setUserIdToDelete(id);
-    setDeleteModalOpen(true);
-  };
-
-  const Delete = async (id) => {
-    try {
-      await axios.delete("http://localhost:3001/users/" + id);
-      setUsers(users.filter(user => user.id !== id));
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
-  const DeleteModal = () => {
-    const closeModal = () => {
-      setDeleteModalOpen(false);
-    };
-
-    const handleDelete = async () => {
-      Delete(userIdToDelete);
-      closeModal();
-    };
-
+    const formik = useFormik({
+      initialValues: {
+        email: '',
+        password: '',
+      },
+      validationSchema: Yup.object({
+        email: Yup.string().email('Wrong Email').required('Email Required'),
+        password: Yup.string().min(8, 'Only 8 characters are needed').required('Required Password'),
+      }),
+      onSubmit: (values) => {
+        Axios.post('http://localhost:3001/login', {
+          email: values.email,
+          password: values.password,
+        }).then((response) => {
+          if (response.data.message) {
+            setLoginStatus(response.data.message);
+          } else {
+            setIsLoggedIn(true);
+            navigate('/Home');
+          }
+        });
+      },
+    });
+  
     return (
-    
-      <div className={`edit-modal ${deleteModalOpen ? "open" : ""}`}>
-        <div className="modal-content">
-          <h2>Are you sure you want to delete this department?</h2>
-          <div className="modal-buttons">
-            <button className="cancel-button" onClick={closeModal}>
-              No
-            </button>
-            <button className="update-button" onClick={handleDelete}>
-              Yes
-            </button>
+      <form onSubmit={formik.handleSubmit}>
+        <div className="login-container">
+          <div className="login-box">
+            <div className="header">
+              <h3>LOGIN</h3>
+            </div>
+            <div className="content">
+              <div className="input-box">
+                <input
+                  type="email"
+                  placeholder=" "
+                  name="email"
+                  value={formik.values.email}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  required
+                />
+                <span className={formik.values.email ? 'active' : ''}>email</span>
+                <span></span>
+              </div>
+              {formik.touched.email && formik.errors.email ? (
+                <p className="error">{formik.errors.email}</p>
+              ) : null}
+              <div className="input-box">
+                <input
+                  type="password"
+                  placeholder=" "
+                  name="password"
+                  value={formik.values.password}
+                  onChange={formik.handleChange}
+                
+                  onBlur={formik.handleBlur}
+                  required
+                />
+                <span className={formik.values.password ? 'active' : ''}>password</span>
+                <span></span>
+              </div>
+              {formik.touched.password && formik.errors.password ? (
+                <p className="error">{formik.errors.password}</p>
+              ) : null}
+              <div className="input-box">
+                <button className="loginbtn" type="submit">
+                  Login
+                </button>{" "}
+                {loginStatus}
+                <div className="goto-register">
+                  <p>
+                    No Account Yet! <Link to="/Signup">Register Here</Link>
+                  </p>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
+      </form>
     );
-  };
-
-  // Render the user table
-  const renderUserTable = () => {
-    return (
-      <div>
-      <table className="table">
-        <thead>
-          <tr>
-            <th className="th-td">First Name</th>
-            <th className="th-td">Last Name</th>
-            <th className="th-td">Contact</th>
-            <th className="th-td">Email</th>
-            <th className="th-td">ACTION</th>
-          </tr>
-        </thead>
-        <tbody>
-          {users.map((user) => (
-            <tr key={user.id}>
-              <td className="th-td">{user.firstname}</td>
-              <td className="th-td">{user.lastname}</td>
-              <td className="th-td">{user.contact}</td>
-              <td className="th-td">{user.email}</td>
-              
-              
-              <td className="th-td">
-
-
-                <button className="button update">
-                  <Link to={`/update/${user.id}`}>Update</Link>
-                </button>
-                <button
-                    className="button delete"
-                    onClick={(event) => {
-                    event.preventDefault(); // Prevent form submission and page refresh
-                    openDeleteModal(user.id);
-                    }}>
-                Delete
-                </button>
-
-
-              </td>
-            </tr>
-          ))}
-        </tbody>
-    
-      </table>
-    
-          <DeleteModal />
-          </div>
-    );
-  };
-
-  return (
-    <Sidebar>
-    <div className="um-wrapper">    
-      <div className="um-header">
-        <h2>User Management</h2>
-      </div>
-      {renderUserTable()}
-    </div>
-    </Sidebar>
-  );
-};
-
-export default UserManagement;
+  }
+  
+  export default LoginForm;

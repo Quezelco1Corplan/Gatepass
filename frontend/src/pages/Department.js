@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import "../css/DepartmentStyle.css";
+import "../css/Department.module.css";
 import axios from "axios";
 import Sidebar from "../component/sidebar";
 // Sidebar
