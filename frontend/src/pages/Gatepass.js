@@ -128,29 +128,23 @@ const Gatepass = () => {
       return;
     }
 
-    // Ask the user to confirm
     const confirm = window.confirm("Are you sure your information is correct?");
     if (!confirm) {
       return;
     }
 
-    // Get the current date
     const date = new Date();
     const dateString = date.toISOString().slice(0, 10);
 
-    // Check if the date has changed
     if (dateString !== currentDate) {
-      // If the date has changed, reset the counter and update the current date
       setCounter(1);
       localStorage.setItem("counter", "1");
       setCurrentDate(dateString);
     } else {
-      // If the date has not changed, increment the counter
       setCounter(counter + 1);
       localStorage.setItem("counter", String(counter + 1));
     }
 
-    // Generate the reference number
     const refNumber = `${date.getFullYear()}-${String(
       date.getMonth() + 1
     ).padStart(2, "0")}-${String(date.getDate()).padStart(2, "0")}-${String(
@@ -162,40 +156,69 @@ const Gatepass = () => {
         ...gatepass,
         ref_number: refNumber,
       });
+
+      // Add the new gatepass to the gatepassData state
+      setGatepassData((prevGatepassData) => [
+        ...prevGatepassData,
+        {
+          ...gatepass,
+          ref_number: refNumber,
+          gatepass_id: response.data.insertId,
+        },
+      ]);
+
+      // setGatepass({
+      //   ref_number: "",
+      //   purpose: "",
+      //   destination: "",
+      //   dot: "",
+      //   departments: "",
+      //   service_vehicle: "",
+      //   names: "",
+      // });
+      // setDestination("");
+      // setDateOfTravel("");
+      // setDepartment("");
+      // setName("");
+      // setServiceVehicle("");
+
       alert(response.data);
       setDescription(purpose);
       setServiceVehicle(service_vehicle);
       setButtonPopup(true);
       setRefNumber(refNumber);
-      window.location.reload();
     } catch (err) {
       console.log(err);
       setError(true);
     }
   };
 
-  // const deleteGatepass = async (id) => {
-  //   console.log(`Deleting gatepass with id: ${id}`);
-  //   if (!id) {
-  //     console.error("Invalid ID:", id);
-  //     return;
-  //   }
+  const deleteGatepass = async (id) => {
+    // Ask the user to confirm
+    const confirm = window.confirm("Are you want to delete this gatepass?");
+    if (!confirm) {
+      return;
+    }
 
-  //   try {
-  //     const response = await axios.delete(
-  //       "http://localhost:3001/gatepass/" + id
-  //     );
-  //     if (response.status === 200) {
-  //       await fetchGatepass();
-  //     }
-  //   } catch (err) {
-  //     if (err.response && err.response.status === 404) {
-  //       alert("Gatepass not found");
-  //     } else {
-  //       console.error(err);
-  //     }
-  //   }
-  // };
+    try {
+      const response = await axios.delete(
+        `http://localhost:3001/gatepass/${id}`
+      );
+      if (response.status === 200) {
+        // Remove the deleted gatepass from the gatepassData state
+        setGatepassData(
+          gatepassData.filter((gatepass) => gatepass.gatepass_id !== id)
+        );
+        alert("Gatepass has been deleted");
+      }
+    } catch (err) {
+      if (err.response && err.response.status === 404) {
+        alert("Gatepass not found");
+      } else {
+        console.error(err);
+      }
+    }
+  };
 
   return (
     <Sidebar>
@@ -345,6 +368,7 @@ const Gatepass = () => {
                       <th>Department</th>
                       <th>Service Vehicle</th>
                       <th>Name</th>
+                      <th>Action</th>
                     </tr>
                   </thead>
                   <tbody className="empty">
@@ -358,7 +382,7 @@ const Gatepass = () => {
                           <td>{gatepass.departments}</td>
                           <td>{gatepass.service_vehicle}</td>
                           <td>{gatepass.names}</td>
-                          {/* <td>
+                          <td>
                             <div className="delete">
                               <button
                                 onClick={() =>
@@ -368,7 +392,7 @@ const Gatepass = () => {
                                 Delete
                               </button>
                             </div>
-                          </td> */}
+                          </td>
                         </tr>
                       );
                     })}

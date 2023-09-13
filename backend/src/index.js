@@ -64,7 +64,7 @@ app.get("/employee", getEmployee),
   app.delete("/employee/:id", deleteEmployee);
 
 app.post("/gatepass", addGatepasss);
-app.delete("/gatepass/:id", deleteGatepass);
+app.delete("/gatepass/:gatepass_id", deleteGatepass);
 app.get("/gatepass", getGatepass);
 
 app.listen(3001, () => {
