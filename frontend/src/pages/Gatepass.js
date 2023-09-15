@@ -8,6 +8,8 @@ import { faRepeat } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
 
 const Gatepass = () => {
+  const [searchTerm, setSearchTerm] = useState("");
+
   const [description, setDescription] = useState("");
   const [destination, setDestination] = useState("");
   const [dateOfTravel, setDateOfTravel] = useState("");
@@ -40,6 +42,11 @@ const Gatepass = () => {
 
   const toggleSearch = () => {
     setIsSearchVisible(!isSearchVisible);
+  };
+
+  // search function
+  const handleSearchChange = (e) => {
+    setSearchTerm(e.target.value);
   };
 
   useEffect(() => {
@@ -223,110 +230,132 @@ const Gatepass = () => {
   return (
     <Sidebar>
       <div>
-        <div className="main-wrap">
-          <div className="header">
-            <h1 className="title">Gatepass</h1>
-            <div className="search-wrap">
+        <div className="g-main-wrap">
+          <div className="g-header">
+            <h1>Gatepass</h1>
+            <div className="g-search-wrap">
+              <div className="g-component">
+                <h3 className="h3">Search</h3>
+              </div>
+
               <SearchBar
                 isSearchVisible={isSearchVisible}
                 toggleSearch={toggleSearch}
+                searchTerm={searchTerm}
+                handleSearchChange={handleSearchChange}
               />
             </div>
           </div>
-          <div className="form-box">
-            <div className="form-preview">
-              <div className="form-wrap">
+          <div className="g-form-box">
+            <div className="g-form-preview">
+              <div className="g-form-wrap">
                 <form onSubmit={handleClick}>
-                  <label>
-                    Purpose:
-                    <textarea
-                      value={gatepass.purpose}
-                      onChange={handleChange}
-                      name="purpose"
-                    />
-                  </label>
+                  <div className="g-label-container">
+                    <label htmlFor="purpose">
+                      Purpose:
+                      <textarea
+                        id="purpose"
+                        name="purpose"
+                        value={gatepass.purpose}
+                        onChange={handleChange}
+                      />
+                    </label>
+                  </div>
 
-                  <label>
-                    Destination:
-                    <select
-                      className="dropdown-input"
-                      value={destination}
-                      onChange={handleDestinationChange}
-                      name="destination"
-                    >
-                      <option value="">Select Destination</option>
-                      <option value="Gumaca">Gumaca</option>
-                      <option value="Macalelon">Macalelon</option>
-                      <option value="Pitogo">Pitogo</option>
-                      <option value="Lopez">Lopez</option>
-                      <option value="General Luna">General Luna</option>
-                      <option value="Calauag">Calauag</option>
-                      {/* Add more destination options */}
-                    </select>
-                  </label>
+                  <div className="g-label-container">
+                    <label htmlFor="destination">
+                      Destination:
+                      <select
+                        id="destination"
+                        className="dropdown-input"
+                        name="destination"
+                        value={destination}
+                        onChange={handleDestinationChange}
+                      >
+                        <option value="">Select Destination</option>
+                        <option value="Gumaca">Gumaca</option>
+                        <option value="Macalelon">Macalelon</option>
+                        <option value="Pitogo">Pitogo</option>
+                        <option value="Lopez">Lopez</option>
+                        <option value="General Luna">General Luna</option>
+                        <option value="Calauag">Calauag</option>
+                        {/* Add more destination options */}
+                      </select>
+                    </label>
+                  </div>
 
-                  <label>
-                    Date of Travel:
-                    <input
-                      type="date"
-                      value={dateOfTravel}
-                      onChange={handleDateOfTravelChange}
-                      name="dot"
-                    />
-                  </label>
-
-                  <label>
-                    Service Vehicle
-                    <input
-                      type="text"
-                      value={gatepass.service_vehicle}
-                      onChange={handleChange}
-                      name="service_vehicle"
-                    />
-                  </label>
-
-                  <label>
-                    Department:
-                    <select
-                      className="dropdown-input"
-                      value={department}
-                      onChange={handleDepartmentChange}
-                      name="departments"
-                    >
-                      <option value="">Select Department</option>
-                      {Array.isArray(departments) &&
-                        departments.map((department) => (
-                          <option
-                            key={department.department_id}
-                            value={department.department}
-                          >
-                            {department.department}
-                          </option>
-                        ))}
-                    </select>
-                  </label>
-
-                  <label>
-                    Name:
-                    <select
-                      className="dropdown-input"
-                      value={name}
-                      onChange={handleNameChange}
-                      name="names"
-                    >
-                      <option value="">Select Name</option>
-                      {Array.isArray(employees) &&
-                        employees.map((employee) => (
-                          <option
-                            key={employee.employee_id}
-                            value={employee.empName}
-                          >
-                            {employee.empName}
-                          </option>
-                        ))}
-                    </select>
-                  </label>
+                  <div className="g-label-container">
+                    <label htmlFor="dot">
+                      Date of Travel:
+                      <input
+                        id="dot"
+                        type="date"
+                        name="dot"
+                        value={dateOfTravel}
+                        onChange={handleDateOfTravelChange}
+                      />
+                    </label>
+                  </div>
+                  <div className="g-label-container">
+                    <label htmlFor="service_vehicle">
+                      Service Vehicle
+                      <input
+                        id="service_vehicle"
+                        type="text"
+                        name="service_vehicle"
+                        value={gatepass.service_vehicle}
+                        onChange={handleChange}
+                      />
+                    </label>
+                  </div>
+                  <div className="g-label-container">
+                    <label htmlFor="departments">
+                      Department:
+                      <select
+                        id="departments"
+                        className="dropdown-input"
+                        name="departments"
+                        value={department}
+                        onChange={handleDepartmentChange}
+                      >
+                        <option value="">Select Department</option>
+                        {Array.isArray(departments) &&
+                          departments.map((department) => (
+                            <option
+                              key={department.department_id}
+                              value={department.department}
+                            >
+                              {department.department}
+                            </option>
+                          ))}
+                      </select>
+                    </label>
+                  </div>
+                  <div className="g-label-container">
+                    <label htmlFor="names">
+                      Names
+                      <select
+                        id="names"
+                        className="dropdown-input"
+                        name="names"
+                        value={name}
+                        onChange={handleNameChange}
+                      >
+                        <option value="">Select Name</option>
+                        {Array.isArray(employees) &&
+                          employees.map((employee) => (
+                            <option
+                              key={employee.employee_id}
+                              value={employee.empName}
+                            >
+                              {employee.empName}
+                            </option>
+                          ))}
+                      </select>
+                    </label>
+                  </div>
                 </form>
+                ;
               </div>
               <button
                 className="generate-pass-button"
@@ -344,7 +373,7 @@ const Gatepass = () => {
               description={description}
             >
               <h2>Gate Pass</h2>
-              <div className="gatepass-content">
+              <div className="g-gatepass-content">
                 <p>Reference Number: {refNumber}</p>
                 <p>Description: {description}</p>
                 <p>Destination: {destination}</p>
@@ -356,46 +385,76 @@ const Gatepass = () => {
             </GeneratedGatePass>
 
             <div className="history-box">
-              <div className="history-title">History</div>
+              <div className="history-title">
+                <h3>History</h3>
+              </div>
               <div className="history-content">
-                <table className="empty">
-                  <thead className="empty">
+                <table className="g-table">
+                  <thead className="g-thead">
                     <tr className="empty">
-                      <th>Ref Number</th>
-                      <th>Purpose</th>
-                      <th>Destination</th>
-                      <th>Date of Travel</th>
-                      <th>Department</th>
-                      <th>Service Vehicle</th>
-                      <th>Name</th>
-                      <th>Action</th>
+                      <th className="g-th-td">Purpose</th>
+                      <th className="g-th-td">Ref Number</th>
+                      <th className="g-th-td">Destination</th>
+                      <th className="g-th-td">Date of Travel</th>
+                      <th className="g-th-td">Department</th>
+                      <th className="g-th-td">Service Vehicle</th>
+                      <th className="g-th-td">Name</th>
+                      <th className="g-th-td">Action</th>
                     </tr>
                   </thead>
-                  <tbody className="empty">
-                    {gatepassData.map((gatepass, index) => {
-                      return (
-                        <tr key={index}>
-                          <td>{gatepass.ref_number}</td>
-                          <td>{gatepass.purpose}</td>
-                          <td>{gatepass.destination}</td>
-                          <td>{formatDate(gatepass.dot)}</td>
-                          <td>{gatepass.departments}</td>
-                          <td>{gatepass.service_vehicle}</td>
-                          <td>{gatepass.names}</td>
-                          <td>
-                            <div className="delete">
-                              <button
-                                onClick={() =>
-                                  deleteGatepass(gatepass.gatepass_id)
-                                }
-                              >
-                                Delete
-                              </button>
-                            </div>
-                          </td>
-                        </tr>
-                      );
-                    })}
+                  <tbody className="g-tbody">
+                    {gatepassData
+                      .filter((gatepass) => {
+                        // Change this line to match the fields you want to search
+                        return (
+                          gatepass.ref_number
+                            .toLowerCase()
+                            .includes(searchTerm.toLowerCase()) ||
+                          gatepass.purpose
+                            .toLowerCase()
+                            .includes(searchTerm.toLowerCase()) ||
+                          gatepass.destination
+                            .toLowerCase()
+                            .includes(searchTerm.toLowerCase()) ||
+                          gatepass.departments
+                            .toLowerCase()
+                            .includes(searchTerm.toLowerCase()) ||
+                          gatepass.service_vehicle
+                            .toLowerCase()
+                            .includes(searchTerm.toLowerCase()) ||
+                          gatepass.names
+                            .toLowerCase()
+                            .includes(searchTerm.toLowerCase())
+                        );
+                      })
+                      .map((gatepass, index) => {
+                        return (
+                          <tr key={index}>
+                            <td className="g-th-td">{gatepass.purpose}</td>
+                            <td className="g-th-td">{gatepass.ref_number}</td>
+                            <td className="g-th-td">{gatepass.destination}</td>
+                            <td className="g-th-td">
+                              {formatDate(gatepass.dot)}
+                            </td>
+                            <td className="g-th-td">{gatepass.departments}</td>
+                            <td className="g-th-td">
+                              {gatepass.service_vehicle}
+                            </td>
+                            <td className="g-th-td">{gatepass.names}</td>
+                            <td className="g-th-td">
+                              <div className="delete">
+                                <button
+                                  onClick={() =>
+                                    deleteGatepass(gatepass.gatepass_id)
+                                  }
+                                >
+                                  Delete
+                                </button>
+                              </div>
+                            </td>
+                          </tr>
+                        );
+                      })}
                   </tbody>
                 </table>
               </div>

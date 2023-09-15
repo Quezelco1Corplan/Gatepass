@@ -86,6 +86,13 @@ const Employee = () => {
   };
 
   const addEmployee = async () => {
+    const { empName, dob, doe, pos, dept, id_num } = newEmployee;
+
+    if (!empName || !dob || !doe || !pos || !dept || !id_num) {
+      alert("Values are empty");
+      return;
+    }
+
     try {
       const response = await axios.post(
         "http://localhost:3001/employee",

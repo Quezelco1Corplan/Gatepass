@@ -1,4 +1,4 @@
-  /* root */
+
   :root {
     --darkblue: #3c6c91;
     --skybleue: #0583d2;
@@ -77,21 +77,14 @@
     grid-area: body;
   }
 
-  .um-th-td {
+  .um-th, .um-td {
     padding: 10px;
     text-align: left;
     border: var(--border1);
     width: 300px;
   }
 
-  .um-th-td-1  {
-    padding: 10px;
-    text-align: left;
-    border: var(--border1);
-    width: 300px;
-    display:flex;
-    flex-direction: row;
-  }
+  
 
 
   /* button */
