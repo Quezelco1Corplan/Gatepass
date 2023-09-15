@@ -3,7 +3,7 @@ const { db } = require("../sql/Connection.jsx");
 function updateUser(req, res) {
   const userid = req.params.id;
   const q =
-    "UPDATE user SET `firstname` = ?, `lastname` = ?, `contact` = ?, `email` = ? WHERE id = ?";
+    "UPDATE users SET `firstname` = ?, `lastname` = ?, `contact` = ?, `email` = ? WHERE id = ?";
 
   const values = [
     req.body.firstname,
@@ -20,7 +20,7 @@ function updateUser(req, res) {
 
 function deleteUser(req, res) {
   const userid = req.params.id;
-  const q = "DELETE FROM user WHERE id = ?";
+  const q = "DELETE FROM users WHERE id = ?";
 
   db.query(q, [userid], (err, data) => {
     if (err) return res.json(err);
@@ -29,7 +29,7 @@ function deleteUser(req, res) {
 }
 
 function getUser(req, res) {
-  const q = "SELECT * FROM user";
+  const q = "SELECT * FROM users";
   db.query(q, (err, data) => {
     if (err) return res.json(err);
     return res.json(data);
@@ -38,7 +38,7 @@ function getUser(req, res) {
 
 function getUserWithId(req, res) {
   const userid = req.params.id;
-  const q = "SELECT * FROM user WHERE id = ?";
+  const q = "SELECT * FROM users WHERE id = ?";
 
   db.query(q, [userid], (err, data) => {
     if (err) return res.json(err);
