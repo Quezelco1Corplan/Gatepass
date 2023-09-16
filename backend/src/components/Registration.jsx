@@ -15,7 +15,7 @@ const userRegister = (req, res) => {
     }
 
     db.query(
-      "INSERT INTO user (firstname, lastname, contact, email, password) VALUES (?, ?, ?, ?, ?)",
+      "INSERT INTO users (firstname, lastname, contact, email, password) VALUES (?, ?, ?, ?, ?)",
       [firstname, lastname, contact, email, hash],
       (err, result) => {
         if (result) {

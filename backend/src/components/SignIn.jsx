@@ -5,7 +5,7 @@ const userLogin = (req, res) => {
   const email = req.body.email;
   const password = req.body.password;
 
-  db.query("SELECT * FROM user WHERE email = ?;", email, (err, result) => {
+  db.query("SELECT * FROM users WHERE email = ?;", email, (err, result) => {
     if (err) {
       res.send({ err: err });
     }

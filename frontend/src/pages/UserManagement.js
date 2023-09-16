@@ -2,11 +2,10 @@ import { useNavigate } from "react-router-dom";
 import { FaTrash } from "react-icons/fa";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import umCss from '../css/UserManagement.module.css';
+import umCss from "../css/UserManagement.module.css";
 import Sidebar from "../component/sidebar";
 
 const UserManagement = () => {
-  
   const [users, setUsers] = useState([]);
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
   const [userIdToDelete, setUserIdToDelete] = useState(null);
@@ -32,7 +31,7 @@ const UserManagement = () => {
   const Delete = async (id) => {
     try {
       await axios.delete("http://localhost:3001/users/" + id);
-      setUsers(users.filter(user => user.id !== id));
+      setUsers(users.filter((user) => user.id !== id));
     } catch (err) {
       console.log(err);
     }
@@ -49,7 +48,11 @@ const UserManagement = () => {
     };
 
     return (
-      <div className={`${umCss["um-edit-modal"]} ${deleteModalOpen ? umCss.open : ""}`}>
+      <div
+        className={`${umCss["um-edit-modal"]} ${
+          deleteModalOpen ? umCss.open : ""
+        }`}
+      >
         <div className={umCss["um-modal-content"]}>
           <div className={umCss["um-text-container"]}>
             <div className={umCss["um-text-h2"]}>
@@ -59,18 +62,24 @@ const UserManagement = () => {
               <p>Note: this will not be recovered if yes!</p>
             </div>
           </div>
-         
+
           <div className={umCss["um-modal-buttons"]}>
             <div className={umCss["um-button"]}>
-              <button className={umCss["um-update-button"]} onClick={handleDelete}>
+              <button
+                className={umCss["um-update-button"]}
+                onClick={handleDelete}
+              >
                 YES
               </button>
             </div>
             <div className={umCss["um-button"]}>
-              <button className={umCss["um-cancel-button"]} onClick={closeModal}>
+              <button
+                className={umCss["um-cancel-button"]}
+                onClick={closeModal}
+              >
                 CANCEL
               </button>
-              </div>
+            </div>
           </div>
         </div>
       </div>
