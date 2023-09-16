@@ -1,7 +1,7 @@
 .box-login {
   display:flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-end;
   align-items: center;
   height: 100vh;
   position: relative;

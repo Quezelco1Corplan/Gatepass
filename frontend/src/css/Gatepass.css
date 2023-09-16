@@ -223,10 +223,12 @@ form::-webkit-scrollbar {
   }
 }
 
+
 /* table */
 .history-box {
   text-align: right;
   /* border: solid 1px; */
+  padding-right: 10px;
   
   .history-title {
     display: flex;
@@ -236,8 +238,8 @@ form::-webkit-scrollbar {
   }
 
   .history-content {
-    /* width: auto; */
-    max-height: 520px;
+    
+    max-height: 470px;
     overflow-y: scroll;
     display: grid;
     box-shadow: 4px 4px 10px #838383;

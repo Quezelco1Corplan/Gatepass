@@ -9,6 +9,7 @@ import axios from "axios";
 
 const Gatepass = () => {
   const [searchTerm, setSearchTerm] = useState("");
+  const [filteredNames, setFilteredNames] = useState([]);
 
   const [description, setDescription] = useState("");
   const [destination, setDestination] = useState("");
@@ -112,8 +113,19 @@ const Gatepass = () => {
   };
 
   const handleNameChange = (e) => {
-    setName(e.target.value);
-    setGatepass((prev) => ({ ...prev, names: e.target.value }));
+    const userInput = e.target.value;
+    setName(userInput);
+
+    // Filter the names based on the user input
+    const filtered = employees.filter((employee) =>
+      employee.empName.toLowerCase().includes(userInput.toLowerCase())
+    );
+    setFilteredNames(filtered);
+  };
+
+  const handleNameClick = (name) => {
+    setName(name);
+    setFilteredNames([]);
   };
 
   // Modify the handleClick function
@@ -334,24 +346,23 @@ const Gatepass = () => {
                   <div className="g-label-container">
                     <label htmlFor="names">
                       Names
-                      <select
+                      <input
                         id="names"
                         className="dropdown-input"
+                        type="text"
                         name="names"
                         value={name}
                         onChange={handleNameChange}
+                      />
+                      {/* Display the filtered names as suggestions */}
+                      {filteredNames.map((employee) => (
+                        <div
+                        key={employee.employee_id}
+                        onClick={() => handleNameClick(employee.empName)}
                       >
-                        <option value="">Select Name</option>
-                        {Array.isArray(employees) &&
-                          employees.map((employee) => (
-                            <option
-                              key={employee.employee_id}
-                              value={employee.empName}
-                            >
-                              {employee.empName}
-                            </option>
-                          ))}
-                      </select>
+                        {employee.empName}
+                      </div>
+                      ))}
                     </label>
                   </div>
                 </form>
