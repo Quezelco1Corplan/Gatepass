@@ -1,0 +1,363 @@
+.header {
+  margin-bottom: 15px;
+  height: 50px;
+}
+
+.main-wrap {
+  max-height: 85vh;
+  overflow-y: auto;
+}
+
+/* .search-wrap {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-end;
+  top: 0;
+}
+
+.search-bar {
+  display: relative;
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 20px;
+  box-shadow: 0px 0px 10px #ccc ;
+  padding: 10px;
+  width: 22px;
+  overflow: hidden;
+  transition: width .5s cubic-bezier(.9, 0, .3, .1);
+}
+
+.show-search {
+  width: 45%;
+  
+}
+
+.search-bar input[type="text"] {
+    background-color: antiquewhite;
+    border: none;
+    outline: none;
+    height: 100%;
+    width: calc(100% - 64px);
+    padding: 0px;
+    font-size: 16px;
+    font-weight: 500;
+    padding-left: 14px;
+    border-radius: 4rem;
+    box-shadow: 0 0 0 100px white inset;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 1.5s;
+  }
+
+  .show-search,
+  .search-bar input[type="text"] {
+    opacity: 1;
+    pointer-events: initial;
+  }
+
+  .search-bar:active {
+    border: 1px solid #87bdf0;
+  }
+
+  .search-button {
+    width: 35px;
+    height: 35px;
+    background-color: #272727;
+    border-radius: 50%;
+    position: absolute;
+    top: 2.8ch;
+    right: 24px;
+    margin: auto;
+    display: grid;
+    place-items: center;
+    cursor: pointer;
+    transition: transform .6s cubic-bezier(.9, 0, .3, .9);
+  }
+ 
+  .close-icon{
+    opacity: 0;
+  }
+  .show-search
+  .search-button {
+    transform: rotate(90deg);
+  }
+  .search-icon {
+    font-size: 1rem;
+  }
+
+
+  .close-icon {
+    font-size: 1.5; 
+  }
+
+  .search-icon,
+  .close-icon {
+    color: #fff;
+    position: absolute;
+    transition: opacity .5s cubic-bezier(.9, 0, .3, .9);
+  }
+
+  .show-search .search-icon {
+    opacity: 0;
+  }
+
+  .show-search .close-icon {
+    opacity: 1;
+  } */
+
+/*FORM STYLES*/
+.form-block,
+.date-container,
+.time-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+.checkbox-container {
+  display: flex;
+  justify-content: end;
+  padding-bottom: 10px;
+}
+
+.checkbox-container input[type="checkbox"] {
+  width: fit-content;
+  margin: 0;
+  margin-left: 10px;
+  transform: scale(1.3);
+}
+
+.checkbox-text {
+  font-size: 14px;
+  color: gray;
+}
+
+.employee-form-box {
+  padding: 20px;
+  height: auto;
+  background-color: white;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  border-radius: 5px;
+  text-align: left;
+  margin: 20px;
+}
+
+.form-box {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  padding: 20px;
+  height: auto;
+  background-color: white;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  border-radius: 5px;
+  text-align: left;
+  margin: 20px;
+}
+
+.form-wrap label {
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.form-inner-left,
+.form-inner-right {
+  margin: 20px;
+}
+
+.main-wrap::-webkit-scrollbar {
+  width: 6px;
+}
+
+.main-wrap::-webkit-scrollbar-thumb {
+  background-color: #ccc;
+}
+
+textarea,
+select,
+input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  box-sizing: border-box;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.input-container input {
+  width: 90%;
+  box-sizing: border-box;
+  margin: 5px;
+  margin-left: 0;
+}
+
+/*BUTTON STYLES*/
+.generate-pass {
+  display: flex;
+  flex-direction: column;
+  align-items: end;
+  margin: 20px;
+}
+
+.generate-pass button .svg-inline--fa {
+  margin-right: 5px;
+  font-size: 1rem;
+  color: #fff;
+}
+
+.generate-pass button {
+  background-color: #007bff;
+  color: #fff;
+  padding: 14px 20px;
+  width: 100%;
+  font-size: 16px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.generate-pass button:hover {
+  background-color: #0056b3;
+}
+
+.addname-button {
+  background-color: #e3f3fb;
+  color: #007bff;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  margin-top: 10px;
+}
+
+.addname-button:active {
+  transition: 0.5s ease;
+  background-color: #007bff;
+  color: #e3f3fb;
+}
+.save-button button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  cursor: pointer;
+}
+
+.save-button {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  padding-top: 10px;
+  margin-top: 10px;
+  border-top: 1px solid #ccc;
+}
+
+.save-button button:hover {
+  background-color: #0056b3;
+}
+
+.remove-button {
+  background-color: white;
+  border: none;
+  border-radius: 5px;
+  color: rgb(231, 87, 87);
+  padding: 10px;
+  cursor: pointer;
+}
+
+.remove-button:active {
+  transition: 0.5s ease;
+  background-color: rgb(231, 87, 87);
+  color: white;
+}
+
+/*POP-UP GENERATED GATEPASS*/
+.popup-gate-pass {
+  position: fixed;
+  top: 0%;
+  left: 0%;
+  width: 100%;
+  height: 100vh;
+  border-radius: 5px;
+  background-color: rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+  /* Apply a blur effect to the background */
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  /* Animation */
+  animation-name: fade-in;
+  animation-duration: 0.5s;
+  animation-timing-function: ease-in-out;
+}
+
+.gate-pass-inner {
+  position: relative;
+  padding: 32px;
+  min-height: 75vh;
+  min-width: 400px;
+  background-color: #fff;
+
+  /* Animation */
+  animation-name: slide-up;
+  animation-duration: 0.5s;
+  animation-timing-function: ease-in-out;
+}
+
+.print-gatepass-button {
+  background-color: #007bff;
+  font-size: larger;
+  color: #fff;
+  padding: 13px 20px;
+  min-width: 465px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 5px;
+}
+
+/* Animation Keyframes */
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slide-up {
+  from {
+    transform: translateY(50px);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+/*GATEPASS PDF STYLES*/
+.pdf-viewer {
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.pdf-container {
+  width: 100%;
+  height: 100%;
+}
+
+@page {
+  size: letter landscape;
+  margin: 20mm;
+}

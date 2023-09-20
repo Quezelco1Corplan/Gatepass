@@ -57,7 +57,7 @@ export const Sidebardata = [
       },
       {
         title: "Gate Pass Form",
-        path: "/Gatepass",
+        path: "/gate",
         icon: <GiOpenGate />,
       },
     ],

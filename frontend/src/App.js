@@ -9,7 +9,8 @@ import Update from "./component/Update";
 import Position from "./pages/Position";
 import Department from "./pages/Department";
 import Employee from "./pages/Employee";
-import Gatepass from "./pages/Gatepass";
+// import Gatepass from "./pages/Gatepass";
+import Gatepass from "./pages/gate";
 import "./App.css";
 // import LoginForm from "./pages/Loginform";
 
@@ -27,7 +28,7 @@ const App = () => {
           <Route path="/Position" element={<Position />} />
           <Route path="/Department" element={<Department />} />
           <Route path="/Employee" element={<Employee />} />
-          <Route path="/Gatepass" element={<Gatepass />} />
+          <Route path="/gate" element={<Gatepass />} />
         </Routes>
       </Router>
     </div>

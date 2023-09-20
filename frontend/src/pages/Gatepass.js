@@ -93,8 +93,12 @@ const Gatepass = () => {
     }
   };
 
-  const handleChange = (e) => {
-    setGatepass((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+  const handlePurposeChange = (e) => {
+    setGatepass((prev) => ({ ...prev, purpose: e.target.value }));
+  };
+
+  const handleServiceVehicleChange = (e) => {
+    setGatepass((prev) => ({ ...prev, service_vehicle: e.target.value }));
   };
 
   const handleDestinationChange = (e) => {
@@ -121,6 +125,7 @@ const Gatepass = () => {
       employee.empName.toLowerCase().includes(userInput.toLowerCase())
     );
     setFilteredNames(filtered);
+    setGatepass((prev) => ({ ...prev, names: e.target.value }));
   };
 
   const handleNameClick = (name) => {
@@ -160,8 +165,11 @@ const Gatepass = () => {
       localStorage.setItem("counter", "1");
       setCurrentDate(dateString);
     } else {
-      setCounter(counter + 1);
-      localStorage.setItem("counter", String(counter + 1));
+      setCounter((prevCounter) => {
+        const newCounter = prevCounter + 1;
+        localStorage.setItem("counter", String(newCounter));
+        return newCounter;
+      });
     }
 
     const refNumber = `${date.getFullYear()}-${String(
@@ -185,21 +193,6 @@ const Gatepass = () => {
           gatepass_id: response.data.insertId,
         },
       ]);
-
-      // setGatepass({
-      //   ref_number: "",
-      //   purpose: "",
-      //   destination: "",
-      //   dot: "",
-      //   departments: "",
-      //   service_vehicle: "",
-      //   names: "",
-      // });
-      // setDestination("");
-      // setDateOfTravel("");
-      // setDepartment("");
-      // setName("");
-      // setServiceVehicle("");
 
       alert(response.data);
       setDescription(purpose);
@@ -269,7 +262,7 @@ const Gatepass = () => {
                         id="purpose"
                         name="purpose"
                         value={gatepass.purpose}
-                        onChange={handleChange}
+                        onChange={handlePurposeChange}
                       />
                     </label>
                   </div>
@@ -316,7 +309,7 @@ const Gatepass = () => {
                         type="text"
                         name="service_vehicle"
                         value={gatepass.service_vehicle}
-                        onChange={handleChange}
+                        onChange={handleServiceVehicleChange}
                       />
                     </label>
                   </div>
@@ -357,11 +350,11 @@ const Gatepass = () => {
                       {/* Display the filtered names as suggestions */}
                       {filteredNames.map((employee) => (
                         <div
-                        key={employee.employee_id}
-                        onClick={() => handleNameClick(employee.empName)}
-                      >
-                        {employee.empName}
-                      </div>
+                          key={employee.employee_id}
+                          onClick={() => handleNameClick(employee.empName)}
+                        >
+                          {employee.empName}
+                        </div>
                       ))}
                     </label>
                   </div>
