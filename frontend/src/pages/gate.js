@@ -26,6 +26,8 @@ const Gatepass = () => {
     area_office: "",
     start_time: "",
     return_time: "",
+    start_date: "",
+    end_date: "",
   });
   const [filteredNames, setFilteredNames] = useState([]);
   const [description, setDescription] = useState("");
@@ -36,12 +38,10 @@ const Gatepass = () => {
   const [serviceVehicle, setServiceVehicle] = useState("");
   const [department, setDepartment] = useState("");
   const [departments, setDepartments] = useState([]);
-  const [isSearchVisible, setIsSearchVisible] = useState(false);
   const [buttonPopUp, setButtonPopup] = useState(false);
   const [employeeNames, setEmployeeNames] = useState([
     { id: Math.random(), name: "" },
   ]);
-  const [newEmployeeName, setNewEmployeeName] = useState("");
   const [startDateOfTravel, setStartDateOfTravel] = useState("");
   const [endDateOfTravel, setEndDateOfTravel] = useState("");
   const [isMoreThanOneDayTravel, setIsMoreThanOneDayTravel] = useState(false);
@@ -105,18 +105,6 @@ const Gatepass = () => {
     setEmployeeNames(updatedEmployeeNames);
   };
 
-  // const handleNameChange = (e) => {
-  //   const userInput = e.target.value;
-  //   setName(userInput);
-
-  //   // Filter the names based on the user input
-  //   const filtered = employees.filter((employee) =>
-  //     employee.empName.toLowerCase().includes(userInput.toLowerCase())
-  //   );
-  //   setFilteredNames(filtered);
-  //   setGatepass((prev) => ({ ...prev, names: e.target.value }));
-  // };
-
   const handleAreaOfficeChange = (e) => {
     setAreaOffice(e.target.value);
     setGatepass((prev) => ({ ...prev, area_office: e.target.value }));
@@ -144,14 +132,49 @@ const Gatepass = () => {
     setGatepass((prev) => ({ ...prev, dot: e.target.value }));
   };
 
+  const StartDateOfTravel = (e) => {
+    setStartDateOfTravel(e.target.value);
+    setGatepass((prev) => ({ ...prev, start_date: e.target.value }));
+  };
+
+  const EndDateOfTravel = (e) => {
+    setEndDateOfTravel(e.target.value);
+    setGatepass((prev) => ({ ...prev, end_date: e.target.value }));
+  };
+
+  const convertTo12HourFormat = (time24) => {
+    const [hours24, minutes] = time24.split(":");
+    let period = "AM";
+    let hours = hours24;
+
+    if (hours24 > 12) {
+      hours = hours24 - 12;
+      period = "PM";
+    } else if (hours24 === "00") {
+      hours = 12;
+    } else if (hours24 === "12") {
+      period = "PM";
+    }
+
+    return `${hours}:${minutes} ${period}`;
+  };
+
   const handleStartTimeChange = (e) => {
-    setDateOfTime(e.target.value);
-    setGatepass((prev) => ({ ...prev, start_time: e.target.value }));
+    const time24 = e.target.value;
+    setDateOfTime(time24);
+    setGatepass((prev) => ({
+      ...prev,
+      start_time: convertTo12HourFormat(time24),
+    }));
   };
 
   const handleReturnTimeChange = (e) => {
-    setReturnDateOfTime(e.target.value);
-    setGatepass((prev) => ({ ...prev, return_time: e.target.value }));
+    const time24 = e.target.value;
+    setReturnDateOfTime(time24);
+    setGatepass((prev) => ({
+      ...prev,
+      return_time: convertTo12HourFormat(time24),
+    }));
   };
 
   // Event handler for updating the employee name in the array
@@ -194,7 +217,6 @@ const Gatepass = () => {
     if (
       !purpose ||
       !destination ||
-      !dot ||
       !departments ||
       !service_vehicle ||
       !area_office ||
@@ -238,6 +260,8 @@ const Gatepass = () => {
           ...gatepass,
           names: employee.name, // Use the employee name from the loop
           ref_number: refNumber,
+          isMoreThanOneDayTravel: Number(isMoreThanOneDayTravel),
+          duration_day: isMoreThanOneDayTravel ? 1 : 0,
         });
 
         // Add the new gatepass to the gatepassData state
@@ -256,6 +280,7 @@ const Gatepass = () => {
         setServiceVehicle(service_vehicle);
         setButtonPopup(true);
         setRefNumber(refNumber);
+        window.location.reload();
       } catch (err) {
         console.log(err);
         setError(true);
@@ -305,11 +330,6 @@ const Gatepass = () => {
                   <FontAwesomeIcon icon={faPlus} /> Add a name
                 </button>
               </div>
-              {/* <div className="save-button">
-                <button onClick={handleSaveClick}>
-                  <FontAwesomeIcon icon={faCheck} /> Save
-                </button>
-              </div> */}
             </div>
             <div className="form-box">
               <div className="form-inner-left">
@@ -399,7 +419,7 @@ const Gatepass = () => {
                         <input
                           type="date"
                           value={startDateOfTravel}
-                          onChange={(e) => setStartDateOfTravel(e.target.value)}
+                          onChange={StartDateOfTravel}
                         />
                       </div>
 
@@ -408,7 +428,7 @@ const Gatepass = () => {
                         <input
                           type="date"
                           value={endDateOfTravel}
-                          onChange={(e) => setEndDateOfTravel(e.target.value)}
+                          onChange={EndDateOfTravel}
                         />
                       </div>
                     </div>

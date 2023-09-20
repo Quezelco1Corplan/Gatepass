@@ -13,17 +13,14 @@ const addGatepasss = (req, res) => {
     area_office,
     start_time,
     return_time,
+    start_date,
+    end_date,
   } = req.body;
-
-  // if (!ref_number || !purpose || !destination || !dot || !departments || !service_vehicle || !names) {
-  //   alert("Values are empty");
-  //   return;
-  // }
 
   console.log(req.body);
 
   const q =
-    "INSERT INTO gatepass (ref_number, duration_day, purpose, destination, dot, departments, service_vehicle ,names, area_office, start_time, return_time) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    "INSERT INTO gatepass (ref_number, duration_day, purpose, destination, dot, departments, service_vehicle ,names, area_office, start_time, return_time, start_date, end_date) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
   const values = [
     ref_number,
     duration_day,
@@ -36,6 +33,8 @@ const addGatepasss = (req, res) => {
     area_office,
     start_time,
     return_time,
+    start_date,
+    end_date,
   ];
 
   db.query(q, values, (err, data) => {
@@ -45,7 +44,7 @@ const addGatepasss = (req, res) => {
         .status(500)
         .json({ message: "Internal Server Error", error: err.message });
     }
-    return res.json("Gatepass has been added in your database.");
+    return res.json("Gatepass has been created.");
   });
 };
 
