@@ -3,13 +3,12 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import Axios from "axios";
 import { Link } from "react-router-dom";
-import "../css/Signup.css";
+import * as SignupStyles from "../css/Signup.styles";
 
 function Signup() {
   const [registerStatus, setRegisterStatus] = useState("");
 
-  const formik = useFormik (
-    {
+  const formik = useFormik({
     initialValues: {
       firstname: "",
       lastname: "",
@@ -28,9 +27,11 @@ function Signup() {
       email: Yup.string().email("Wrong Email").required("Email Required"),
       password: Yup.string()
         .min(8, "Only 8 characters are needed")
+        .max(20, "Only 8 characters are needed")
         .required("Required Password"),
-      contact: Yup.number()
+      contact: Yup.string()
         .max(11, "Maximum of 11 digits allowed.")
+
         .required("Required Password"),
     }),
 
@@ -54,58 +55,66 @@ function Signup() {
         setRegisterStatus(response.data.message);
       } else {
         setRegisterStatus("ACCOUNT CREATED SUCCESSFULLY");
-        window.location.href = "/";
       }
     });
   };
 
   console.log(formik.touched);
   return (
-    <form onSubmit={formik.handleSubmit}>
-      <div className="box-signup">
-        <h1> Register Form </h1>
-
-        <div className="input-box-signup">
-          <div className="box-names">
-            <div className="input-firstname">
-              <label htmlFor="firstname">First Name</label>
-              <input
-                className="firstname"
-                name="firstname"
-                type="text"
-                placeholder="Input First Name"
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                value={formik.values.firstname}
-                required
-              />
-              {formik.touched.firstname && formik.errors.firstname ? (
-                <p className="error"> {formik.errors.firstname} </p>
-              ) : (
-                <p className="error">ㅤ</p>
-              )}
-            </div>
-
-            <div className="input-lastname">
-              <label htmlFor="lastname">Last Name</label>
-              <input
-                className="lastname"
-                name="lastname"
-                type="text"
-                placeholder="Input Last Name"
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                value={formik.values.lastname}
-                required
-              />
-              {formik.touched.lastname && formik.errors.lastname ? (
-                <p className="error"> {formik.errors.lastname} </p>
-              ) : (
-                <p className="error">ㅤ</p>
-              )}
-            </div>
-          </div>
-          <div className="input-contact">
+    <SignupStyles.SignupBody>
+      <SignupStyles.SignupContainer>
+        <SignupStyles.SignupForm onSubmit={formik.handleSubmit}>
+          <SignupStyles.SignupData>
+            <h1> Sign UP </h1>
+          </SignupStyles.SignupData>
+          <SignupStyles.SignupError>
+            {registerStatus}ㅤ
+          </SignupStyles.SignupError>
+          <SignupStyles.SignupData>
+            <SignupStyles.Signupdivcontainer>
+              <SignupStyles.Signupdiv>
+                <label htmlFor="firstname">First Name</label>
+                <input
+                  className="firstname"
+                  name="firstname"
+                  type="text"
+                  placeholder="Input First Name"
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  value={formik.values.firstname}
+                  required
+                />
+                <SignupStyles.error>
+                  {formik.touched.firstname && formik.errors.firstname ? (
+                    <p className="error"> {formik.errors.firstname} </p>
+                  ) : (
+                    <p className="error">ㅤ</p>
+                  )}
+                </SignupStyles.error>
+              </SignupStyles.Signupdiv>
+              <SignupStyles.Signupdiv>
+                <label htmlFor="lastname">Last Name</label>
+                <input
+                  className="lastname"
+                  name="lastname"
+                  type="text"
+                  placeholder="Input Last Name"
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  value={formik.values.lastname}
+                  required
+                />
+                <SignupStyles.error>
+                  {formik.touched.lastname && formik.errors.lastname ? (
+                    <p className="error"> {formik.errors.lastname} </p>
+                  ) : (
+                    <p className="error">ㅤ</p>
+                  )}
+                </SignupStyles.error>
+              </SignupStyles.Signupdiv>
+            </SignupStyles.Signupdivcontainer>
+          </SignupStyles.SignupData>
+          <SignupStyles.SignupData>
             <label htmlFor="contact">Contact Number</label>
             <input
               className="contact"
@@ -117,14 +126,15 @@ function Signup() {
               value={formik.values.contact}
               required
             />
-
-            {formik.touched.contact && formik.errors.contact ? (
-              <p className="error"> {formik.errors.contact} </p>
-            ) : (
-              <p className="error">ㅤ</p>
-            )}
-          </div>
-          <div className="input-email">
+            <SignupStyles.error>
+              {formik.touched.contact && formik.errors.contact ? (
+                <p className="error"> {formik.errors.contact} </p>
+              ) : (
+                <p className="error">ㅤ</p>
+              )}
+            </SignupStyles.error>
+          </SignupStyles.SignupData>
+          <SignupStyles.SignupData>
             <label htmlFor="email">Email</label>
             <input
               className="email"
@@ -136,13 +146,15 @@ function Signup() {
               value={formik.values.email}
               required
             />
-            {formik.touched.email && formik.errors.email ? (
-              <p className="error"> {formik.errors.email} </p>
-            ) : (
-              <p className="error">ㅤ</p>
-            )}
-          </div>
-          <div className="input-password">
+            <SignupStyles.error>
+              {formik.touched.email && formik.errors.email ? (
+                <p className="error"> {formik.errors.email} </p>
+              ) : (
+                <p className="error">ㅤ</p>
+              )}
+            </SignupStyles.error>
+          </SignupStyles.SignupData>
+          <SignupStyles.SignupData>
             <label htmlFor="password">Password</label>
             <input
               className="password"
@@ -154,25 +166,27 @@ function Signup() {
               value={formik.values.password}
               required
             />
-            {formik.touched.password && formik.errors.password ? (
-              <p className="error"> {formik.errors.password} </p>
-            ) : (
-              <p className="error">ㅤ</p>
-            )}
-          </div>
-          <button className="signupbtn" type="submit" onClick={register}>
-            Register
-          </button>{" "}
-          {registerStatus}
-          <div className="goto-login">
-            <p> Already have account! </p>{" "}
+            <SignupStyles.error>
+              {formik.touched.password && formik.errors.password ? (
+                <p className="error"> {formik.errors.password} </p>
+              ) : (
+                <p className="error">ㅤ</p>
+              )}
+            </SignupStyles.error>
+          </SignupStyles.SignupData>
+          <SignupStyles.SignupData>
+            <button className="signupbtn" type="submit" onClick={register}>
+              Register
+            </button>
+
             <p>
+              Already have account!
               <Link to="/">LoginHere</Link>
             </p>
-          </div>
-        </div>
-      </div>
-    </form>
+          </SignupStyles.SignupData>
+        </SignupStyles.SignupForm>
+      </SignupStyles.SignupContainer>
+    </SignupStyles.SignupBody>
   );
 }
 

@@ -9,12 +9,14 @@ function History() {
   const [data, setData] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [selectAll, setSelectAll] = useState(false);
+  const [refreshTable, setRefreshTable] = useState(false);
 
-  const filteredData = data.filter((item) =>
-    item.names.toLowerCase().includes(searchQuery.toLowerCase()) || 
-    item.dot.toLowerCase().includes(searchQuery.toLowerCase()) || 
-    item.ref_number.toLowerCase().includes(searchQuery.toLowerCase()) || 
-    item.destination.toLowerCase().includes(searchQuery.toLowerCase())
+  const filteredData = data.filter(
+    (item) =>
+      item.names.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      item.dot.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      item.ref_number.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      item.destination.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
   const handleCheckboxChange = (index) => {
@@ -32,16 +34,43 @@ function History() {
     setSelectAll(!selectAll);
   };
 
+  const refreshPage = () => {
+    setRefreshTable(true);
+  };
+
   useEffect(() => {
     axios
-      .get("http://localhost:3001/gatepass")
+      .get("http://localhost:3001/gatepass", {
+        params: {
+          refresh: refreshTable ? Date.now() : undefined,
+        },
+      })
       .then((response) => {
         setData(response.data);
       })
       .catch((error) => {
         console.error("There was an error!", error);
       });
-  }, []);
+  }, [refreshTable]);
+
+  const handleDelete = (id) => {
+    const confirm = window.confirm("Are you sure your information is correct?");
+    if (!confirm) {
+      return;
+    }
+
+    axios
+      .delete(`http://localhost:3001/gatepass/${id}`)
+      .then((response) => {
+        //Handle delete
+        console.log("Item deleted");
+        refreshPage();
+      })
+      .catch((error) => {
+        //Handle error
+        console.error("Error deleting item", error);
+      });
+  };
 
   return (
     <Sidebar>
@@ -128,7 +157,7 @@ function History() {
                         <BiShow />
                       </button>
 
-                      <button>
+                      <button onClick={() => handleDelete(item.gatepass_id)}>
                         <BiSolidTrashAlt />
                       </button>
                     </HistoryStyles.HistoryAction>

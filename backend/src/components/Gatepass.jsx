@@ -60,7 +60,7 @@ const getGatepass = (req, res) => {
 };
 
 const deleteGatepass = (req, res) => {
-  const gatepassId = req.params.gatepass_id;
+  const gatepassId = req.params.id;
   const q = "DELETE FROM gatepass WHERE gatepass_id = ?";
 
   db.query(q, [gatepassId], (err, result) => {

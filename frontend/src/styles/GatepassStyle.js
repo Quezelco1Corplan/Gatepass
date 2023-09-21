@@ -130,6 +130,7 @@ export const HistoryTableData = styled.td`
   & button {
     background-color: none;
     border: none;
+    cursor: pointer;
   }
 `;
 
