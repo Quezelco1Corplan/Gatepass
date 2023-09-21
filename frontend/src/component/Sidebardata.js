@@ -7,11 +7,16 @@ import * as TablerIcons from "react-icons/tb";
 import * as RadixIcons from "react-icons/rx";
 import * as SimpleIcons from "react-icons/si";
 import { FcLeave, FcDepartment } from "react-icons/fc";
+import { AiOutlineHistory } from "react-icons/ai";
+import { BsFillPersonLinesFill } from "react-icons/bs";
+
 
 // import UserManagement from '../pages/UserManagement';
 // import Home from '../pages/Home';
 // UserManagement
 // Home
+
+
 
 export const Sidebardata = [
   {
@@ -57,15 +62,20 @@ export const Sidebardata = [
       },
       {
         title: "Gate Pass Form",
-        path: "/gate",
+        path: "/Gatepass",
         icon: <GiOpenGate />,
+      },
+      {
+        title: "History Form",
+        path: "/History",
+        icon: <AiOutlineHistory />,
       },
     ],
   },
   {
     title: "Maintenance",
     // path: '/Home',
-    icon: <SimpleIcons.SiFormstack />,
+    icon: <SimpleIcons.SiAbbott />,
     iconClosed: <RiIcons.RiArrowDownSFill />,
     iconOpened: <RiIcons.RiArrowUpSFill />,
     subNav: [
@@ -87,7 +97,7 @@ export const Sidebardata = [
       {
         title: "User Management",
         path: "/UserManagement",
-        icon: <GiOpenGate />,
+        icon: <BsFillPersonLinesFill />,
       },
     ],
   },

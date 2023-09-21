@@ -206,7 +206,6 @@ const Gatepass = () => {
     const {
       purpose,
       destination,
-      dot,
       departments,
       service_vehicle,
       area_office,

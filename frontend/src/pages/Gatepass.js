@@ -1,36 +1,50 @@
 import React, { useState, useEffect } from "react";
+// import { PDFViewer } from "@react-pdf/renderer";
 import Sidebar from "../component/sidebar";
 import "../css/Gatepass.css";
-import SearchBar from "../component/SearchBar.js";
-import GeneratedGatePass from "../component/GeneratedGatePass";
+//import SearchBar from "../component/SearchBar";
+//import GeneratedGatePass from "../component/GeneratedGatePass";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faRepeat } from "@fortawesome/free-solid-svg-icons";
+import {
+  faRepeat,
+  faPlus,
+  faCheck,
+  faTimes,
+} from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
 
 const Gatepass = () => {
-  const [searchTerm, setSearchTerm] = useState("");
-  const [filteredNames, setFilteredNames] = useState([]);
-
-  const [description, setDescription] = useState("");
-  const [destination, setDestination] = useState("");
-  const [dateOfTravel, setDateOfTravel] = useState("");
-  const [department, setDepartment] = useState("");
-  const [name, setName] = useState("");
-  const [isSearchVisible, setIsSearchVisible] = useState(false);
-  const [buttonPopUp, setButtonPopup] = useState(false);
   const [gatepass, setGatepass] = useState({
     ref_number: "",
+    duration_day: "",
     purpose: "",
     destination: "",
     dot: "",
     departments: "",
     service_vehicle: "",
     names: "",
+    area_office: "",
+    start_time: "",
+    return_time: "",
+    start_date: "",
+    end_date: "",
   });
-  const [error, setError] = useState(false);
-  const [employees, setEmployees] = useState([]);
-  const [departments, setDepartments] = useState([]);
+  const [filteredNames, setFilteredNames] = useState([]);
+  const [description, setDescription] = useState("");
+  const [area_office, setAreaOffice] = useState("");
+  const [dateOfTravel, setDateOfTravel] = useState("");
+  const [dateOfTime, setDateOfTime] = useState("");
+  const [returnDateOfTime, setReturnDateOfTime] = useState("");
   const [serviceVehicle, setServiceVehicle] = useState("");
+  const [department, setDepartment] = useState("");
+  const [departments, setDepartments] = useState([]);
+  const [buttonPopUp, setButtonPopup] = useState(false);
+  const [employeeNames, setEmployeeNames] = useState([
+    { id: Math.random(), name: "" },
+  ]);
+  const [startDateOfTravel, setStartDateOfTravel] = useState("");
+  const [endDateOfTravel, setEndDateOfTravel] = useState("");
+  const [isMoreThanOneDayTravel, setIsMoreThanOneDayTravel] = useState(false);
   const [refNumber, setRefNumber] = useState("");
   const [counter, setCounter] = useState(() => {
     const savedCounter = localStorage.getItem("counter");
@@ -40,25 +54,24 @@ const Gatepass = () => {
     new Date().toISOString().slice(0, 10)
   );
   const [gatepassData, setGatepassData] = useState([]);
+  const [employees, setEmployees] = useState([]);
+  const [name, setName] = useState("");
+  const [error, setError] = useState(false);
 
-  const toggleSearch = () => {
-    setIsSearchVisible(!isSearchVisible);
+  // Event handler for adding a new input field
+  const handleAddNameClick = () => {
+    setEmployeeNames([...employeeNames, { id: Math.random(), name: "" }]);
   };
 
-  // search function
-  const handleSearchChange = (e) => {
-    setSearchTerm(e.target.value);
-  };
-
+  // // Event handler for saving the inputs
+  // const handleSaveClick = () => {
+  //   // You can access the employee names from the employeeNames state
+  //   console.log("Employee Names:", employeeNames);
+  //   // Perform your save logic here
+  // };
   useEffect(() => {
     fetchEmployeesAndDepartments();
-    fetchGatepass();
   }, []);
-
-  const formatDate = (dateString) => {
-    const options = { year: "numeric", month: "2-digit", day: "2-digit" };
-    return new Date(dateString).toLocaleDateString(undefined, options);
-  };
 
   const fetchEmployeesAndDepartments = async () => {
     try {
@@ -84,31 +97,17 @@ const Gatepass = () => {
     }
   };
 
-  const fetchGatepass = async () => {
-    try {
-      const response = await axios.get("http://localhost:3001/gatepass");
-      setGatepassData(response.data);
-    } catch (error) {
-      console.error(error);
-    }
+  // Event handler for removing an input field
+  const handleRemoveNameClick = (idToRemove) => {
+    const updatedEmployeeNames = employeeNames.filter(
+      (employee) => employee.id !== idToRemove
+    );
+    setEmployeeNames(updatedEmployeeNames);
   };
 
-  const handlePurposeChange = (e) => {
-    setGatepass((prev) => ({ ...prev, purpose: e.target.value }));
-  };
-
-  const handleServiceVehicleChange = (e) => {
-    setGatepass((prev) => ({ ...prev, service_vehicle: e.target.value }));
-  };
-
-  const handleDestinationChange = (e) => {
-    setDestination(e.target.value);
-    setGatepass((prev) => ({ ...prev, destination: e.target.value }));
-  };
-
-  const handleDateOfTravelChange = (e) => {
-    setDateOfTravel(e.target.value);
-    setGatepass((prev) => ({ ...prev, dot: e.target.value }));
+  const handleAreaOfficeChange = (e) => {
+    setAreaOffice(e.target.value);
+    setGatepass((prev) => ({ ...prev, area_office: e.target.value }));
   };
 
   const handleDepartmentChange = (e) => {
@@ -116,16 +115,83 @@ const Gatepass = () => {
     setGatepass((prev) => ({ ...prev, departments: e.target.value }));
   };
 
-  const handleNameChange = (e) => {
-    const userInput = e.target.value;
-    setName(userInput);
+  const handleDestinationChange = (e) => {
+    setGatepass((prev) => ({ ...prev, destination: e.target.value }));
+  };
+
+  const handleServiceVehicleChange = (e) => {
+    setGatepass((prev) => ({ ...prev, service_vehicle: e.target.value }));
+  };
+
+  const handlePurposeChange = (e) => {
+    setGatepass((prev) => ({ ...prev, purpose: e.target.value }));
+  };
+
+  const handleDateOfTravelChange = (e) => {
+    setDateOfTravel(e.target.value);
+    setGatepass((prev) => ({ ...prev, dot: e.target.value }));
+  };
+
+  const StartDateOfTravel = (e) => {
+    setStartDateOfTravel(e.target.value);
+    setGatepass((prev) => ({ ...prev, start_date: e.target.value }));
+  };
+
+  const EndDateOfTravel = (e) => {
+    setEndDateOfTravel(e.target.value);
+    setGatepass((prev) => ({ ...prev, end_date: e.target.value }));
+  };
+
+  const convertTo12HourFormat = (time24) => {
+    const [hours24, minutes] = time24.split(":");
+    let period = "AM";
+    let hours = hours24;
+
+    if (hours24 > 12) {
+      hours = hours24 - 12;
+      period = "PM";
+    } else if (hours24 === "00") {
+      hours = 12;
+    } else if (hours24 === "12") {
+      period = "PM";
+    }
+
+    return `${hours}:${minutes} ${period}`;
+  };
+
+  const handleStartTimeChange = (e) => {
+    const time24 = e.target.value;
+    setDateOfTime(time24);
+    setGatepass((prev) => ({
+      ...prev,
+      start_time: convertTo12HourFormat(time24),
+    }));
+  };
+
+  const handleReturnTimeChange = (e) => {
+    const time24 = e.target.value;
+    setReturnDateOfTime(time24);
+    setGatepass((prev) => ({
+      ...prev,
+      return_time: convertTo12HourFormat(time24),
+    }));
+  };
+
+  // Event handler for updating the employee name in the array
+  const handleEmployeeNameChange = (id, value) => {
+    setName(value);
 
     // Filter the names based on the user input
     const filtered = employees.filter((employee) =>
-      employee.empName.toLowerCase().includes(userInput.toLowerCase())
+      employee.empName.toLowerCase().includes(value.toLowerCase())
     );
     setFilteredNames(filtered);
-    setGatepass((prev) => ({ ...prev, names: e.target.value }));
+    setGatepass((prev) => ({ ...prev, names: value }));
+
+    const updatedEmployeeNames = employeeNames.map((employee) =>
+      employee.id === id ? { ...employee, name: value } : employee
+    );
+    setEmployeeNames(updatedEmployeeNames);
   };
 
   const handleNameClick = (name) => {
@@ -137,16 +203,24 @@ const Gatepass = () => {
   const handleClick = async (e) => {
     e.preventDefault();
 
-    const { purpose, destination, dot, departments, service_vehicle, names } =
-      gatepass;
+    const {
+      purpose,
+      destination,
+      departments,
+      service_vehicle,
+      area_office,
+      start_time,
+      return_time,
+    } = gatepass;
 
     if (
       !purpose ||
       !destination ||
-      !dot ||
       !departments ||
       !service_vehicle ||
-      !names
+      !area_office ||
+      !start_time ||
+      !return_time
     ) {
       alert("Values are empty");
       return;
@@ -178,56 +252,37 @@ const Gatepass = () => {
       counter
     ).padStart(4, "0")}`;
 
-    try {
-      const response = await axios.post("http://localhost:3001/gatepass", {
-        ...gatepass,
-        ref_number: refNumber,
-      });
-
-      // Add the new gatepass to the gatepassData state
-      setGatepassData((prevGatepassData) => [
-        ...prevGatepassData,
-        {
+    // Loop through the employeeNames state
+    for (const employee of employeeNames) {
+      try {
+        const response = await axios.post("http://localhost:3001/gatepass", {
           ...gatepass,
+          names: employee.name, // Use the employee name from the loop
           ref_number: refNumber,
-          gatepass_id: response.data.insertId,
-        },
-      ]);
+          isMoreThanOneDayTravel: Number(isMoreThanOneDayTravel),
+          duration_day: isMoreThanOneDayTravel ? 1 : 0,
+        });
 
-      alert(response.data);
-      setDescription(purpose);
-      setServiceVehicle(service_vehicle);
-      setButtonPopup(true);
-      setRefNumber(refNumber);
-    } catch (err) {
-      console.log(err);
-      setError(true);
-    }
-  };
+        // Add the new gatepass to the gatepassData state
+        setGatepassData((prevGatepassData) => [
+          ...prevGatepassData,
+          {
+            ...gatepass,
+            names: employee.name, // Use the employee name from the loop
+            ref_number: refNumber,
+            gatepass_id: response.data.insertId,
+          },
+        ]);
 
-  const deleteGatepass = async (id) => {
-    // Ask the user to confirm
-    const confirm = window.confirm("Are you want to delete this gatepass?");
-    if (!confirm) {
-      return;
-    }
-
-    try {
-      const response = await axios.delete(
-        `http://localhost:3001/gatepass/${id}`
-      );
-      if (response.status === 200) {
-        // Remove the deleted gatepass from the gatepassData state
-        setGatepassData(
-          gatepassData.filter((gatepass) => gatepass.gatepass_id !== id)
-        );
-        alert("Gatepass has been deleted");
-      }
-    } catch (err) {
-      if (err.response && err.response.status === 404) {
-        alert("Gatepass not found");
-      } else {
-        console.error(err);
+        alert(response.data);
+        setDescription(purpose);
+        setServiceVehicle(service_vehicle);
+        setButtonPopup(true);
+        setRefNumber(refNumber);
+        window.location.reload();
+      } catch (err) {
+        console.log(err);
+        setError(true);
       }
     }
   };
@@ -235,234 +290,193 @@ const Gatepass = () => {
   return (
     <Sidebar>
       <div>
-        <div className="g-main-wrap">
-          <div className="g-header">
-            <h1>Gatepass</h1>
-            <div className="g-search-wrap">
-              <div className="g-component">
-                <h3 className="h3">Search</h3>
+        <div className="header">
+          <h1 className="title">Gatepass</h1>
+        </div>
+        <div className="main-wrap">
+          <div className="form-wrap">
+            <div className="employee-form-box">
+              <div className="employee-box">
+                <label>Add employee</label>
+                {employeeNames.map((employee) => (
+                  <div key={employee.id} className="input-container">
+                    <input
+                      type="text"
+                      placeholder="Enter the name of employee..."
+                      value={employee.name}
+                      name="names"
+                      onChange={(e) =>
+                        handleEmployeeNameChange(employee.id, e.target.value)
+                      }
+                    />
+                    {filteredNames.map((employee) => (
+                      <div
+                        key={employee.employee_id}
+                        onClick={() => handleNameClick(employee.empName)}
+                      >
+                        {employee.empName}
+                      </div>
+                    ))}
+                    <button
+                      className="remove-button"
+                      onClick={() => handleRemoveNameClick(employee.id)}
+                    >
+                      Remove
+                    </button>
+                  </div>
+                ))}
+                <button className="addname-button" onClick={handleAddNameClick}>
+                  <FontAwesomeIcon icon={faPlus} /> Add a name
+                </button>
+              </div>
+            </div>
+            <div className="form-box">
+              <div className="form-inner-left">
+                <div className="form-block">
+                  <div>
+                    <label> Area Office:</label>
+                    <select
+                      id="areaoffice"
+                      value={area_office}
+                      onChange={handleAreaOfficeChange}
+                    >
+                      <option value="">Select Area Office</option>
+                      <option value="Office 1">Office 1</option>
+                      <option value="Office 2">Office 2</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label>Department:</label>
+                    <select
+                      name="departments"
+                      value={department}
+                      onChange={handleDepartmentChange}
+                    >
+                      <option value="">Select Department</option>
+                      {Array.isArray(departments) &&
+                        departments.map((department) => (
+                          <option
+                            key={department.department_id}
+                            value={department.department}
+                          >
+                            {department.department}
+                          </option>
+                        ))}
+                    </select>
+                  </div>
+                </div>
+
+                <div>
+                  <label>Destination:</label>
+                  <input
+                    type="text"
+                    name="destination"
+                    value={gatepass.destination}
+                    onChange={handleDestinationChange}
+                  />
+                </div>
+
+                <div>
+                  <label>Service Vehicle:</label>
+                  <input
+                    id="service_vehicle"
+                    type="text"
+                    name="service_vehicle"
+                    value={gatepass.service_vehicle}
+                    onChange={handleServiceVehicleChange}
+                  />
+                </div>
+
+                <div>
+                  <label>Purpose:</label>
+                  <textarea
+                    name="purpose"
+                    value={gatepass.purpose}
+                    onChange={handlePurposeChange}
+                  ></textarea>
+                </div>
               </div>
 
-              <SearchBar
-                isSearchVisible={isSearchVisible}
-                toggleSearch={toggleSearch}
-                searchTerm={searchTerm}
-                handleSearchChange={handleSearchChange}
-              />
+              <div className="form-inner-right">
+                <div className="checkbox-container">
+                  <h3 className="checkbox-text">More than 1-day travel?</h3>
+                  <input
+                    type="checkbox"
+                    id="check-active"
+                    checked={isMoreThanOneDayTravel}
+                    onChange={(e) =>
+                      setIsMoreThanOneDayTravel(e.target.checked)
+                    }
+                  />
+                </div>
+
+                <div>
+                  {isMoreThanOneDayTravel && (
+                    <div className="date-container">
+                      <div>
+                        <label>Start Date:</label>
+                        <input
+                          type="date"
+                          value={startDateOfTravel}
+                          onChange={StartDateOfTravel}
+                        />
+                      </div>
+
+                      <div>
+                        <label>End Date:</label>
+                        <input
+                          type="date"
+                          value={endDateOfTravel}
+                          onChange={EndDateOfTravel}
+                        />
+                      </div>
+                    </div>
+                  )}
+
+                  {!isMoreThanOneDayTravel && (
+                    <div>
+                      <div>
+                        <label>Travel Date:</label>
+                        <input
+                          type="date"
+                          name="dot"
+                          value={dateOfTravel}
+                          onChange={handleDateOfTravelChange}
+                        />
+                      </div>
+                    </div>
+                  )}
+                </div>
+
+                <div className="time-container">
+                  <div>
+                    <label>Time:</label>
+                    <input
+                      type="time"
+                      name="start_time"
+                      value={dateOfTime}
+                      onChange={handleStartTimeChange}
+                    />
+                  </div>
+
+                  <div>
+                    <label>Return Time:</label>
+                    <input
+                      type="time"
+                      name="return_time"
+                      value={returnDateOfTime}
+                      onChange={handleReturnTimeChange}
+                    />
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
-          <div className="g-form-box">
-            <div className="g-form-preview">
-              <div className="g-form-wrap">
-                <form onSubmit={handleClick}>
-                  <div className="g-label-container">
-                    <label htmlFor="purpose">
-                      Purpose:
-                      <textarea
-                        id="purpose"
-                        name="purpose"
-                        value={gatepass.purpose}
-                        onChange={handlePurposeChange}
-                      />
-                    </label>
-                  </div>
-
-                  <div className="g-label-container">
-                    <label htmlFor="destination">
-                      Destination:
-                      <select
-                        id="destination"
-                        className="dropdown-input"
-                        name="destination"
-                        value={destination}
-                        onChange={handleDestinationChange}
-                      >
-                        <option value="">Select Destination</option>
-                        <option value="Gumaca">Gumaca</option>
-                        <option value="Macalelon">Macalelon</option>
-                        <option value="Pitogo">Pitogo</option>
-                        <option value="Lopez">Lopez</option>
-                        <option value="General Luna">General Luna</option>
-                        <option value="Calauag">Calauag</option>
-                        {/* Add more destination options */}
-                      </select>
-                    </label>
-                  </div>
-
-                  <div className="g-label-container">
-                    <label htmlFor="dot">
-                      Date of Travel:
-                      <input
-                        id="dot"
-                        type="date"
-                        name="dot"
-                        value={dateOfTravel}
-                        onChange={handleDateOfTravelChange}
-                      />
-                    </label>
-                  </div>
-                  <div className="g-label-container">
-                    <label htmlFor="service_vehicle">
-                      Service Vehicle
-                      <input
-                        id="service_vehicle"
-                        type="text"
-                        name="service_vehicle"
-                        value={gatepass.service_vehicle}
-                        onChange={handleServiceVehicleChange}
-                      />
-                    </label>
-                  </div>
-                  <div className="g-label-container">
-                    <label htmlFor="departments">
-                      Department:
-                      <select
-                        id="departments"
-                        className="dropdown-input"
-                        name="departments"
-                        value={department}
-                        onChange={handleDepartmentChange}
-                      >
-                        <option value="">Select Department</option>
-                        {Array.isArray(departments) &&
-                          departments.map((department) => (
-                            <option
-                              key={department.department_id}
-                              value={department.department}
-                            >
-                              {department.department}
-                            </option>
-                          ))}
-                      </select>
-                    </label>
-                  </div>
-                  <div className="g-label-container">
-                    <label htmlFor="names">
-                      Names
-                      <input
-                        id="names"
-                        className="dropdown-input"
-                        type="text"
-                        name="names"
-                        value={name}
-                        onChange={handleNameChange}
-                      />
-                      {/* Display the filtered names as suggestions */}
-                      {filteredNames.map((employee) => (
-                        <div
-                          key={employee.employee_id}
-                          onClick={() => handleNameClick(employee.empName)}
-                        >
-                          {employee.empName}
-                        </div>
-                      ))}
-                    </label>
-                  </div>
-                </form>
-                ;
-              </div>
-              <button
-                className="generate-pass-button"
-                type="submit"
-                onClick={handleClick}
-              >
-                <FontAwesomeIcon icon={faRepeat} /> Generate pass
-              </button>
-              {error && "Something went wrong!"}
-            </div>
-
-            <GeneratedGatePass
-              trigger={buttonPopUp}
-              setTrigger={setButtonPopup}
-              description={description}
-            >
-              <h2>Gate Pass</h2>
-              <div className="g-gatepass-content">
-                <p>Reference Number: {refNumber}</p>
-                <p>Description: {description}</p>
-                <p>Destination: {destination}</p>
-                <p>Date of Travel: {dateOfTravel}</p>
-                <p>Service Vehicle: {serviceVehicle}</p>
-                <p>Department: {department}</p>
-                <p>Name: {name}</p>
-              </div>
-            </GeneratedGatePass>
-
-            <div className="history-box">
-              <div className="history-title">
-                <h3>History</h3>
-              </div>
-              <div className="history-content">
-                <table className="g-table">
-                  <thead className="g-thead">
-                    <tr className="empty">
-                      <th className="g-th-td">Purpose</th>
-                      <th className="g-th-td">Ref Number</th>
-                      <th className="g-th-td">Destination</th>
-                      <th className="g-th-td">Date of Travel</th>
-                      <th className="g-th-td">Department</th>
-                      <th className="g-th-td">Service Vehicle</th>
-                      <th className="g-th-td">Name</th>
-                      <th className="g-th-td">Action</th>
-                    </tr>
-                  </thead>
-                  <tbody className="g-tbody">
-                    {gatepassData
-                      .filter((gatepass) => {
-                        // Change this line to match the fields you want to search
-                        return (
-                          gatepass.ref_number
-                            .toLowerCase()
-                            .includes(searchTerm.toLowerCase()) ||
-                          gatepass.purpose
-                            .toLowerCase()
-                            .includes(searchTerm.toLowerCase()) ||
-                          gatepass.destination
-                            .toLowerCase()
-                            .includes(searchTerm.toLowerCase()) ||
-                          gatepass.departments
-                            .toLowerCase()
-                            .includes(searchTerm.toLowerCase()) ||
-                          gatepass.service_vehicle
-                            .toLowerCase()
-                            .includes(searchTerm.toLowerCase()) ||
-                          gatepass.names
-                            .toLowerCase()
-                            .includes(searchTerm.toLowerCase())
-                        );
-                      })
-                      .map((gatepass, index) => {
-                        return (
-                          <tr key={index}>
-                            <td className="g-th-td">{gatepass.purpose}</td>
-                            <td className="g-th-td">{gatepass.ref_number}</td>
-                            <td className="g-th-td">{gatepass.destination}</td>
-                            <td className="g-th-td">
-                              {formatDate(gatepass.dot)}
-                            </td>
-                            <td className="g-th-td">{gatepass.departments}</td>
-                            <td className="g-th-td">
-                              {gatepass.service_vehicle}
-                            </td>
-                            <td className="g-th-td">{gatepass.names}</td>
-                            <td className="g-th-td">
-                              <div className="delete">
-                                <button
-                                  onClick={() =>
-                                    deleteGatepass(gatepass.gatepass_id)
-                                  }
-                                >
-                                  Delete
-                                </button>
-                              </div>
-                            </td>
-                          </tr>
-                        );
-                      })}
-                  </tbody>
-                </table>
-              </div>
-            </div>
+          <div className="generate-pass button">
+            <button type="submit" onClick={handleClick}>
+              <FontAwesomeIcon icon={faRepeat} /> Generate pass
+            </button>
+            {error && "Something went wrong!"}
           </div>
         </div>
       </div>
