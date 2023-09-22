@@ -120,7 +120,7 @@ h2 {
 }
 .checkbox-container {
   display: flex;
-  justify-content: end;
+  justify-content: flex-end;
   padding-bottom: 10px;
 }
 
@@ -198,7 +198,7 @@ input {
 .generate-pass {
   display: flex;
   flex-direction: column;
-  align-items: end;
+  align-items: flex-end;
   margin: 20px;
 }
 
@@ -347,7 +347,7 @@ input {
 .close-button-wrap {
   display: flex;
   flex-direction: column;
-  align-items: end;
+  align-items: flex-end;
   padding: 0;
   margin-bottom: 10px;
 }

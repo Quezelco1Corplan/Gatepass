@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import axios from "axios";
 import { saveAs } from "file-saver";
 import "../css/Gatepass.css";
@@ -8,14 +8,10 @@ import { faClose } from "@fortawesome/free-solid-svg-icons";
 function GeneratedGatePass(props) {
   const [pdfSrc, setPdfSrc] = useState("");
 
-  useEffect(() => {
-    if (props.trigger) {
-      // Only fetch and set PDF source when the component is triggered
-      fetchPdf();
-    }
-  }, [props.trigger]);
-
-  const fetchPdf = async () => {
+  const fetchPdf = useCallback(async () => {
+    const axiosInstance = axios.create({
+      baseURL: "http://localhost:3001",
+    });
     try {
       const pdfData = {
         description: props.description,
@@ -24,28 +20,64 @@ function GeneratedGatePass(props) {
         serviceVehicle: props.serviceVehicle,
         department: props.department,
         employeeNames: props.employeeNames,
+      };
+
+      // POST request
+      const postConfig = {
+        url: "/createPdf",
+        method: "post",
+        data: pdfData,
+      };
+
+      const postResponse = await axiosInstance(postConfig);
+
+      if (postResponse.status === 200) {
+        console.log("PDF creation response:", postResponse.data);
+      } else {
+        console.error("POST request failed with status:", postResponse.status);
       }
 
-      // Send the PDF data URL to the server
-      const response = await axios.post(`http://localhost:3001/createPdf`, pdfData);
-      console.log('PDF creation response:', response.data); // Log the response for debugging
-
-      // Make a request to fetch the PDF data
-      const pdfResponse = await axios.get(`http://localhost:3001/fetchPdf`, {
+      // GET request
+      const getConfig = {
+        url: "/fetchPdf",
+        method: "get",
         responseType: "blob",
-      });
-      const pdfBlob = new Blob([pdfResponse.data], { type: "application/pdf" });
-
-      // Display the PDF as data URI for preview
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setPdfSrc(reader.result);
       };
-      reader.readAsDataURL(pdfBlob);
-    } catch (error) {
-      console.error("Axios Error:", error);
+
+      const getResponse = await axiosInstance(getConfig);
+
+      if (getResponse.status === 200) {
+        const pdfBlob = new Blob([getResponse.data], {
+          type: "application/pdf",
+        });
+
+        // Display the PDF as data URI for preview
+        const reader = new FileReader();
+        reader.onloadend = () => {
+          setPdfSrc(reader.result);
+        };
+        reader.readAsDataURL(pdfBlob);
+      } else {
+        console.error("GET request failed with status:", getResponse.status);
+      }
+    } catch (err) {
+      console.error("Axios Error:", err);
     }
-  };
+  }, [
+    props.description,
+    props.destination,
+    props.dateOfTravel,
+    props.serviceVehicle,
+    props.department,
+    props.employeeNames,
+  ]);
+
+  useEffect(() => {
+    if (props.trigger) {
+      // Only fetch and set PDF source when the component is triggered
+      fetchPdf();
+    }
+  }, [props.trigger, fetchPdf]);
 
   const handleDownloadClick = () => {
     // Trigger PDF download when the "Download Gatepass" button is clicked

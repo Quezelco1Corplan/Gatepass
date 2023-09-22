@@ -1,9 +1,9 @@
 const express = require("express");
 const { createPdf, fetchPdf } = require("../components/PdfSource.jsx");
-const gatepassSource = express.Router();
+const GatepassSource = express.Router();
 
-gatepassSource.post("/createPdf", createPdf);
+GatepassSource.post("/createPdf", createPdf);
 
-gatepassSource.get("/fetchPdf", fetchPdf);
+GatepassSource.get("/fetchPdf", fetchPdf);
 
-module.exports = gatepassSource;
+module.exports = GatepassSource;
