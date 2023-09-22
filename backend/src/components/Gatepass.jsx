@@ -46,14 +46,14 @@ const addGatepasss = (req, res) => {
   });
 };
 
-const getGatepass = (req, res) => {
+const getGatepass = (req, res, next) => {
   const query = "SELECT * FROM gatepass";
 
   db.query(query, (err, data) => {
     if (err) {
       return res.json(err);
     }
-    return res.json(data);
+    res.json(data);
   });
 };
 

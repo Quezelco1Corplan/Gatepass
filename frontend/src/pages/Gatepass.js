@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import Sidebar from "../component/sidebar";
 import "../css/Gatepass.css";
 //import SearchBar from "../component/SearchBar";
-//import GeneratedGatePass from "../component/GeneratedGatePass";
+import GeneratedGatePass from "../component/GeneratedGatePass";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faRepeat,
@@ -29,21 +29,21 @@ const Gatepass = () => {
     end_date: "",
   });
   const [filteredNames, setFilteredNames] = useState([]);
-  const [, setDescription] = useState("");
+  const [description, setDescription] = useState("");
   const [area_office, setAreaOffice] = useState("");
   const [dateOfTravel, setDateOfTravel] = useState("");
   const [dateOfTime, setDateOfTime] = useState("");
   const [returnDateOfTime, setReturnDateOfTime] = useState("");
-  const [, setServiceVehicle] = useState("");
+  const [serviceVehicle, setServiceVehicle] = useState("");
   const [department, setDepartment] = useState("");
   const [departments, setDepartments] = useState([]);
-  const [, setButtonPopup] = useState(false);
+  const [buttonPopUp, setButtonPopup] = useState(false);
   const [employeeNames, setEmployeeNames] = useState([
     { id: Math.random(), name: "" },
   ]);
   const [endDateOfTravel, setEndDateOfTravel] = useState("");
   const [isMoreThanOneDayTravel, setIsMoreThanOneDayTravel] = useState(false);
-  const [, setRefNumber] = useState("");
+  const [refNumber, setRefNumber] = useState("");
   const [counter, setCounter] = useState(() => {
     const savedCounter = localStorage.getItem("counter");
     return savedCounter ? Number(savedCounter) : 1;
@@ -51,9 +51,9 @@ const Gatepass = () => {
   const [currentDate, setCurrentDate] = useState(
     new Date().toISOString().slice(0, 10)
   );
-  const [, setGatepassData] = useState([]);
+  const [gatepassData, setGatepassData] = useState([]);
   const [employees, setEmployees] = useState([]);
-  const [, setName] = useState("");
+  const [names, setName] = useState("");
   const [error, setError] = useState(false);
 
   // Event handler for adding a new input field
@@ -250,6 +250,8 @@ const Gatepass = () => {
           ref_number: refNumber,
           isMoreThanOneDayTravel: Number(isMoreThanOneDayTravel),
           duration_day: isMoreThanOneDayTravel ? 1 : 0,
+          start_time: gatepass.start_time,
+          return_time: gatepass.return_time,
         });
 
         // Add the new gatepass to the gatepassData state
@@ -268,7 +270,6 @@ const Gatepass = () => {
         setServiceVehicle(service_vehicle);
         setButtonPopup(true);
         setRefNumber(refNumber);
-        window.location.reload();
       } catch (err) {
         console.log(err);
         setError(true);
@@ -451,6 +452,17 @@ const Gatepass = () => {
                     />
                   </div>
                 </div>
+                <div className="officer-container">
+                  <div>
+                    <label>Officer In-Charge</label>
+                    <input type="text" />
+                  </div>
+
+                  <div>
+                    <label>Position</label>
+                    <input type="text" />
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -461,6 +473,16 @@ const Gatepass = () => {
             {error && "Something went wrong!"}
           </div>
         </div>
+        <GeneratedGatePass
+          trigger={buttonPopUp}
+          setTrigger={setButtonPopup}
+          description={description}
+          destination={gatepass.destination}
+          dateOfTravel={dateOfTravel}
+          serviceVehicle={serviceVehicle}
+          department={department}
+          employeeNames={employeeNames}
+        />
       </div>
     </Sidebar>
   );

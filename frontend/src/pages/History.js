@@ -72,23 +72,6 @@ function History() {
       });
   };
 
-  const getTime = (time24) => {
-    const [hours24, minutes] = time24.split(":");
-    let period = "AM";
-    let hours = parseInt(hours24);
-
-    if (hours > 12) {
-      hours = hours - 12;
-      period = "PM";
-    } else if (hours === 0) {
-      hours = 12;
-    } else if (hours === 12) {
-      period = "PM";
-    }
-
-    return `${hours}:${minutes} ${period}`;
-  };
-
   return (
     <Sidebar>
       <HistoryStyles.HistoryContainer>
@@ -140,10 +123,10 @@ function History() {
                   End Date
                 </HistoryStyles.HistoryTableHeader>
                 <HistoryStyles.HistoryTableHeader>
-                  Start Time
+                  Time in
                 </HistoryStyles.HistoryTableHeader>
                 <HistoryStyles.HistoryTableHeader>
-                  Return Time
+                  Time out
                 </HistoryStyles.HistoryTableHeader>
                 <HistoryStyles.HistoryTableHeader>
                   Status
@@ -184,10 +167,10 @@ function History() {
                       : new Date(item.end_date).toLocaleDateString()}
                   </HistoryStyles.HistoryTableData>
                   <HistoryStyles.HistoryTableData>
-                    {getTime(item.start_time)}
+                    {item.start_time}
                   </HistoryStyles.HistoryTableData>
                   <HistoryStyles.HistoryTableData>
-                    {getTime(item.return_time)}
+                    {item.return_time}
                   </HistoryStyles.HistoryTableData>
                   <HistoryStyles.HistoryTableData>
                     Status

@@ -31,6 +31,7 @@ const {
   deleteGatepass,
   getGatepass,
 } = require("./components/Gatepass.jsx");
+const GatepassSource = require("./components/GatepassSource.jsx");
 const app = express();
 
 app.use(express.json());
@@ -66,6 +67,8 @@ app.get("/employee", getEmployee),
 app.post("/gatepass", addGatepasss);
 app.delete("/gatepass/:id", deleteGatepass);
 app.get("/gatepass", getGatepass);
+
+app.use(GatepassSource);
 
 app.listen(3001, () => {
   console.log("running server");
