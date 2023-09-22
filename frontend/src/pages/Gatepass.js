@@ -8,8 +8,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faRepeat,
   faPlus,
-  faCheck,
-  faTimes,
+  // faCheck,
+  // faTimes,
 } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
 
@@ -26,26 +26,24 @@ const Gatepass = () => {
     area_office: "",
     start_time: "",
     return_time: "",
-    start_date: "",
     end_date: "",
   });
   const [filteredNames, setFilteredNames] = useState([]);
-  const [description, setDescription] = useState("");
+  const [, setDescription] = useState("");
   const [area_office, setAreaOffice] = useState("");
   const [dateOfTravel, setDateOfTravel] = useState("");
   const [dateOfTime, setDateOfTime] = useState("");
   const [returnDateOfTime, setReturnDateOfTime] = useState("");
-  const [serviceVehicle, setServiceVehicle] = useState("");
+  const [, setServiceVehicle] = useState("");
   const [department, setDepartment] = useState("");
   const [departments, setDepartments] = useState([]);
-  const [buttonPopUp, setButtonPopup] = useState(false);
+  const [, setButtonPopup] = useState(false);
   const [employeeNames, setEmployeeNames] = useState([
     { id: Math.random(), name: "" },
   ]);
-  const [startDateOfTravel, setStartDateOfTravel] = useState("");
   const [endDateOfTravel, setEndDateOfTravel] = useState("");
   const [isMoreThanOneDayTravel, setIsMoreThanOneDayTravel] = useState(false);
-  const [refNumber, setRefNumber] = useState("");
+  const [, setRefNumber] = useState("");
   const [counter, setCounter] = useState(() => {
     const savedCounter = localStorage.getItem("counter");
     return savedCounter ? Number(savedCounter) : 1;
@@ -53,9 +51,9 @@ const Gatepass = () => {
   const [currentDate, setCurrentDate] = useState(
     new Date().toISOString().slice(0, 10)
   );
-  const [gatepassData, setGatepassData] = useState([]);
+  const [, setGatepassData] = useState([]);
   const [employees, setEmployees] = useState([]);
-  const [name, setName] = useState("");
+  const [, setName] = useState("");
   const [error, setError] = useState(false);
 
   // Event handler for adding a new input field
@@ -63,12 +61,6 @@ const Gatepass = () => {
     setEmployeeNames([...employeeNames, { id: Math.random(), name: "" }]);
   };
 
-  // // Event handler for saving the inputs
-  // const handleSaveClick = () => {
-  //   // You can access the employee names from the employeeNames state
-  //   console.log("Employee Names:", employeeNames);
-  //   // Perform your save logic here
-  // };
   useEffect(() => {
     fetchEmployeesAndDepartments();
   }, []);
@@ -132,11 +124,6 @@ const Gatepass = () => {
     setGatepass((prev) => ({ ...prev, dot: e.target.value }));
   };
 
-  const StartDateOfTravel = (e) => {
-    setStartDateOfTravel(e.target.value);
-    setGatepass((prev) => ({ ...prev, start_date: e.target.value }));
-  };
-
   const EndDateOfTravel = (e) => {
     setEndDateOfTravel(e.target.value);
     setGatepass((prev) => ({ ...prev, end_date: e.target.value }));
@@ -145,14 +132,14 @@ const Gatepass = () => {
   const convertTo12HourFormat = (time24) => {
     const [hours24, minutes] = time24.split(":");
     let period = "AM";
-    let hours = hours24;
+    let hours = parseInt(hours24);
 
-    if (hours24 > 12) {
-      hours = hours24 - 12;
+    if (hours > 12) {
+      hours = hours - 12;
       period = "PM";
-    } else if (hours24 === "00") {
+    } else if (hours === 0) {
       hours = 12;
-    } else if (hours24 === "12") {
+    } else if (hours === 12) {
       period = "PM";
     }
 
@@ -211,6 +198,7 @@ const Gatepass = () => {
       area_office,
       start_time,
       return_time,
+      names,
     } = gatepass;
 
     if (
@@ -220,7 +208,8 @@ const Gatepass = () => {
       !service_vehicle ||
       !area_office ||
       !start_time ||
-      !return_time
+      !return_time ||
+      !names
     ) {
       alert("Values are empty");
       return;
@@ -414,16 +403,9 @@ const Gatepass = () => {
                   {isMoreThanOneDayTravel && (
                     <div className="date-container">
                       <div>
-                        <label>Start Date:</label>
-                        <input
-                          type="date"
-                          value={startDateOfTravel}
-                          onChange={StartDateOfTravel}
-                        />
-                      </div>
-
-                      <div>
-                        <label>End Date:</label>
+                        <label>
+                          <span>End</span> Date:
+                        </label>
                         <input
                           type="date"
                           value={endDateOfTravel}

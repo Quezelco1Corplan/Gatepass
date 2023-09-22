@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import umCss from "../css/UserManagement.module.css";
 import Sidebar from "../component/sidebar";
+import * as UMStyles from "../css/UM.styles";
 
 const UserManagement = () => {
   const [users, setUsers] = useState([]);
@@ -88,67 +89,71 @@ const UserManagement = () => {
 
   const renderUserTable = () => {
     return (
-      <div className={umCss["um-table-container"]}>
-        <table className={umCss["um-table"]}>
-          <thead>
-            <tr>
-              <th className={umCss["um-th"]}>No.</th>
-              <th className={umCss["um-th"]}>First Name</th>
-              <th className={umCss["um-th"]}>Last Name</th>
-              <th className={umCss["um-th"]}>Contact</th>
-              <th className={umCss["um-th"]}>Email</th>
-              <th className={umCss["um-th"]}>Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            {users.map((user, index) => (
-              <tr key={user.id}>
-                <td className={umCss["um-td"]}>{index + 1}</td>
-                <td className={umCss["um-td"]}>{user.firstname}</td>
-                <td className={umCss["um-td"]}>{user.lastname}</td>
-                <td className={umCss["um-td"]}>{user.contact}</td>
-                <td className={umCss["um-td"]}>{user.email}</td>
-                <td className={umCss["um-td"]}>
-                  <div className={umCss["um-info"]}>
-                    <div className={umCss["um-update"]}>
-                      <button
-                        className={`${umCss["um-button"]} ${umCss.update}`}
-                        onClick={() => {
-                          navigate(`/Update/${user.id}`);
-                        }}
-                      >
-                        Update
-                      </button>
-                    </div>
-                    <div className={umCss["um-delete"]}>
-                      <button
-                        className={umCss["um-button-delete"]}
-                        onClick={(event) => {
-                          event.preventDefault();
-                          openDeleteModal(user.id);
-                        }}
-                      >
-                        <FaTrash />
-                      </button>
-                    </div>
-                  </div>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+      <>
+        <UMStyles.UMBody>
+          <UMStyles.UMContainer>
+            <UMStyles.UMbox1>
+              <h1>User Management</h1>
+            </UMStyles.UMbox1>
+
+            <UMStyles.UMbox2>
+              <UMStyles.UMTable>
+                <UMStyles.UMTableHead>
+                  <tr>
+                    <UMStyles.UMTableth>No.</UMStyles.UMTableth>
+                    <UMStyles.UMTableth>First Name</UMStyles.UMTableth>
+                    <UMStyles.UMTableth>Last Name</UMStyles.UMTableth>
+                    <UMStyles.UMTableth>Contact</UMStyles.UMTableth>
+                    <UMStyles.UMTableth>Email</UMStyles.UMTableth>
+                    <UMStyles.UMTableth>Action</UMStyles.UMTableth>
+                  </tr>
+                </UMStyles.UMTableHead>
+                <tbody>
+                  {users.map((user, index) => (
+                    <tr key={user.id}>
+                      <UMStyles.UMTabletd>{index + 1}</UMStyles.UMTabletd>
+                      <UMStyles.UMTabletd>{user.firstname}</UMStyles.UMTabletd>
+                      <UMStyles.UMTabletd>{user.lastname}</UMStyles.UMTabletd>
+                      <UMStyles.UMTabletd>{user.contact}</UMStyles.UMTabletd>
+                      <UMStyles.UMTabletd>{user.email}</UMStyles.UMTabletd>
+                      <UMStyles.UMTabletd>
+                        <UMStyles.UMAction>
+                          <UMStyles.UMTablebutton1>
+                            <button
+                              onClick={() => {
+                                navigate(`/Update/${user.id}`);
+                              }}
+                            >
+                              Update
+                            </button>
+                          </UMStyles.UMTablebutton1>
+
+                          <UMStyles.UMablebutton2>
+                            <button
+                              onClick={(event) => {
+                                event.preventDefault();
+                                openDeleteModal(user.id);
+                              }}
+                            >
+                              <FaTrash />
+                            </button>
+                          </UMStyles.UMablebutton2>
+                        </UMStyles.UMAction>
+                      </UMStyles.UMTabletd>
+                    </tr>
+                  ))}
+                </tbody>
+              </UMStyles.UMTable>
+            </UMStyles.UMbox2>
+          </UMStyles.UMContainer>
+        </UMStyles.UMBody>
+      </>
     );
   };
 
   return (
     <Sidebar>
-      <div className="um-wrapper">
-        <div className="um-header">
-          <h1>User Management</h1>
-        </div>
-        <div className="um-component">{renderUserTable()}</div>
-      </div>
+      {renderUserTable()}
       <DeleteModal />
     </Sidebar>
   );

@@ -10,13 +10,10 @@ import { FcLeave, FcDepartment } from "react-icons/fc";
 import { AiOutlineHistory } from "react-icons/ai";
 import { BsFillPersonLinesFill } from "react-icons/bs";
 
-
 // import UserManagement from '../pages/UserManagement';
 // import Home from '../pages/Home';
 // UserManagement
 // Home
-
-
 
 export const Sidebardata = [
   {
@@ -36,10 +33,15 @@ export const Sidebardata = [
         path: "/Dashboard",
         icon: <RadixIcons.RxDashboard />,
       },
+      // {
+      //   title: "Report",
+      //   path: "/Reports/Report",
+      //   icon: <TablerIcons.TbReport />,
+      // },
       {
-        title: "Report",
-        path: "/Reports/Report",
-        icon: <TablerIcons.TbReport />,
+        title: "Gatepass Records",
+        path: "/History",
+        icon: <AiOutlineHistory />,
       },
     ],
   },
@@ -64,11 +66,6 @@ export const Sidebardata = [
         title: "Gate Pass Form",
         path: "/Gatepass",
         icon: <GiOpenGate />,
-      },
-      {
-        title: "History Form",
-        path: "/History",
-        icon: <AiOutlineHistory />,
       },
     ],
   },

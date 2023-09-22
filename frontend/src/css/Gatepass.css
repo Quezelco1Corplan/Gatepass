@@ -106,8 +106,10 @@
   } */
 
 /*FORM STYLES*/
+label span {
+  color: red;
+}
 .form-block,
-.date-container,
 .time-container {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -115,7 +117,7 @@
 }
 .checkbox-container {
   display: flex;
-  justify-content: end;
+  justify-content: flex-end;
   padding-bottom: 10px;
 }
 
@@ -193,7 +195,7 @@ input {
 .generate-pass {
   display: flex;
   flex-direction: column;
-  align-items: end;
+  align-items: flex-end;
   margin: 20px;
 }
 

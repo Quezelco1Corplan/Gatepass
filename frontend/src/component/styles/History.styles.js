@@ -3,36 +3,46 @@ import styled from "styled-components";
 export const HistoryContainer = styled.div`
   box-sizing: border-box;
   display: grid;
-  gap: 5px;
+  gap: 10px;
   font-family: "Open Sans", sans-serif;
+  position: relative;
 `;
 
 //Box 1
 export const Box1 = styled.div`
+  position: relative;
   background: #ffffff;
-  padding-left: 5px;
   display: grid;
   grid-template-columns: 2fr 1fr;
   align-items: center;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  padding: 5px 10px;
 `;
 
 export const Headerstyles = styled.div`
-  padding: 10px 10px;
-  color: gray;
+  padding-left: 20px;
+
+  & h1 {
+    color: #3c6c91;
+    font-size: 35px;
+  }
 `;
 
 export const HeaderSearchBar = styled.div`
-  padding-right: 10px;
-  display: flex;
+  /* border: 1px solid; */
+  align-items: center;
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+`;
+
+export const Headersearchbarbox = styled.div`
+  /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); */
 `;
 
 export const SearchBarinput = styled.input`
-  width: 100%;
-  border: 2px solid #ccc;
-  border-right: none;
+  margin-top: 10px;
   padding: 5px;
-  height: 20px;
+  height: 34px;
   outline: none;
   color: #ccc;
 
@@ -62,12 +72,10 @@ export const SearchBarButton = styled.button`
 export const Box2 = styled.div`
   position: relative;
   background: #ffffff;
-  box-shadow: 1px 1px 10px 2px #dadada;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
   max-height: 82vh;
   overflow: overlay;
   overflow-y: scroll;
-  display: grid;
-  grid-template-rows: 1fr;
 
   &::-webkit-scrollbar-track {
     -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
@@ -87,8 +95,8 @@ export const Box2 = styled.div`
 export const HistoryTable = styled.table`
   width: 100%;
   border-spacing: 0;
-  border-collapse: separate;
-  /* border-buttom:  */
+  border-collapse: collapse;
+  border: none;
 `;
 
 export const HistoryTableRow = styled.tr``;
@@ -102,12 +110,11 @@ export const HistoryTableHead = styled.thead`
   text-align: left;
   color: #e3f3fb;
   font-size: 15px;
-  border: 1px solid;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
 
   & input {
     background-color: transparent;
-    border-bottom: 1px solid #ffffff;
+
+    border: none;
     outline: none;
     color: #e3f3fb;
 
@@ -119,18 +126,36 @@ export const HistoryTableHead = styled.thead`
 
 export const HistoryTableHeader = styled.th`
   padding: 10px 10px;
+  border-collapse: collapse;
+  border: none;
 `;
 
 export const HistoryTableData = styled.td`
   padding: 10px;
+  border-collapse: collapse;
+  border: none;
   border-bottom: 1px solid #ccc;
   color: gray;
   font-size: 13px;
 
   & button {
-    background-color: none;
+    background-color: transparent;
     border: none;
+    color: gray;
     cursor: pointer;
+    font-size: 20px;
+  }
+`;
+
+export const HistoryTablebutton1 = styled.div`
+  & :hover {
+    color: BLUE;
+  }
+`;
+
+export const HistoryTablebutton2 = styled.div`
+  & :hover {
+    color: red;
   }
 `;
 

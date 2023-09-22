@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Sidebar from "../component/sidebar";
-import * as HistoryStyles from "../styles/GatepassStyle";
+import * as HistoryStyles from "../component/styles/History.styles";
 import { FaSearch } from "react-icons/fa";
 import { BiSolidTrashAlt, BiShow } from "react-icons/bi";
 import axios from "axios";
@@ -72,22 +72,43 @@ function History() {
       });
   };
 
+  const getTime = (time24) => {
+    const [hours24, minutes] = time24.split(":");
+    let period = "AM";
+    let hours = parseInt(hours24);
+
+    if (hours > 12) {
+      hours = hours - 12;
+      period = "PM";
+    } else if (hours === 0) {
+      hours = 12;
+    } else if (hours === 12) {
+      period = "PM";
+    }
+
+    return `${hours}:${minutes} ${period}`;
+  };
+
   return (
     <Sidebar>
       <HistoryStyles.HistoryContainer>
         <HistoryStyles.Box1>
           <HistoryStyles.Headerstyles>
-            <h1>History</h1>
+            <h1>Gatepass Records</h1>
           </HistoryStyles.Headerstyles>
 
           <HistoryStyles.HeaderSearchBar>
-            <HistoryStyles.SearchBarinput
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-            />
-            <HistoryStyles.SearchBarButton>
-              <FaSearch />
-            </HistoryStyles.SearchBarButton>
+            <HistoryStyles.Headersearchbarbox>
+              <HistoryStyles.SearchBarinput
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+              />
+            </HistoryStyles.Headersearchbarbox>
+            <HistoryStyles.Headersearchbarbox>
+              <HistoryStyles.SearchBarButton>
+                <FaSearch />
+              </HistoryStyles.SearchBarButton>
+            </HistoryStyles.Headersearchbarbox>
           </HistoryStyles.HeaderSearchBar>
         </HistoryStyles.Box1>
 
@@ -113,7 +134,16 @@ function History() {
                   Destination
                 </HistoryStyles.HistoryTableHeader>
                 <HistoryStyles.HistoryTableHeader>
-                  Date
+                  Date of Travel
+                </HistoryStyles.HistoryTableHeader>
+                <HistoryStyles.HistoryTableHeader>
+                  End Date
+                </HistoryStyles.HistoryTableHeader>
+                <HistoryStyles.HistoryTableHeader>
+                  Start Time
+                </HistoryStyles.HistoryTableHeader>
+                <HistoryStyles.HistoryTableHeader>
+                  Return Time
                 </HistoryStyles.HistoryTableHeader>
                 <HistoryStyles.HistoryTableHeader>
                   Status
@@ -149,17 +179,31 @@ function History() {
                       : new Date(item.dot).toLocaleDateString()}
                   </HistoryStyles.HistoryTableData>
                   <HistoryStyles.HistoryTableData>
+                    {isNaN(new Date(item.end_date).getTime())
+                      ? "No assigned date"
+                      : new Date(item.end_date).toLocaleDateString()}
+                  </HistoryStyles.HistoryTableData>
+                  <HistoryStyles.HistoryTableData>
+                    {getTime(item.start_time)}
+                  </HistoryStyles.HistoryTableData>
+                  <HistoryStyles.HistoryTableData>
+                    {getTime(item.return_time)}
+                  </HistoryStyles.HistoryTableData>
+                  <HistoryStyles.HistoryTableData>
                     Status
                   </HistoryStyles.HistoryTableData>
                   <HistoryStyles.HistoryTableData>
                     <HistoryStyles.HistoryAction>
-                      <button>
-                        <BiShow />
-                      </button>
-
-                      <button onClick={() => handleDelete(item.gatepass_id)}>
-                        <BiSolidTrashAlt />
-                      </button>
+                      <HistoryStyles.HistoryTablebutton1>
+                        <button>
+                          <BiShow />
+                        </button>
+                      </HistoryStyles.HistoryTablebutton1>
+                      <HistoryStyles.HistoryTablebutton2>
+                        <button onClick={() => handleDelete(item.gatepass_id)}>
+                          <BiSolidTrashAlt />
+                        </button>
+                      </HistoryStyles.HistoryTablebutton2>
                     </HistoryStyles.HistoryAction>
                   </HistoryStyles.HistoryTableData>
                 </HistoryStyles.HistoryTableRow>

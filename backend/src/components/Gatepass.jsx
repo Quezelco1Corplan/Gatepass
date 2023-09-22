@@ -13,14 +13,13 @@ const addGatepasss = (req, res) => {
     area_office,
     start_time,
     return_time,
-    start_date,
     end_date,
   } = req.body;
 
   console.log(req.body);
 
   const q =
-    "INSERT INTO gatepass (ref_number, duration_day, purpose, destination, dot, departments, service_vehicle ,names, area_office, start_time, return_time, start_date, end_date) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    "INSERT INTO gatepass (ref_number, duration_day, purpose, destination, dot, departments, service_vehicle ,names, area_office, start_time, return_time, end_date) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
   const values = [
     ref_number,
     duration_day,
@@ -33,7 +32,6 @@ const addGatepasss = (req, res) => {
     area_office,
     start_time,
     return_time,
-    start_date,
     end_date,
   ];
 
