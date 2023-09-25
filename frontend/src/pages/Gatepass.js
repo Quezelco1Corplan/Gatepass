@@ -48,7 +48,7 @@ const Gatepass = () => {
   const [refNumber, setRefNumber] = useState("");
   const [counter, setCounter] = useState(() => {
     const savedCounter = localStorage.getItem("counter");
-    return savedCounter ? Number(savedCounter) : 1;
+    return savedCounter && !isNaN(savedCounter) ? Number(savedCounter) : 1;
   });
   const [currentDate, setCurrentDate] = useState(
     new Date().toISOString().slice(0, 10)
