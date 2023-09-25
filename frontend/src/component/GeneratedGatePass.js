@@ -23,6 +23,8 @@ function GeneratedGatePass(props) {
         dateOfTime: props.dateOfTime,
         timeIn: props.timeIn,
         timeOut: props.timeOut,
+        officerOnCharge: props.officerOnCharge,
+        officerPosition: props.officerPosition,
       };
 
       // Send the PDF data URL to the server
@@ -64,6 +66,8 @@ function GeneratedGatePass(props) {
     props.dateOfTime,
     props.timeIn,
     props.timeOut,
+    props.officerOnCharge,
+    props.officerPosition,
   ]);
 
   const handleDownloadClick = () => {

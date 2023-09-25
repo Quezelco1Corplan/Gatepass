@@ -54,7 +54,9 @@ function History() {
   }, [refreshTable]);
 
   const handleDelete = (gatepass_id) => {
-    const confirm = window.confirm("Are you sure your information is correct?");
+    const confirm = window.confirm(
+      "Are you sure you want to delete this record?"
+    );
     if (!confirm) {
       return;
     }

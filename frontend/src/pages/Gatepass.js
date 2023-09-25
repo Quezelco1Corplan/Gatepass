@@ -27,6 +27,8 @@ const Gatepass = () => {
     start_time: "",
     return_time: "",
     end_date: "",
+    officer_in_charge: "",
+    officer_position: "",
   });
   const [filteredNames, setFilteredNames] = useState([]);
   const [description, setDescription] = useState("");
@@ -55,6 +57,8 @@ const Gatepass = () => {
   const [employees, setEmployees] = useState([]);
   const [names, setName] = useState("");
   const [error, setError] = useState(false);
+  const [officerOnCharge, setOfficerOnCharge] = useState("");
+  const [officerPosition, setOfficerPosition] = useState("");
 
   // Event handler for adding a new input field
   const handleAddNameClick = () => {
@@ -128,6 +132,14 @@ const Gatepass = () => {
     setEndDateOfTravel(e.target.value);
     setGatepass((prev) => ({ ...prev, end_date: e.target.value }));
   };
+  const handleOfficerOnCharge = (e) => {
+    setOfficerOnCharge(e.target.value);
+    setGatepass((prev) => ({ ...prev, officer_in_charge: e.target.value }));
+  };
+  const handleOfficerPosition = (e) => {
+    setOfficerPosition(e.target.value);
+    setGatepass((prev) => ({ ...prev, officer_position: e.target.value }));
+  };
 
   const convertTo12HourFormat = (time24) => {
     const [hours24, minutes] = time24.split(":");
@@ -199,6 +211,8 @@ const Gatepass = () => {
       start_time,
       return_time,
       names,
+      officer_in_charge,
+      officer_position,
     } = gatepass;
 
     if (
@@ -209,7 +223,9 @@ const Gatepass = () => {
       !area_office ||
       !start_time ||
       !return_time ||
-      !names
+      !names ||
+      !officer_in_charge ||
+      !officer_position
     ) {
       alert("Values are empty");
       return;
@@ -454,12 +470,20 @@ const Gatepass = () => {
                 <div className="officer-container">
                   <div>
                     <label>Officer In-Charge</label>
-                    <input type="text" />
+                    <input
+                      type="text"
+                      value={officerOnCharge}
+                      onChange={handleOfficerOnCharge}
+                    />
                   </div>
 
                   <div>
                     <label>Position</label>
-                    <input type="text" />
+                    <input
+                      type="text"
+                      value={officerPosition}
+                      onChange={handleOfficerPosition}
+                    />
                   </div>
                 </div>
               </div>
@@ -485,6 +509,8 @@ const Gatepass = () => {
           dateOfTime={dateOfTime}
           timeIn={dateOfTime}
           timeOut={returnDateOfTime}
+          officerOnCharge={officerOnCharge}
+          officerPosition={officerPosition}
         />
       </div>
     </Sidebar>

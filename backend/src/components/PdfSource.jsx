@@ -2,6 +2,23 @@ const puppeteer = require("puppeteer");
 const fs = require("fs");
 const path = require("path");
 
+const convertTo12HourFormat = (time24) => {
+  const [hours24, minutes] = time24.split(":");
+  let period = "AM";
+  let hours = parseInt(hours24);
+
+  if (hours > 12) {
+    hours = hours - 12;
+    period = "PM";
+  } else if (hours === 0) {
+    hours = 12;
+  } else if (hours === 12) {
+    period = "PM";
+  }
+
+  return `${hours}:${minutes} ${period}`;
+};
+
 exports.createPdf = async (req, res) => {
   try {
     const {
@@ -15,6 +32,8 @@ exports.createPdf = async (req, res) => {
       dateOfTime,
       timeIn,
       timeOut,
+      officerOnCharge,
+      officerPosition,
     } = req.body;
 
     // Define the PDF file path
@@ -184,10 +203,10 @@ exports.createPdf = async (req, res) => {
           </h3>
         
           <br>
-          <p>Area Office:${area_office}</p>
+          <p>Area Office: ${area_office}</p>
           
           <p>Department: ${department}</p> 
-          <p>Time of Travel: ${dateOfTime}</p>
+          <p>Time of Travel: ${convertTo12HourFormat(dateOfTime)}</p>
           <p>Destination: ${destination}</p>
           <p>Purpose: ${description}</p>
           <br>
@@ -200,9 +219,9 @@ exports.createPdf = async (req, res) => {
           <p>Service Vehicle: ${serviceVehicle}</p>
           <br>
           <div class="signature-block">
-              <h3>Approved by:</h3>
-              <br>
-              <h3>Manager</h3>
+              <p>Approved by:</p>
+                <p>${officerOnCharge}</p>
+              <h3>${officerPosition}</h3>
           </div>
          </div>
      </div>
@@ -212,12 +231,12 @@ exports.createPdf = async (req, res) => {
       <h3>FOR SECURITY DIVISION</h3>
       <div class="content-below">
           <div class="content-left">
-                  <p>Time out: ${timeOut}</p>
+                  <p>Time in: ${convertTo12HourFormat(timeIn)}</p>
                   <p>Checked by: </p>
                   <h3>TRAVEL VERIFICATION</h3>
           </div>
           <div class="content-right">
-              <p>Time in: ${timeIn}</p>
+                  <p>Time out: ${convertTo12HourFormat(timeOut)}</p>
           </div>
           <div>
               <p>Person/s Visited:</p>
@@ -261,10 +280,10 @@ exports.createPdf = async (req, res) => {
         ${employeeNamesHtml}
       </h3>
       <br>
-      <p>Area Office:${area_office}</p>
+      <p>Area Office: ${area_office}</p>
       
       <p>Department: ${department}</p> 
-      <p>Time of Travel:${dateOfTime}</p>
+      <p>Time of Travel: ${convertTo12HourFormat(dateOfTime)}</p>
       <p>Destination: ${destination}</p>
       <p>Purpose: ${description}</p>
       <br>
@@ -277,9 +296,9 @@ exports.createPdf = async (req, res) => {
       <p>Service Vehicle: ${serviceVehicle}</p>
       <br>
       <div class="signature-block">
-          <h3>Approved by:</h3>
-          <br>
-          <h3>Manager</h3>
+          <p>Approved by:</p>
+          <p>${officerOnCharge}</p>
+          <h3>${officerPosition}</h3>
       </div>
      </div>
  </div>
@@ -289,12 +308,12 @@ exports.createPdf = async (req, res) => {
   <h3>FOR SECURITY DIVISION</h3>
   <div class="content-below">
       <div class="content-left">
-              <p>Time out:${timeOut} </p>
+              <p>Time in: ${convertTo12HourFormat(timeIn)}</p>
               <p>Checked by: </p>
               <h3>TRAVEL VERIFICATION</h3>
       </div>
       <div class="content-right">
-          <p>Time in:${timeIn}</p>
+            <p>Time out: ${convertTo12HourFormat(timeOut)} </p>
       </div>
       <div>
           <p>Person/s Visited:</p>
