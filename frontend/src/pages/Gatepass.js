@@ -265,7 +265,6 @@ const Gatepass = () => {
           },
         ]);
 
-        alert(response.data);
         setDescription(purpose);
         setServiceVehicle(service_vehicle);
         setButtonPopup(true);
@@ -481,7 +480,7 @@ const Gatepass = () => {
           dateOfTravel={dateOfTravel}
           serviceVehicle={serviceVehicle}
           department={department}
-          employeeNames={names}
+          employeeNames={employeeNames}
           area_office={area_office}
           dateOfTime={dateOfTime}
           timeIn={dateOfTime}

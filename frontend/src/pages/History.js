@@ -35,7 +35,7 @@ function History() {
   };
 
   const refreshPage = () => {
-    setRefreshTable(true);
+    setRefreshTable((prevRefreshTable) => !prevRefreshTable);
   };
 
   useEffect(() => {
@@ -53,21 +53,19 @@ function History() {
       });
   }, [refreshTable]);
 
-  const handleDelete = (id) => {
+  const handleDelete = (gatepass_id) => {
     const confirm = window.confirm("Are you sure your information is correct?");
     if (!confirm) {
       return;
     }
 
     axios
-      .delete(`http://localhost:3001/gatepass/${id}`)
-      .then((response) => {
-        //Handle delete
+      .delete(`http://localhost:3001/gatepass/${gatepass_id}`)
+      .then(() => {
         console.log("Item deleted");
         refreshPage();
       })
       .catch((error) => {
-        //Handle error
         console.error("Error deleting item", error);
       });
   };

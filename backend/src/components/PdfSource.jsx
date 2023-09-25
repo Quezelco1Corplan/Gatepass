@@ -20,6 +20,11 @@ exports.createPdf = async (req, res) => {
     // Define the PDF file path
     const pdfFilePath = path.join(__dirname, "gatepass.pdf");
 
+    let employeeNamesHtml = "";
+    employeeNames.forEach((employee) => {
+      employeeNamesHtml += `<li>${employee.name}</li>`;
+    });
+
     // Check if the PDF file already exists, and delete it if it does
     if (fs.existsSync(pdfFilePath)) {
       fs.unlinkSync(pdfFilePath);
@@ -174,7 +179,10 @@ exports.createPdf = async (req, res) => {
      <div class="document-content">
       <div class="content-left">
           <p>Name of Employee/s:</p>
-          <h3> ${employeeNames}</h3>
+          <h3>
+          ${employeeNamesHtml}
+          </h3>
+        
           <br>
           <p>Area Office:${area_office}</p>
           
@@ -249,7 +257,9 @@ exports.createPdf = async (req, res) => {
  <div class="document-content">
   <div class="content-left">
       <p>Name of Employee/s:</p>
-      <h3> ${employeeNames}</h3>
+      <h3>
+        ${employeeNamesHtml}
+      </h3>
       <br>
       <p>Area Office:${area_office}</p>
       

@@ -60,6 +60,10 @@ function GeneratedGatePass(props) {
     props.serviceVehicle,
     props.department,
     props.employeeNames,
+    props.area_office,
+    props.dateOfTime,
+    props.timeIn,
+    props.timeOut,
   ]);
 
   const handleDownloadClick = () => {
