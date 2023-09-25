@@ -481,7 +481,11 @@ const Gatepass = () => {
           dateOfTravel={dateOfTravel}
           serviceVehicle={serviceVehicle}
           department={department}
-          employeeNames={employeeNames}
+          employeeNames={names}
+          area_office={area_office}
+          dateOfTime={dateOfTime}
+          timeIn={dateOfTime}
+          timeOut={returnDateOfTime}
         />
       </div>
     </Sidebar>

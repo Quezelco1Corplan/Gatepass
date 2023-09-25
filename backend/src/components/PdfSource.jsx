@@ -4,8 +4,18 @@ const path = require("path");
 
 exports.createPdf = async (req, res) => {
   try {
-    const { purpose, destination, dot, service_vehicle, departments, names } =
-      req.body;
+    const {
+      description,
+      destination,
+      dateOfTravel,
+      serviceVehicle,
+      department,
+      employeeNames,
+      area_office,
+      dateOfTime,
+      timeIn,
+      timeOut,
+    } = req.body;
 
     // Define the PDF file path
     const pdfFilePath = path.join(__dirname, "gatepass.pdf");
@@ -164,22 +174,22 @@ exports.createPdf = async (req, res) => {
      <div class="document-content">
       <div class="content-left">
           <p>Name of Employee/s:</p>
-          <h3> ${names}</h3>
+          <h3> ${employeeNames}</h3>
           <br>
-          <p>Area Office:</p>
+          <p>Area Office:${area_office}</p>
           
-          <p>Department: ${departments}</p> 
-          <p>Time of Travel:</p>
+          <p>Department: ${department}</p> 
+          <p>Time of Travel: ${dateOfTime}</p>
           <p>Destination: ${destination}</p>
-          <p>Purpose: ${purpose}</p>
+          <p>Purpose: ${description}</p>
           <br>
           <p>Prepared by:</p>
           <br>
           <h3>Employee</h3>
          </div>
          <div class="content-right">
-          <p> Date of Travel: ${dot}</p>
-          <p>Service Vehicle: ${service_vehicle}</p>
+          <p> Date of Travel: ${dateOfTravel}</p>
+          <p>Service Vehicle: ${serviceVehicle}</p>
           <br>
           <div class="signature-block">
               <h3>Approved by:</h3>
@@ -194,12 +204,12 @@ exports.createPdf = async (req, res) => {
       <h3>FOR SECURITY DIVISION</h3>
       <div class="content-below">
           <div class="content-left">
-                  <p>Time out: </p>
+                  <p>Time out: ${timeOut}</p>
                   <p>Checked by: </p>
                   <h3>TRAVEL VERIFICATION</h3>
           </div>
           <div class="content-right">
-              <p>Time in:</p>
+              <p>Time in: ${timeIn}</p>
           </div>
           <div>
               <p>Person/s Visited:</p>
@@ -239,22 +249,22 @@ exports.createPdf = async (req, res) => {
  <div class="document-content">
   <div class="content-left">
       <p>Name of Employee/s:</p>
-      <h3> ${names}</h3>
+      <h3> ${employeeNames}</h3>
       <br>
-      <p>Area Office:</p>
+      <p>Area Office:${area_office}</p>
       
-      <p>Department: ${departments}</p> 
-      <p>Time of Travel:</p>
+      <p>Department: ${department}</p> 
+      <p>Time of Travel:${dateOfTime}</p>
       <p>Destination: ${destination}</p>
-      <p>Purpose: ${purpose}</p>
+      <p>Purpose: ${description}</p>
       <br>
       <p>Prepared by:</p>
       <br>
       <h3>Employee</h3>
      </div>
      <div class="content-right">
-      <p> Date of Travel: ${dot}</p>
-      <p>Service Vehicle: ${service_vehicle}</p>
+      <p> Date of Travel: ${dateOfTravel}</p>
+      <p>Service Vehicle: ${serviceVehicle}</p>
       <br>
       <div class="signature-block">
           <h3>Approved by:</h3>
@@ -269,12 +279,12 @@ exports.createPdf = async (req, res) => {
   <h3>FOR SECURITY DIVISION</h3>
   <div class="content-below">
       <div class="content-left">
-              <p>Time out: </p>
+              <p>Time out:${timeOut} </p>
               <p>Checked by: </p>
               <h3>TRAVEL VERIFICATION</h3>
       </div>
       <div class="content-right">
-          <p>Time in:</p>
+          <p>Time in:${timeIn}</p>
       </div>
       <div>
           <p>Person/s Visited:</p>
@@ -309,9 +319,12 @@ exports.createPdf = async (req, res) => {
 
     // Send the generated PDF file as a response
     res.sendFile(pdfOptions.path);
+    res
+      .status(200)
+      .json({ success: true, message: "PDF generated successfully" });
   } catch (err) {
-    console.error(err);
-    res.status(500).send("PDF Generation Error");
+    console.error("PDF generation error:", err);
+    res.status(500).json({ success: false, error: "Internal Server Error" });
   }
 };
 
