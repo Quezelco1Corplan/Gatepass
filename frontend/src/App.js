@@ -11,7 +11,6 @@ import Department from "./pages/Department";
 import Employee from "./pages/Employee";
 import Gatepass from "./pages/Gatepass";
 import History from "./pages/History";
-import "./App.css";
 // import LoginForm from "./pages/Loginform";
 
 const App = () => {

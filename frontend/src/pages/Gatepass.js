@@ -45,7 +45,7 @@ const Gatepass = () => {
   ]);
   const [endDateOfTravel, setEndDateOfTravel] = useState("");
   const [isMoreThanOneDayTravel, setIsMoreThanOneDayTravel] = useState(false);
-  const [refNumber, setRefNumber] = useState("");
+  const [, setRefNumber] = useState("");
   const [counter, setCounter] = useState(() => {
     const savedCounter = localStorage.getItem("counter");
     return savedCounter && !isNaN(savedCounter) ? Number(savedCounter) : 1;
@@ -53,13 +53,13 @@ const Gatepass = () => {
   const [currentDate, setCurrentDate] = useState(
     new Date().toISOString().slice(0, 10)
   );
-  const [gatepassData, setGatepassData] = useState([]);
+  const [, setGatepassData] = useState([]);
   const [employees, setEmployees] = useState([]);
-  const [names, setName] = useState("");
+  const [, setName] = useState("");
   const [error, setError] = useState(false);
   const [officerOnCharge, setOfficerOnCharge] = useState("");
   const [officerPosition, setOfficerPosition] = useState("");
-
+  const [selectedInputId, setSelectedInputId] = useState(null);
   // Event handler for adding a new input field
   const handleAddNameClick = () => {
     setEmployeeNames([...employeeNames, { id: Math.random(), name: "" }]);
@@ -179,13 +179,13 @@ const Gatepass = () => {
   // Event handler for updating the employee name in the array
   const handleEmployeeNameChange = (id, value) => {
     setName(value);
+    setSelectedInputId(id);
 
     // Filter the names based on the user input
     const filtered = employees.filter((employee) =>
       employee.empName.toLowerCase().includes(value.toLowerCase())
     );
     setFilteredNames(filtered);
-    setGatepass((prev) => ({ ...prev, names: value }));
 
     const updatedEmployeeNames = employeeNames.map((employee) =>
       employee.id === id ? { ...employee, name: value } : employee
@@ -194,13 +194,25 @@ const Gatepass = () => {
   };
 
   const handleNameClick = (name) => {
-    setName(name);
+    setEmployeeNames(
+      employeeNames.map((employee) =>
+        employee.id === selectedInputId ? { ...employee, name } : employee
+      )
+    );
     setFilteredNames([]);
   };
 
   // Modify the handleClick function
   const handleClick = async (e) => {
     e.preventDefault();
+
+    const hasEmptyName = employeeNames.some(
+      (employee) => employee.name.trim() === ""
+    );
+    if (hasEmptyName) {
+      alert("Values are empty");
+      return;
+    }
 
     const {
       purpose,
@@ -210,7 +222,6 @@ const Gatepass = () => {
       area_office,
       start_time,
       return_time,
-      names,
       officer_in_charge,
       officer_position,
     } = gatepass;
@@ -223,7 +234,6 @@ const Gatepass = () => {
       !area_office ||
       !start_time ||
       !return_time ||
-      !names ||
       !officer_in_charge ||
       !officer_position
     ) {
@@ -308,12 +318,19 @@ const Gatepass = () => {
                     <input
                       type="text"
                       placeholder="Enter the name of employee..."
-                      value={employee.name}
+                      value={employee.name} // Use the name property here
                       name="names"
                       onChange={(e) =>
                         handleEmployeeNameChange(employee.id, e.target.value)
                       }
                     />
+
+                    <button
+                      className="remove-button"
+                      onClick={() => handleRemoveNameClick(employee.id)}
+                    >
+                      Remove
+                    </button>
                     {filteredNames.map((employee) => (
                       <div
                         key={employee.employee_id}
@@ -322,12 +339,6 @@ const Gatepass = () => {
                         {employee.empName}
                       </div>
                     ))}
-                    <button
-                      className="remove-button"
-                      onClick={() => handleRemoveNameClick(employee.id)}
-                    >
-                      Remove
-                    </button>
                   </div>
                 ))}
                 <button className="addname-button" onClick={handleAddNameClick}>
